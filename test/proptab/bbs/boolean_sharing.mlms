@@ -1,0 +1,37 @@
+type boolean = private
+  | Btrue | Bfalse
+  | Batom of string
+ 
+  | Bnot of boolean
+     begin 
+        involutive 
+        distributive (Band, Bor)
+        distributive (Bor, Band)
+        rule Bnot Bfalse -> Btrue
+        rule Bnot Btrue -> Bfalse
+     end 
+
+  | Band of boolean * boolean
+        begin
+           associative
+           idempotent
+           commutative
+           distributive (Bor) 
+        end
+
+  | Bor of boolean * boolean
+        begin
+          associative 
+          (* The following means that if we have twice the same branch
+             they will be nearby and only one instance will be kept
+             in the bor comb
+          *)
+          commutative
+          idempotent
+        end
+
+   | Bimplies of boolean * boolean 
+         begin 
+           rule Bimplies (x, y) -> Bor (Bnot x, y) 
+         end
+;;

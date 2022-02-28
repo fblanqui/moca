@@ -1,0 +1,27 @@
+\begin{frame}
+\frametitle{Génération d'équations}
+
+\begin{block}{Pas varyadiques: \texttt{eqnrel.ml}}
+\small{\texttt{eqnset\_of\_rels : generator $\rightarrow$ relations $\rightarrow$ EqnSet}}
+
+\vspace{0.2cm}
+puisque concat est associative:\\
+ \small{\texttt{concat (concat (x, y), z) =\\
+        \hspace{0.4\textwidth} concat (x, concat (y, z))}}
+\end{block}
+
+\pause
+\begin{block}{Varyadiques: \texttt{genr\_varyadic\_equations.ml}}
+\small{\texttt{testing\_eqns\_of\_rels : gen $\rightarrow$
+    rels $\rightarrow$ eqn list}}
+
+\vspace{0.2cm}
+puisque concat est associative: \onslide<3>{\alert{équations ad-hoc!}}\\
+\small{\texttt{concat [concat [x; y]; z] = concat [x; y; z]}}\\
+\small{\texttt{concat [x; concat [y; z]; concat [w; x1]] =\\
+     \hspace{0.4\textwidth}  concat [x; y; z; w; x1]}}\\
+\small{\texttt{concat [concat [x; y; z]; w] =\\
+    \hspace{0.4\textwidth} concat [x; y; z; w]}}
+\end{block}
+\end{frame}
+

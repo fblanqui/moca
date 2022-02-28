@@ -1,0 +1,55 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: vector.mlm,v 1.10 2010-10-25 16:37:40 weis Exp $ *)
+
+(* Implantation of:
+P. Arrighi and G. Dowek, Linear-algebraic lambda-calculus.
+http://www.lix.polytechnique.fr/~dowek/Publi/qpl.ps.gz *)
+
+open Field;;
+
+type vector = private
+  | VZero
+  | VAdd of vector * vector
+     begin
+       associative
+       commutative
+       neutral (VZero)
+       rule VAdd (VDot (l, u), VDot (m, u')) when u = u' -> VDot (kAdd (l, m), u)
+         (* to be replaced by factorizing left (VDot, kAdd) ? *)
+       rule VAdd (VDot (l, u), u') when u = u' -> VDot (kAdd (l, kOne), u)
+       rule VAdd (u, u') when u = u' -> VDot (kAdd (kOne, kOne), u)
+     end
+   | VDot of field * vector
+     begin
+       rule VDot (KZero, _u) -> VZero
+         (* to be replaced by absorbent left (KZero, VZero) ? *)
+       neutral left (KOne)
+       absorbent right (VZero)
+       distributive right (VAdd)
+       rule VDot (l, VDot (m, u)) -> VDot (kProd (l, m), u)
+         (* to be replaced by compositional left (VDot, kProd) ? *)
+     end
+   | VTensor of vector * vector
+     begin
+       distributive (VAdd)
+       rule VTensor (VDot (l, u), v) -> VDot (l, VTensor (u, v))
+         (* to be replaced by compositional left (VDot) ? *)
+       rule VTensor (u, VDot (l, v)) -> VDot (l, VTensor (u, v))
+         (* to be replaced by compositional right (VDot) ? *)
+       absorbent (VZero)
+     end
+;;

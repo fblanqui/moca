@@ -1,0 +1,9 @@
+lambda_sigma.cmo: lambda_sigma.cmi
+lambda_sigma.cmx: lambda_sigma.cmi
+lambda_sigma_beta.cmo: lambda_sigma.cmi
+lambda_sigma_beta.cmx: lambda_sigma.cmx
+lambda_sigma_utils.cmo: lambda_sigma.cmi
+lambda_sigma_utils.cmx: lambda_sigma.cmx
+ls_test.cmo: lambda_sigma_utils.cmo lambda_sigma_beta.cmo lambda_sigma.cmi
+ls_test.cmx: lambda_sigma_utils.cmx lambda_sigma_beta.cmx lambda_sigma.cmx
+lambda_sigma.cmi:

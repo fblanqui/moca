@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% moca
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{The \moca\ system}
+\label{sec-moca}
+
+We now describe the \moca\ prototype, a program generator that
+implements an extension of \ocaml\ with RDTs. \moca\ parses a special
+``.mlm'' file containing the RDT definition and produces a regular
+\ocaml\ module (interface and implementation) which provides the
+construction functions for the RDT. \moca\ provides a set of keywords
+for specifying the equations described in Figure \ref{fig-eq}.
+
+For instance, the RDT {\tt exp} can be defined in \moca\ as follows:
+
+{\small\begin{verbatim}
+type exp = private Zero | One | Opp of exp | Plus of exp * exp
+  begin associative commutative neutral(Zero) opposite(Opp) end
+\end{verbatim}}
+
+\moca\ also features user's arbitrary rules with the construction:
+{\small {\tt rule} $pattern$ {\tt ->} $pattern$}. These rules add
+extra clauses in the definitions of construction functions generated
+by \moca: the LHS $pattern$ is copied verbatim as the pattern of a
+clause which returns the RHS $pattern$ considered as an expression
+where constructors are replaced by calls to the corresponding
+construction functions. Of course, in the presence of such arbitrary
+rules, we cannot guarantee the termination or completeness of the
+generated code. This construction is thus provided for expert users
+that can prove termination and completeness of the corresponding set
+of rules. That way, the programmer can describe complex RDTs, even
+those which cannot be described with the set of predefined equational
+invariants.
+
+\moca\ also accepts polymorphic RDTs and RDTs mutually defined with
+record types (but equations between record fields are not yet
+available).
+
+The equations of Figure \ref{fig-eq} also support n-ary constructor,
+implemented as unary constructors of type {\tt t list -> t}. In this
+case, {\tt Plus} gets a single argument of type {\tt exp list}. Normal
+forms are modified accordingly and use lists instead of combs. For
+instance, associative normal forms get flat lists of arguments: in a
+{\tt Plus}$(l)$ expression, no element of $l$ is a {\tt Plus}$(l')$
+expression. The corresponding data structure is widely used in
+rewriting.
+
+Finally, \moca\ offers an important additional feature: it can
+generate construction functions that provide maximally shared
+representatives. To fire maximal sharing, just add the {\tt --sharing}
+option when compiling the ``.mlm'' file. In this case, the generated
+type is slightly modified, since every functional constructor gets an
+extra argument to keep the hash code of the term. Maximally shared
+representatives have a lot of good properties: not only data size is
+minimal and user's memoized functions can be light speed, but
+comparison between representatives is turned from a complex recursive
+term comparison to a pointer comparison -- a single machine
+instruction. \moca\ heavily uses this property for the generation of
+construction functions: when dealing with non-linear equations, the
+maximal sharing property allows \moca\ to replace term equality by
+pointer equality.

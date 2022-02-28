@@ -1,0 +1,11 @@
+#!/bin/sh
+
+
+
+set -x
+
+#Make the correct depend file
+touch .depend
+make depend
+
+

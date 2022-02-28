@@ -1,0 +1,17 @@
+#!/bin/sh
+
+f=$1
+
+set -x
+
+ocamlc gentest.mli
+ocamlc gentest.ml
+../mocac -test $f.mlm
+ocamlc $f.mli
+ocamlc $f.ml
+ocamlc -o zo gentest.cmo $f.cmo ${f}_test.ml
+./zo
+if test $? -ne 0
+then
+  ledit -h ~/.ocaml-history -x ocaml gentest.cmo $f.cmo
+fi

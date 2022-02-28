@@ -1,0 +1,27 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: bool0.mlm,v 1.4 2008-02-11 19:37:33 weis Exp $ *)
+
+(* Booleans. No rules nor relations are defined. *)
+
+type t = private
+  | Btrue
+  | Bfalse
+  | Bvar of string
+  | Bnot of t
+  | Band of t * t
+  | Bor of t * t
+;;

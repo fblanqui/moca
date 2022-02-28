@@ -1,0 +1,45 @@
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2012,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+# $Id: Makefile.config.in,v 1.8 2012-06-04 13:01:22 weis Exp $
+
+# Makefile for the user to tune the installation of the software
+
+# The root directory of this application sources are installed.
+SRCROOTDIR=$
+
+# The directory where the Makefile templates are.
+MAKEFILES_DIR=$(SRCROOTDIR)/Mk
+
+# The directory where everything will be installed
+# (normally in the bin, lib, and man subdirs of this one, but you may change
+# the corresponding variables if necessary).
+PREFIX=/usr/local
+
+# Where to install the binaries
+BINDIR=$(PREFIX)/bin
+
+# Where to install the libraries
+LIBDIR=$(PREFIX)/lib
+
+# Where to install the man page
+MANEXT=1
+MANDIR=$(PREFIX)/man/man$(MANEXT)
+
+# The name of this application
+SOFTWARE=mocac
+
+# The name of this system (set of commands and documentation).
+PACKAGE=moca

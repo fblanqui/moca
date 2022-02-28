@@ -1,0 +1,7 @@
+*.cm*
+.depend*
+*.byt
+*.bin
+*_sharing.*
+semi_algebra.mli
+semi_algebra.ml

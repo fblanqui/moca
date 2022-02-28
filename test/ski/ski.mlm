@@ -1,0 +1,87 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: ski.mlm,v 1.5 2008-06-11 08:20:08 weis Exp $ *)
+
+(* Defining Combinatory Logic:
+   Constructors are S, K, and I (S is ``subtituting application'',
+   K is ``constant function generator'', and I is ``identity'').
+   We also need an App binary constructor to modelize application.
+   Then semantics definitions of S, K, I are given using rules that
+   define their behavior when applied to arguments. For instance:
+    rule App (I, x) -> x
+   defines the combinator I.
+
+   S = fun x y z -> (x z) (y z) 
+   K = fun x y -> x
+   I = fun x -> x
+
+We have the implied rules:
+
+K S = fun y -> S
+    = fun t x y z -> (x z) (y z)
+
+K I = fun y -> I
+    = fun y x -> x
+
+I = S K K
+
+K I t = K (S K K) t = S K K
+
+In Caml, we can define the combinators using definitions:
+
+let i x = x
+and s x y z = x z (y z)
+and k x y = x;;
+
+   In Moca, we define the combinators by rules, e.g. to define S:
+
+   rule App (App (App (S, x), y), z) -> App (App (x, z), (App (y, z)))...
+
+   To be complete, we must define rules for all possible partial
+   applications of each combinator. E.g. for combinator S, we must
+   define a rule for S I, S S, S K; in fact we need only one rule for S K:
+
+    S I is ill-typed (cannot be applied to i or s or k).
+    S S is also ill-typed.
+    S K is defined using:
+    rule App (App (S, K), K) -> I
+    rule App (App (S, K), I) -> I
+
+   We add similar rules for partial applications of K:
+    rule App (K, I) -> I
+    rule App (K, K) -> K
+    rule App (K, S) -> S
+   We define those three rules using a single rule with a bound variable
+    rule App (K, x) -> x
+
+   Note that the system is not terminating. For example, with
+   SII = App (App (S, I), I), the term App (SII, SII) does not have
+   a normal form.
+*)
+type ski = private
+   | S
+   | K
+   | I
+   | App of ski * ski
+   begin
+    (* Defining I *)
+    rule App (I, x) -> x
+    (* Defining K *)
+    rule App (App (K, x), _y) -> x
+    (* Defining S *)
+    rule App (App (S, K), _x) -> I
+    rule App (App (App (S, x), y), z) -> App (App (x, z), (App (y, z)))
+   end;;

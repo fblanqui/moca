@@ -1,0 +1,631 @@
+\newslide{Moca}
+
+\advitransition{slide}
+
+The ideas:
+
+\begin{citemize}
+\item Design a language to specify the invariants that must be satisfied by
+the value of the type. A private data type with specified relations is a {\em
+relational} data type.
+
+\item Provide a compiler to generate the construction functions for the type. This
+is {\em mocac}.
+\end{citemize}
+
+\newslide{Relational data types}
+
+\advitransition{slide}
+
+A {\em relational} data type (or RDT) is a private data type with declared {\em relations}.
+
+The relations {\em define the invariants} that must be verified by {\em all the values} of the
+type.
+
+The notion of relational data type is {\em not} native to the Caml compiler: it is
+provided via an external program generator that generates regular Caml code for a
+relational data type definition.
+
+\newslide{The Moca framework}
+
+\advitransition{slide}
+
+{\em Moca} provides a notation to state predefined algebraic relations between
+constructors,
+
+Moca provides a notation to define {\em arbitrary rewritting rules} between
+constructors.
+
+Moca provides a module generator, \verb"mocac", that generates code to
+implement a corresponding normal form.
+
+Team: Frédéric Blanqui \& Pierre Weis (Researchers), Richard Bonichon (Post
+Doc), Laura Lowenthal (Internship), Thérèse Hardin (Professor Lip6).
+
+See \verb|http://moca.inria.fr/|.
+
+\newslide{High level description of relations}
+\advitransition{wipe}
+
+We consider relational data types defined using:
+\begin{citemize}
+\item nullary or constant constructors,
+\item unary or binary constructors,
+\item nary constructors (argument has type $\alpha$ list).
+\end{citemize}
+
+Arguments of constructors cannot be {\em too complex} (in particular functionnal).
+
+\newslide{Properties of constructors}
+\advitransition{wipe}
+
+A binary constructor $op$ of an RDT {\tt t} can be declared as:
+
+\begin{citemize}
+ \item 
+    \verb"associative" meaning that
+    $\forall x, y, z \in {\mbox {\tt t}}: (x\ op\ y)\ op\ z = x\ op\ (y\ op\ z)$,
+ \item
+    \verb"commutative" meaning that
+    $\forall x, y \in {\mbox {\tt t}}: x\ op\ y = y\ op\ x$,
+ \item
+    \verb"distributive" with respect to another binary operator $opp$ in
+{\tt t} meaning that
+    $\forall x, y, z \in {\mbox {\tt t}}: (x\ opp\ y)\ op\ z = (x\ op\ y)\ opp\ (y\ op\ z)$,
+\end{citemize}
+
+\newslide{Properties of constructors}
+\advitransition{wipe}
+
+A binary constructor $op$ of a RDT {\tt t} can be declared as:
+
+\begin{citemize}
+ \item
+    having $e$ as its \verb"neutral" meaning that
+    $\forall x \in {\mbox {\tt t}}: x\ op\ e = e\ op\ x = x$,
+ \item
+    having $opp$ as \verb"opposite" meaning that
+    $\exists e \in {\mbox {\tt t}}, e $ is neutral for $op$, and
+    $\forall x \in {\mbox {\tt t}}: x\ op\ (opp\ x) = (opp\ x)\ op\ x = e $,
+ \item
+    having $z$ as its \verb"absorbent" element meaning that
+    $\forall x \in {\mbox {\tt t}}: x\ op\ z = z\ op\ x = z$,
+\end{citemize}
+
+\newslide{Properties of constructors}
+\advitransition{wipe}
+
+A unary constructor $op$ of a RDT {\tt t} can be declared as:
+
+\begin{citemize}
+ \item
+    being \verb"idempotent" meaning that
+    $\forall x \in {\mbox {\tt t}}:\ op\ (op\ x) =\ op\ x$,
+ \item
+    being \verb"nilpotent" wrt $z$ meaning that
+    $\forall x \in {\mbox {\tt t}}:\ op\ (op\ x) = z$,
+ \item
+    being \verb"involutive" meaning that
+    $\forall x \in {\mbox {\tt t}}:\ op\ (op\ x) = x$,
+\end{citemize}
+
+\newslide{Defining arbitrary relations}
+\advitransition{wipe}
+
+A constructor $op$ of a RDT {\tt t} can have one or more
+rewrite rules declared as:
+
+\begin{citemize}
+ \item
+    \verb"rule" $op$ \verb"pat" $\rightarrow$ \verb"expr"
+    meaning that any occurrence of pattern $op$ \verb"pat" has to be
+rewritten as \verb"expr"
+\end{citemize}
+
+Example:
+\begin{verbatim}
+rule Bool_not (Bool_true) -> Bool_false
+\end{verbatim}
+
+\vfill
+
+\newslide{The mocac compiler}
+
+From these specifications, the {\em mocac} compiler generates the construction
+functions that build the normal form of values that verifies the algebraic
+relations and the invariants of a relational type.
+
+The {\em mocac} compiler is a module generator for RDTs.
+
+The input for mocac is a file with suffix \verb".mlm": it is a regular Caml
+file with specific annotations to define the relations.
+
+\newslide{Examples}
+
+A trivial example with no annotations:
+
+\begin{verbatim}
+type bexpr = private
+   | Band of bexpr list
+   | Bor of bexpr list
+   | Btrue
+   | Bfalse;;
+\end{verbatim}
+
+\newslide{Generated files}
+
+Interface:
+
+\begin{verbatim}
+type bexpr = private
+   | Band of bexpr list
+   | Bor of bexpr list
+   | Btrue
+   | Bfalse;;
+val bfalse : bexpr
+val band : bexpr list -> bexpr
+val bor : bexpr list -> bexpr
+val btrue : bexpr
+\end{verbatim}
+
+\newslide{Generated files}
+
+Implementation:
+\begin{verbatim}
+type bexpr =
+   | Band of bexpr list
+   | Bor of bexpr list
+   | Btrue
+   | Bfalse
+
+let rec bfalse = Bfalse
+and band x = Band x
+and bor x = Bor x
+and btrue = Btrue
+\end{verbatim}
+
+\newslide{{\tt .mlm} source file}
+
+A more realistic example for boolean expressions:
+\begin{verbatim}
+type bexpr = private
+   | Band of bexpr * bexpr
+   begin
+     associative
+     commutative
+     distributive (Bxor)
+     neutral (Btrue)
+     absorbing (Bfalse)
+     opposite (Binv)
+   end
+\end{verbatim}
+
+\newslide{{\tt .mlm} source file}
+
+\begin{verbatim}
+  | Bxor of bexpr * bexpr
+  begin
+    associative
+    commutative
+    neutral (Bfalse)
+    opposite (Bopp)
+  end
+\end{verbatim}
+
+\newslide{{\tt .mlm} source file}
+
+\begin{verbatim}
+  | Btrue
+  | Bfalse
+  | Bvar of string
+
+  | Bopp of bexpr
+  begin
+    rule Bopp(Btrue) -> Btrue
+  end
+
+  | Binv of bexpr;;
+\end{verbatim}
+
+\newslide{Generated interface}
+\begin{verbatim}
+type bexpr = private
+  | Band of bexpr * bexpr
+  (*
+    associative
+    commutative
+    distributive (Bxor)
+    neutral (Btrue)
+    absorbing (Bfalse)
+    opposite (Binv)
+  *)
+  ...
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Type definition + simple operators
+\begin{verbatim}
+type bexpr = ...
+
+let rec bvar x = Bvar x
+and bopp x =
+  match x with
+  | Btrue -> Btrue
+  | Bfalse -> Bfalse
+  | Bopp x -> x
+  | Bxor (x, y) -> bxor (bopp x, bopp y)
+  | _ -> Bopp x
+and bfalse = Bfalse
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Binary associative + commutative operators are more tricky
+\begin{verbatim}
+and band z =
+  match z with
+  | Bfalse, _ -> Bfalse
+  | _, Bfalse -> Bfalse
+  | Btrue, y -> y
+  | x, Btrue -> x
+  | Binv x, y -> insert_opp_in_band x y
+  | x, Binv y -> insert_opp_in_band y x
+  | Bxor (x, y), z -> bxor (band (x, z), band (y, z))
+  | x, Bxor (y, z) -> bxor (band (x, y), band (x, z))
+  | Band (x, y), z -> band (x, band (y, z))
+  | x, y -> insert_in_band x y
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Insertion in a {\tt band} comb
+\begin{verbatim}
+and insert_in_band x u =
+  match u with
+  | Band (Binv y, t) when y = x -> t
+  | Band (y, t) when x <= y ->
+      begin try delete_in_band (Binv x) u with
+        Not_found -> Band (x, u)
+      end
+  | Band (y, t) -> Band (y, insert_in_band x t)
+  | Binv y when y = x -> Btrue
+  | _ when x < u -> Band (x, u)
+  | _ -> Band (u, x)
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Deletion in a {\tt band} comb (note that {\tt band} is commutative)
+\begin{verbatim}
+and insert_opp_in_band x u =
+  match u with
+  | Band (y, t) when y = x -> t
+  | Band (y, t) -> Band (y, insert_opp_in_band x t)
+  | _ when x = u -> Btrue
+  | _ -> insert_in_band (Binv x) u
+and delete_in_band x u =
+  match u with
+  | Band (y, t) when y = x -> t
+  | Band (y, (Band (_, _) as t)) -> Band (y, delete_in_band x t)
+  | Band (y, t) when x = t -> y
+  | _ -> raise Not_found
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+The inverse operator cannot be defined on the absorbing element...
+\begin{verbatim}
+and binv x =
+  match x with
+  | Bfalse -> failwith "Division by Absorbing element"
+  | Btrue -> Btrue
+  | Binv x -> x
+  | Band (x, y) -> band (binv x, binv y)
+  | _ -> Binv x
+and btrue = Btrue
+and bxor z = ...
+\end{verbatim}
+
+\newslide{{\tt .mlm} source file}
+
+Two binary operators and their associated (ring-like) stuff:
+\begin{verbatim}
+type aexpr = private
+  | Add of aexpr * aexpr
+  begin
+    associative
+    commutative
+    neutral (Zero)
+    opposite (Opp)
+  end
+\end{verbatim}
+
+\newslide{{\tt .mlm} source file}
+
+\begin{verbatim}
+  | Mul of aexpr * aexpr
+  begin
+    associative
+    commutative
+    distributive (Add)
+    neutral (One)
+    absorbing (Zero)
+    opposite (Inv)
+  end
+  | One
+  | Zero
+  | Var of string
+  | Opp of aexpr
+  | Inv of aexpr;;
+\end{verbatim}
+
+\newslide{Generated interface}
+
+Just regular: export the RDT type and its construction functions:
+\begin{verbatim}
+type aexpr = private
+  | Add of aexpr * aexpr ...
+
+val var : string -> aexpr
+val opp : aexpr -> aexpr
+val mul : aexpr * aexpr -> aexpr
+val inv : aexpr -> aexpr
+val add : aexpr * aexpr -> aexpr
+val zero : aexpr
+val one : aexpr
+\end{verbatim}
+
+\newslide{Generated implementation}
+\begin{verbatim}
+type aexpr =
+   | Add of aexpr * aexpr
+ ...
+
+let rec var x = Var x
+and opp x =
+  match x with
+  | Zero -> Zero
+  | Opp x -> x
+  | Add (x, y) -> add (opp x, opp y)
+  | _ -> Opp x
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Binary operators:
+\begin{verbatim}
+and mul z =
+  match z with
+  | Zero, _ -> Zero
+  | _, Zero -> Zero
+  | One, y -> y
+  | x, One -> x
+  | Inv x, y -> insert_opp_in_mul x y
+  | x, Inv y -> insert_opp_in_mul y x
+  | Add (x, y), z -> add (mul (x, z), mul (y, z))
+  | x, Add (y, z) -> add (mul (x, y), mul (x, z))
+  | Mul (x, y), z -> mul (x, mul (y, z))
+  | x, y -> insert_in_mul x y
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Insertion
+\begin{verbatim}
+and insert_in_mul x u =
+  match u with
+  | Mul (Inv y, t) when y = x -> t
+  | Mul (y, t) when x <= y ->
+      begin try delete_in_mul (Inv x) u with
+      | Not_found -> Mul (x, u)
+      end
+  | Mul (y, t) -> Mul (y, insert_in_mul x t)
+  | Inv y when y = x -> One
+  | _ when x < u -> Mul (x, u)
+  | _ -> Mul (u, x)
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Deletion
+\begin{verbatim}
+and insert_opp_in_mul x u =
+  match u with
+  | Mul (y, t) when y = x -> t
+  | Mul (y, t) -> Mul (y, insert_opp_in_mul x t)
+  | _ when x = u -> One
+  | _ -> insert_in_mul (Inv x) u
+and delete_in_mul x u =
+  match u with
+  | Mul (y, t) when y = x -> t
+  | Mul (y, (Mul (_, _) as t)) -> Mul (y, delete_in_mul x t)
+  | Mul (y, t) when x = t -> y
+  | _ -> raise Not_found
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Definition of inverse, and so on
+\begin{verbatim}
+and inv x =
+  match x with
+  | Zero -> failwith "Division by Absorbing element"
+  | One -> One
+  | Inv x -> x
+  | Mul (x, y) -> mul (inv x, inv y)
+  | _ -> Inv x
+...
+and zero = Zero
+and one = One
+\end{verbatim}
+
+\newslide{Maximal sharing generation}
+
+The moca compiler also provides values represented as maximally shared trees.
+
+You just have to use the \verb"-sharing" option of the compiler.
+
+Hence the \verb".mlm" source file for maximally ``arith'' values is
+the same.
+
+\newslide{Generated interface}
+
+The interface is slightly modified to incorporate the hash codes into values:
+\begin{verbatim}
+type info = { mutable hash : int };;
+type aexpr = private
+   | Add of info * aexpr * aexpr
+   ...
+;;
+\end{verbatim}
+
+\newslide{Generated interface}
+Construction functions are similar; an additional equality function is
+also provided (to benefit from the sharing to get fast equality with \verb"==")
+\begin{verbatim}
+val var : string -> aexpr
+...
+val eq_aexpr : aexpr -> aexpr -> bool
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+The implementation defines the types and the hash code generator:
+\begin{verbatim}
+type info = { mutable hash : int }
+type aexpr =
+   | Add of info * aexpr * aexpr
+    ...
+
+let mk_info h = {hash = h}
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+The implementation defines an equality to share values:
+\begin{verbatim}
+let rec equal_aexpr x y = x == y;;
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Then the hash key access functions for the RDT
+\begin{verbatim}
+let rec get_hash_aexpr x =
+  match x with
+  | Add ({hash = h}, _x1, _x2) -> h
+  | Mul ({hash = h}, _x1, _x2) -> h
+  | Var ({hash = h}, _x1) -> h
+  | Opp ({hash = h}, _x1) -> h
+  | Inv ({hash = h}, _x1) -> h
+  | One -> 1
+  | Zero -> 0
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Then the hash code computation function
+\begin{verbatim}
+let rec hash_aexpr x =
+  succ
+    (match x with
+     | Add (_, x1, x2) ->
+         get_hash_aexpr x1 + (get_hash_aexpr x2 + Obj.tag (Obj.repr x))
+     | Mul (_, x1, x2) ->
+         get_hash_aexpr x1 + (get_hash_aexpr x2 + Obj.tag (Obj.repr x))
+     | Var (_, x1) -> Hashtbl.hash x1 + Obj.tag (Obj.repr x)
+     | Opp (_, x1) -> get_hash_aexpr x1 + Obj.tag (Obj.repr x)
+     | Inv (_, x1) -> get_hash_aexpr x1 + Obj.tag (Obj.repr x)
+     | One -> 1
+     | Zero -> 0)
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Then those functions are encapsulated into a weak hash table:
+\begin{verbatim}
+module Hashed_aexpr =
+  struct type t = aexpr let equal = equal_aexpr let hash = hash_aexpr end
+
+module Shared_aexpr = Weak.Make (Hashed_aexpr)
+
+let table_aexpr = Shared_aexpr.create 1009
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+The basic construction functions use sharing:
+\begin{verbatim}
+let rec mk_Add x1 x2 =
+
+  let info = {hash = 0} in
+
+  let v = Add (info, x1, x2) in
+
+  let _ = info.hash <- hash_aexpr v in
+  try Shared_aexpr.find table_aexpr v with
+  | Not_found -> let _ = Shared_aexpr.add table_aexpr v in v
+...
+\end{verbatim}
+
+\newslide{Generated implementation}
+
+Then the normalisation functions also use the maximal sharing (calling
+{\tt mk\_Add}, {\tt mk\_Opp}):
+\begin{verbatim}
+let rec var x = mk_Var x
+and opp x =
+  match x with
+  | Zero -> Zero
+  | Opp (_, x) -> x
+  | Add (_, x, y) -> add (opp x, opp y)
+  | _ -> mk_Opp x
+
+and mul z = ...
+and zero = Zero
+and one = One
+\end{verbatim}
+
+\newslide{Current state of {\em mocac}}
+
+We use a KB completion tool to complete the user's set of relations.
+
+We generate automatic test beds for the generated construction functions.
+
+We wrote a paper at ESOP'07: it states the framework, provides definitions of
+the desired construction functions, proves the correctness of the
+construction functions in simple cases.
+
+\newslide{Future work}
+
+Still need to:
+
+\begin{citemize}
+\item prove the generated code (i.e. provide a proof for each generated
+implementation),
+\item or prove the code generator (better: once and for all).
+\end{citemize}
+
+Not so easy \verb":("
+
+\newslide{Extensions}
+
+We may use the current Moca framework to provide new additional features:
+
+\begin{citemize}
+\item automatic {\em memoization} for functions,
+\item generation of tailored construction functions for sets,
+\item generation of pretty/printing functions for types,
+\item specific annotations for automatic generation of parsers ?
+\end{citemize}
+
+In brief: use mocac as a meta tool to generate Caml modules with complex code
+that we do not want to write (since it is hard to get correct and
+``evidently'' generic).
+
+%We need also to integrate/interface {\em mocac} to other frameworks:
+%\begin{citemize}
+%\item for Focal (more work to do, need pattern matching first),
+%\item for Tom/Gom (Pierre-Étienne Moreau, INRIA Lorraine) ?
+%\end{citemize}

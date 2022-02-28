@@ -1,0 +1,261 @@
+<table class="bnf">
+
+<tr>
+  <td class="left">constr-decl</td>
+  <td class="middle">::=</td>
+  <td class="right">
+    <font class="nter"> constr-name
+      <font class="bnf">[</font>
+      annotation
+      <font class="bnf">]</font>
+    </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="nter"> constr-name
+      <font class="keyword">of</font>
+      typeexpr
+      <font class="bnf">[</font>
+      annotation
+      <font class="bnf">]</font>
+    </font>
+  </td>
+</tr>
+
+</table>
+
+<table class="bnf">
+  <tr>
+    <td class="left">annotation</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">begin
+        <font class="bnf">{</font>
+        <font class="nter">relation</font>
+        <font class="bnf">|</font>
+        <font class="nter">completion_hint</font>
+        <font class="bnf">}<sup>+</sup></font>
+       end
+      </font>
+  </td>
+  </tr>
+</table>
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">side</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">left</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+      <font class="keyword">right
+      </font>
+    </td>
+    </tr>
+</table>
+
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">invopp</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">inverse</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+      <font class="keyword">opposite
+      </font>
+    </td>
+    </tr>
+</table>
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">rpo_status</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">lexicographic</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+      <font class="keyword">multiset
+      </font>
+    </td>
+    </tr>
+</table>
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">completion_hint</td>
+    <td class="middle">::=</td>
+    <td class="right">
+       <font class="keyword">
+    completion precedence
+    </font>
+    <font class="nter">int</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+          <font class="keyword">
+            completion status
+    </font>
+    <font class="nter">rpo_status</font>
+
+    </td>
+    </tr>
+</table>
+
+
+
+<table class="bnf">
+<tr>
+  <td class="left">relation</td>
+  <td class="middle">::=</td>
+  <td class="right">
+    <font class="keyword"> commutative
+      <font class="bnf">[</font>
+      (
+      <font class="nter"> comp </font>
+      )
+     <font class="bnf">]</font>
+    </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword"> associative </font>
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">involutive </font>
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">idempotent </font>
+    [<font class="nter">side</font>]
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">nilpotent </font>
+    [<font class="nter">side</font>]
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">neutral </font>
+    [<font class="nter">side</font>]
+    <font class="keyword">(
+    <font class="nter">constr-name</font> )
+    </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">absorbent </font>
+    [<font class="nter">side</font>]
+    <font class="keyword"> (
+      <font class="nter">constr-name</font>
+      )</font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">absorbing </font>
+    [<font class="nter">side</font>]
+    <font class="keyword">(
+      <font class="nter">constr-name</font>
+      )</font>
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword"> distributive </font>
+    [<font class="nter">invopp</font>]
+    [<font class="nter">side</font>]
+    <font class="keyword">( </font>
+      <font class="nter">constr-name</font>
+    [<font class="keyword">,</font><font class="nter">constr-name</font>]
+    <font class="keyword">  ) </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">
+      rule
+    </font>
+    <font class="nter">pattern</font>
+    <font class="keyword">-></font>
+    <font class="nter">expression</font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">
+      completion
+    </font>
+    <font class="nter">completion_hint</font>
+  </td>
+</tr>
+</table>
+

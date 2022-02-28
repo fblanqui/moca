@@ -1,0 +1,20 @@
+1. What is it?
+-----------
+
+Small Binary Decision Diagrams (BDDs) and Decision Trees (DT) written
+using Moca.
+
+The BDD "library" is applied to the nqueens problem.
+
+
+2. Use
+-----------
+$ ./configure
+$ make
+
+then type:
+$ nqueens <number_of_queens>
+
+3. Todo
+-----------
+It lacks memoization, which limits the effectiveness of BDDs.

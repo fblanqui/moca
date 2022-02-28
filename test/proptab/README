@@ -1,0 +1,62 @@
+This file is a small description of the content this directory.
+
+1. Summary
+--------------------------------
+
+Several examples of implementation of tableau methods for
+propositional logic using the different features of Moca for the
+underlying boolean algebra.
+
+The implementation here is really naive as it uses Moca to put the
+input into DNF, and then and only then tries to close every branch.
+
+This test is also intended as a non-trivial benchmark as it uses 
+a large subset of all Moca features (lots of keywords + rule) fot the
+quotient type.
+
+2. Content of subdirectories 
+-------------------------------
+bbns = binary boolean no sharing
+bbs = binary boolean sharing
+vbns = varyadic boolean no sharing
+
+Therefore:
+
+bbns : binary boolean generators (/\, \/, =>, ~) without sharing
+
+bbns+more: like bbns but A \/ ~A is now reduced to false
+
+bbns+all: Moca does it all: DNF+branch closure! If a formula is
+refuted it reduces to False automatically.
+
+bbs: binary boolean generators (/\, \/, =>, ~) with sharing
+
+vbns:  varyadic boolean generators (/\, \/, ~) without sharing
+  here, => is defined in the test_list file as a function using the
+  construction functions associated for \/ and ~ 
+
+vbns+all: varyadic boolean generators without sharing.
+DNF + branch closure.
+
+3. Build
+-------------------------------
+
+Run:
+./configure
+make
+
+(or just ./test.sh as it will also call make)
+
+4. Test
+-------------------------------
+run ./test.sh and ... wait (and go get some coffee)
+
+Some verbose messages will be displayed.
+"Proof Found" means a proof was found and "Proof Not Found" 
+that there is a countermodel (which is given by one of the open branches).
+
+5. Others
+-------------------------------
+
+Running mocac -test will produce failing examples as the equational
+theory is not complete and can't be completed.

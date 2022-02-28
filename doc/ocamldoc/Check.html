@@ -1,0 +1,371 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<script src="jquery.js"></script>
+<script src="improve.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Pr_code.html">
+<link rel="next" href="Var.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Parsetree" rel="Chapter" href="Parsetree.html">
+<link title="Asttypes" rel="Chapter" href="Asttypes.html">
+<link title="Misc" rel="Chapter" href="Misc.html">
+<link title="Tbl" rel="Chapter" href="Tbl.html">
+<link title="Config" rel="Chapter" href="Config.html">
+<link title="Clflags" rel="Chapter" href="Clflags.html">
+<link title="Terminfo" rel="Chapter" href="Terminfo.html">
+<link title="Ccomp" rel="Chapter" href="Ccomp.html">
+<link title="Warnings" rel="Chapter" href="Warnings.html">
+<link title="Consistbl" rel="Chapter" href="Consistbl.html">
+<link title="Linenum" rel="Chapter" href="Linenum.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Longident" rel="Chapter" href="Longident.html">
+<link title="Syntaxerr" rel="Chapter" href="Syntaxerr.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Lexer" rel="Chapter" href="Lexer.html">
+<link title="Parse" rel="Chapter" href="Parse.html">
+<link title="Printast" rel="Chapter" href="Printast.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="File" rel="Chapter" href="File.html">
+<link title="Useful" rel="Chapter" href="Useful.html">
+<link title="Debug" rel="Chapter" href="Debug.html">
+<link title="Mylist" rel="Chapter" href="Mylist.html">
+<link title="Myset" rel="Chapter" href="Myset.html">
+<link title="Relation" rel="Chapter" href="Relation.html">
+<link title="Otype" rel="Chapter" href="Otype.html">
+<link title="Pr_ocaml" rel="Chapter" href="Pr_ocaml.html">
+<link title="Code" rel="Chapter" href="Code.html">
+<link title="Pr_code" rel="Chapter" href="Pr_code.html">
+<link title="Check" rel="Chapter" href="Check.html">
+<link title="Var" rel="Chapter" href="Var.html">
+<link title="Symb" rel="Chapter" href="Symb.html">
+<link title="Term" rel="Chapter" href="Term.html">
+<link title="Term_utils" rel="Chapter" href="Term_utils.html">
+<link title="Subterm" rel="Chapter" href="Subterm.html">
+<link title="Order" rel="Chapter" href="Order.html">
+<link title="Prec" rel="Chapter" href="Prec.html">
+<link title="Subs" rel="Chapter" href="Subs.html">
+<link title="Match" rel="Chapter" href="Match.html">
+<link title="Rename" rel="Chapter" href="Rename.html">
+<link title="Unif" rel="Chapter" href="Unif.html">
+<link title="Rule" rel="Chapter" href="Rule.html">
+<link title="Equation" rel="Chapter" href="Equation.html">
+<link title="Cparser" rel="Chapter" href="Cparser.html">
+<link title="Clexer" rel="Chapter" href="Clexer.html">
+<link title="Cp" rel="Chapter" href="Cp.html">
+<link title="Norm" rel="Chapter" href="Norm.html">
+<link title="Norm_ml" rel="Chapter" href="Norm_ml.html">
+<link title="Comp" rel="Chapter" href="Comp.html">
+<link title="Axiom" rel="Chapter" href="Axiom.html">
+<link title="Genr_pattern" rel="Chapter" href="Genr_pattern.html">
+<link title="Genr_base" rel="Chapter" href="Genr_base.html">
+<link title="Genr_memo" rel="Chapter" href="Genr_memo.html">
+<link title="Genr_sharing" rel="Chapter" href="Genr_sharing.html">
+<link title="Genr_expression" rel="Chapter" href="Genr_expression.html">
+<link title="Eqnrel" rel="Chapter" href="Eqnrel.html">
+<link title="Complete" rel="Chapter" href="Complete.html">
+<link title="Genr_nary" rel="Chapter" href="Genr_nary.html">
+<link title="Genr_listary" rel="Chapter" href="Genr_listary.html">
+<link title="Genr_binary" rel="Chapter" href="Genr_binary.html">
+<link title="Genr_unary" rel="Chapter" href="Genr_unary.html">
+<link title="Genr_nullary" rel="Chapter" href="Genr_nullary.html">
+<link title="Genr" rel="Chapter" href="Genr.html">
+<link title="Genr_mli" rel="Chapter" href="Genr_mli.html">
+<link title="Listutils" rel="Chapter" href="Listutils.html">
+<link title="Randomutils" rel="Chapter" href="Randomutils.html">
+<link title="Tgenr_base" rel="Chapter" href="Tgenr_base.html">
+<link title="Genr_values" rel="Chapter" href="Genr_values.html">
+<link title="Typed_vars" rel="Chapter" href="Typed_vars.html">
+<link title="Genr_listary_equations" rel="Chapter" href="Genr_listary_equations.html">
+<link title="Genr_substitutions" rel="Chapter" href="Genr_substitutions.html">
+<link title="Genr_equalities" rel="Chapter" href="Genr_equalities.html">
+<link title="Genr_testing" rel="Chapter" href="Genr_testing.html">
+<link title="Main" rel="Chapter" href="Main.html"><title>Check</title>
+</head>
+<body>
+<div class="navbar"><a href="Pr_code.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Var.html">Next</a>
+</div>
+<center><h1>Module <a href="type_Check.html">Check</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Check: <code class="code"><span class="keyword">sig</span></code> <a href="Check.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><span id="4_Buildsvarioushashtablesforgeneratorsandtypes"><h4>Builds various hash tables for generators and types </h4></span><br>
+<hr width="100%">
+<br><code><span id="TYPElocality"><span class="keyword">type</span> <code class="type"></code>locality</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Local</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Global</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The locality flag for a generator: is the generator defined in the local
+    module or globally ?</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+
+
+<br><code><span id="TYPEgenerator_arity"><span class="keyword">type</span> <code class="type"></code>generator_arity</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ga_zeroary</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ga_unary</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ga_binary</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ga_listary</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ga_mary</span> <span class="keyword">of</span> <code class="type">int</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The generator associated to a constructor could have one of the following
+    arity class:
+<p>
+<ul>
+<li><code class="code"><span class="constructor">Ga_zeroary</span></code>, if the generator is associated to a constant or 0-ary constructor,</li>
+<li><code class="code"><span class="constructor">Ga_unary</span></code>, if the generator is associated to a unary functional constructor,</li>
+<li><code class="code"><span class="constructor">Ga_binary</span></code>, if the generator is associated to a binary functional constructor,</li>
+<li><code class="code"><span class="constructor">Ga_listary</span></code>, if the generator is associated to a functional constructor
+   with variable arity (i.e. a constructor that has a single argument which
+   is a list of elements of the relational type at hand),</li>
+<li><code class="code"><span class="constructor">Ga_mary</span> n</code>, if the generator is associated to a constructor with an
+   arbitrary number of arguments <code class="code">n</code>.
+   Note that for a generator with arity class <code class="code"><span class="constructor">Ga_mary</span> n</code>:</li>
+<li><code class="code">n</code> can be <code class="code">1</code> when the generator cannot be considered as having a
+     variable arity,</li>
+<li><code class="code">n</code> cannot be 0 or 2,</li>
+<li><code class="code">n</code> can be greater than 3.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+
+
+<br><code><span id="TYPEgenerator_info"><span class="keyword">type</span> <code class="type"></code>generator_info</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_type_name&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_type_params&nbsp;: <code class="type">string list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_target_type&nbsp;: <code class="type">Parsetree.core_type</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_generator_name&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_locality&nbsp;: <code class="type"><a href="Check.html#TYPElocality">locality</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_arity&nbsp;: <code class="type"><a href="Check.html#TYPEgenerator_arity">generator_arity</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_arg_types&nbsp;: <code class="type">Parsetree.core_type list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_relations&nbsp;: <code class="type"><a href="Parsetree.html#TYPErelations">Parsetree.relations</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_location&nbsp;: <code class="type"><a href="Location.html#TYPEt">Location.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>gi_priv_flag&nbsp;: <code class="type"><a href="Asttypes.html#TYPEprivate_flag">Asttypes.private_flag</a></code>;</code></td>
+
+</tr></table>
+}
+
+<div class="info">
+The complete information associated to a generator.<br>
+</div>
+
+<pre><span id="TYPEmsg"><span class="keyword">type</span> <code class="type"></code>msg</span> = <code class="type">string</code> </pre>
+<div class="info">
+Possible errors.<br>
+</div>
+
+<br><code><span id="TYPEerror"><span class="keyword">type</span> <code class="type"></code>error</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Unknown_generator</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">No_neutral_element</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Public_type_with_relations</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Cannot_find_module</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Not_supported</span> <span class="keyword">of</span> <code class="type">string</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Relation_already_declared</span> <span class="keyword">of</span> <code class="type"><a href="Location.html#TYPEt">Location.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Incompatible_types</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> * <a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Invalid_pattern</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pattern_not_headed_by_correct_generator</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Illegal_relation</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Incompatible_relations</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> * <a href="Parsetree.html#TYPErelation">Parsetree.relation</a> * <a href="Parsetree.html#TYPErelation">Parsetree.relation</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Unsound_ordering</span> <span class="keyword">of</span> <code class="type"><a href="Check.html#TYPEmsg">msg</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="EXCEPTIONError"><span class="keyword">exception</span> Error</span> <span class="keyword">of</span> <code class="type"><a href="Location.html#TYPEt">Location.t</a> * <a href="Check.html#TYPEerror">error</a></code></pre>
+<pre><span id="VALraise_error"><span class="keyword">val</span> raise_error</span> : <code class="type"><a href="Location.html#TYPEt">Location.t</a> -> <a href="Check.html#TYPEerror">error</a> -> 'a</code></pre><pre><span id="VALreport_error"><span class="keyword">val</span> report_error</span> : <code class="type">Format.formatter -> <a href="Check.html#TYPEerror">error</a> -> unit</code></pre><br>
+Various access/test functions.<br>
+<pre><span id="VALis_local_info"><span class="keyword">val</span> is_local_info</span> : <code class="type"><a href="Check.html#TYPEgenerator_info">generator_info</a> -> bool</code></pre><pre><span id="VALis_private_info"><span class="keyword">val</span> is_private_info</span> : <code class="type"><a href="Check.html#TYPEgenerator_info">generator_info</a> -> bool</code></pre><pre><span id="VALis_listary_info"><span class="keyword">val</span> is_listary_info</span> : <code class="type"><a href="Check.html#TYPEgenerator_info">generator_info</a> -> bool</code></pre><pre><span id="VALarity_of_info"><span class="keyword">val</span> arity_of_info</span> : <code class="type"><a href="Check.html#TYPEgenerator_info">generator_info</a> -> int</code></pre><pre><span id="VALadd_type_decls"><span class="keyword">val</span> add_type_decls</span> : <code class="type"><a href="Check.html#TYPElocality">locality</a> -> (string * <a href="Parsetree.html#TYPEtype_declaration">Parsetree.type_declaration</a>) list -> unit</code></pre><div class="info">
+Enters a list of type definitions in the table.<br>
+</div>
+<br>
+Access functions to generators and relational types, as recorded into the
+    global Moca tables.
+<p>
+
+ The find kind access functions may raise Not_found.<br>
+<pre><span id="VALis_generator_ident"><span class="keyword">val</span> is_generator_ident</span> : <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> -> bool</code></pre><div class="info">
+Access to generators.<br>
+</div>
+<pre><span id="VALfind_generator_ident_info"><span class="keyword">val</span> find_generator_ident_info</span> : <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> -> <a href="Check.html#TYPEgenerator_info">generator_info</a></code></pre><pre><span id="VALfind_generator_name_info"><span class="keyword">val</span> find_generator_name_info</span> : <code class="type">string -> <a href="Check.html#TYPEgenerator_info">generator_info</a></code></pre><pre><span id="VALis_type_ident"><span class="keyword">val</span> is_type_ident</span> : <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> -> bool</code></pre><div class="info">
+Access to types.<br>
+</div>
+<pre><span id="VALfind_type_ident_declaration"><span class="keyword">val</span> find_type_ident_declaration</span> : <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> -> <a href="Parsetree.html#TYPEtype_declaration">Parsetree.type_declaration</a></code></pre><pre><span id="VALfind_type_name_declaration"><span class="keyword">val</span> find_type_name_declaration</span> : <code class="type">string -> <a href="Parsetree.html#TYPEtype_declaration">Parsetree.type_declaration</a></code></pre><pre><span id="VALfind_generator_info"><span class="keyword">val</span> find_generator_info</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Check.html#TYPEgenerator_info">generator_info</a></code></pre><div class="info">
+Various access/test functions that may raise Unknown_generator.<br>
+</div>
+<pre><span id="VALis_listary_generator"><span class="keyword">val</span> is_listary_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> bool</code></pre><div class="info">
+Various access/test functions.<br>
+</div>
+<pre><span id="VALis_local_generator"><span class="keyword">val</span> is_local_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> bool</code></pre><pre><span id="VALis_private_generator"><span class="keyword">val</span> is_private_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> bool</code></pre><pre><span id="VALarity_of_generator"><span class="keyword">val</span> arity_of_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> int</code></pre><pre><span id="VALget_arity_of_generator"><span class="keyword">val</span> get_arity_of_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Check.html#TYPEgenerator_arity">generator_arity</a></code></pre><pre><span id="VALis_truly_unary_generator"><span class="keyword">val</span> is_truly_unary_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> bool</code></pre><pre><span id="VALneutral_element_of_generator"><span class="keyword">val</span> neutral_element_of_generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a></code></pre><div class="info">
+Gives the neutral element of <code class="code">g</code> or else raise No_neutral_element<br>
+</div>
+</body></html>

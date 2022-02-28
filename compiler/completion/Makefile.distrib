@@ -1,0 +1,38 @@
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2008,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+# $Id: Makefile.distrib,v 1.2 2008-02-11 23:07:56 weis Exp $
+
+MAKEFILES_DIR = ../../Mk
+
+include $(MAKEFILES_DIR)/Config.mk
+
+include Makefile
+
+HTMLCCONFENV = -env $(SRCROOTDIR)/doc_src/Includes/env
+
+BANNERFILE = $(MAKEFILES_DIR)/banner
+BHFLAGS = -bf $(BANNERFILE) -bft ml
+
+MLFILES = useful debug mylist myset var symb subterm order prec \
+          subs match rename unif rule equation cp norm comp axiom
+YLFILES = cparser.mly clexer.mll
+
+BHFILES  = Makefile.distrib Makefile README \
+   $(MLFILES:=.ml) $(MLFILES:=.mli) $(YLFILES)
+
+SUBDIRS =
+
+include $(MAKEFILES_DIR)/Banner.mk

@@ -1,0 +1,73 @@
+CFLAGS=-g
+CAMLBYT=ocamlc $(CFLAGS)
+CAMLBIN=ocamlopt $(CFLAGS)
+CAMLLEX=ocamllex
+CAMLYAC=ocamlyacc
+MOCACDIR=../../..
+MOCAC=$(MOCACDIR)/mocac
+MYMOCAC=mocac -urorder
+MOCAFLAGS=
+
+LIBDEPS= unix.cma
+OPTLIBDEPS= unix.cmxa
+
+.PHONY: depend beforedepend default
+
+default: all
+
+depend : beforedepend
+	 ocamldep *.ml *.mli > .depend
+
+.SUFFIXES: .cmx .cmo .cmi .ml .mli  .mlm .mlms .mll .mly
+
+.ml.cmo:
+	$(CAMLBYT) -c  $<
+
+.mli.cmi:
+	$(CAMLBYT) -c  $<
+
+.ml.cmx:
+	$(CAMLBIN) -c  $<
+
+.mll.cmo:
+	$(CAMLLEX) $<
+	$(CAMLBYT) -c  $*.ml
+
+.mll.cmx:
+	$(CAMLLEX) $<
+	$(CAMLBIN) -c  $*.ml
+
+.mly.cmo:
+	$(CAMLYAC) $<
+	$(CAMLBYT) -c  $*.mli
+	$(CAMLBYT) -c  $*.ml
+
+.mly.cmx:
+	$(CAMLYAC) $<
+	$(CAMLBIN) -c  $*.mli
+	$(CAMLBIN) -c  $*.ml
+
+.mly.cmi:
+	$(CAMLYAC) $<
+	$(CAMLBYT) -c  $*.mli
+
+.mll.ml:
+	$(CAMLLEX) $<
+
+.mly.ml:
+	$(CAMLYAC) $<
+
+.mly.mli:
+	$(CAMLYAC) $<
+
+.mlm.ml:
+	$(MOCAC) $(MOCAFLAGS) $<
+
+.mlm.mli:
+	$(MOCAC) $(MOCAFLAGS) $<
+
+.mlms.ml:
+	$(MOCAC) $(MOCAFLAGS) $<
+
+.mlms.mli:
+	$(MOCAC) $(MOCAFLAGS) $<

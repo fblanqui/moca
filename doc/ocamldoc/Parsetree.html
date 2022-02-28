@@ -1,0 +1,1275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<script src="jquery.js"></script>
+<script src="improve.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="next" href="Asttypes.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Parsetree" rel="Chapter" href="Parsetree.html">
+<link title="Asttypes" rel="Chapter" href="Asttypes.html">
+<link title="Misc" rel="Chapter" href="Misc.html">
+<link title="Tbl" rel="Chapter" href="Tbl.html">
+<link title="Config" rel="Chapter" href="Config.html">
+<link title="Clflags" rel="Chapter" href="Clflags.html">
+<link title="Terminfo" rel="Chapter" href="Terminfo.html">
+<link title="Ccomp" rel="Chapter" href="Ccomp.html">
+<link title="Warnings" rel="Chapter" href="Warnings.html">
+<link title="Consistbl" rel="Chapter" href="Consistbl.html">
+<link title="Linenum" rel="Chapter" href="Linenum.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Longident" rel="Chapter" href="Longident.html">
+<link title="Syntaxerr" rel="Chapter" href="Syntaxerr.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Lexer" rel="Chapter" href="Lexer.html">
+<link title="Parse" rel="Chapter" href="Parse.html">
+<link title="Printast" rel="Chapter" href="Printast.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="File" rel="Chapter" href="File.html">
+<link title="Useful" rel="Chapter" href="Useful.html">
+<link title="Debug" rel="Chapter" href="Debug.html">
+<link title="Mylist" rel="Chapter" href="Mylist.html">
+<link title="Myset" rel="Chapter" href="Myset.html">
+<link title="Relation" rel="Chapter" href="Relation.html">
+<link title="Otype" rel="Chapter" href="Otype.html">
+<link title="Pr_ocaml" rel="Chapter" href="Pr_ocaml.html">
+<link title="Code" rel="Chapter" href="Code.html">
+<link title="Pr_code" rel="Chapter" href="Pr_code.html">
+<link title="Check" rel="Chapter" href="Check.html">
+<link title="Var" rel="Chapter" href="Var.html">
+<link title="Symb" rel="Chapter" href="Symb.html">
+<link title="Term" rel="Chapter" href="Term.html">
+<link title="Term_utils" rel="Chapter" href="Term_utils.html">
+<link title="Subterm" rel="Chapter" href="Subterm.html">
+<link title="Order" rel="Chapter" href="Order.html">
+<link title="Prec" rel="Chapter" href="Prec.html">
+<link title="Subs" rel="Chapter" href="Subs.html">
+<link title="Match" rel="Chapter" href="Match.html">
+<link title="Rename" rel="Chapter" href="Rename.html">
+<link title="Unif" rel="Chapter" href="Unif.html">
+<link title="Rule" rel="Chapter" href="Rule.html">
+<link title="Equation" rel="Chapter" href="Equation.html">
+<link title="Cparser" rel="Chapter" href="Cparser.html">
+<link title="Clexer" rel="Chapter" href="Clexer.html">
+<link title="Cp" rel="Chapter" href="Cp.html">
+<link title="Norm" rel="Chapter" href="Norm.html">
+<link title="Norm_ml" rel="Chapter" href="Norm_ml.html">
+<link title="Comp" rel="Chapter" href="Comp.html">
+<link title="Axiom" rel="Chapter" href="Axiom.html">
+<link title="Genr_pattern" rel="Chapter" href="Genr_pattern.html">
+<link title="Genr_base" rel="Chapter" href="Genr_base.html">
+<link title="Genr_memo" rel="Chapter" href="Genr_memo.html">
+<link title="Genr_sharing" rel="Chapter" href="Genr_sharing.html">
+<link title="Genr_expression" rel="Chapter" href="Genr_expression.html">
+<link title="Eqnrel" rel="Chapter" href="Eqnrel.html">
+<link title="Complete" rel="Chapter" href="Complete.html">
+<link title="Genr_nary" rel="Chapter" href="Genr_nary.html">
+<link title="Genr_listary" rel="Chapter" href="Genr_listary.html">
+<link title="Genr_binary" rel="Chapter" href="Genr_binary.html">
+<link title="Genr_unary" rel="Chapter" href="Genr_unary.html">
+<link title="Genr_nullary" rel="Chapter" href="Genr_nullary.html">
+<link title="Genr" rel="Chapter" href="Genr.html">
+<link title="Genr_mli" rel="Chapter" href="Genr_mli.html">
+<link title="Listutils" rel="Chapter" href="Listutils.html">
+<link title="Randomutils" rel="Chapter" href="Randomutils.html">
+<link title="Tgenr_base" rel="Chapter" href="Tgenr_base.html">
+<link title="Genr_values" rel="Chapter" href="Genr_values.html">
+<link title="Typed_vars" rel="Chapter" href="Typed_vars.html">
+<link title="Genr_listary_equations" rel="Chapter" href="Genr_listary_equations.html">
+<link title="Genr_substitutions" rel="Chapter" href="Genr_substitutions.html">
+<link title="Genr_equalities" rel="Chapter" href="Genr_equalities.html">
+<link title="Genr_testing" rel="Chapter" href="Genr_testing.html">
+<link title="Main" rel="Chapter" href="Main.html"><link title="Type declarations with Moca additions " rel="Section" href="#2_TypedeclarationswithMocaadditions">
+<link title="Generators/relations for relational types " rel="Section" href="#2_Generatorsrelationsforrelationaltypes">
+<link title="Specifications of algebraic relations for generators" rel="Section" href="#2_Specificationsofalgebraicrelationsforgenerators">
+<link title="Definitions " rel="Subsection" href="#3_Definitions">
+<title>Parsetree</title>
+</head>
+<body>
+<div class="navbar">&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Asttypes.html">Next</a>
+</div>
+<center><h1>Module <a href="type_Parsetree.html">Parsetree</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Parsetree: <code class="code"><span class="keyword">sig</span></code> <a href="Parsetree.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><span id="4_ModifiedOCamlparsetreeforMoca"><h4>Modified OCaml parsetree for Moca</h4></span><br>
+<hr width="100%">
+<br>
+<span id="2_TypedeclarationswithMocaadditions"><h2>Type declarations with Moca additions </h2></span><br>
+<br><code><span id="TYPEtype_declaration"><span class="keyword">type</span> <code class="type"></code>type_declaration</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_params&nbsp;: <code class="type">string list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_cstrs&nbsp;: <code class="type">(core_type * core_type * <a href="Location.html#TYPEt">Location.t</a>) list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_kind&nbsp;: <code class="type"><a href="Parsetree.html#TYPEtype_kind">type_kind</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_private&nbsp;: <code class="type"><a href="Asttypes.html#TYPEprivate_flag">Asttypes.private_flag</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_manifest&nbsp;: <code class="type">core_type option</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_variance&nbsp;: <code class="type">(bool * bool) list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>ptype_loc&nbsp;: <code class="type"><a href="Location.html#TYPEt">Location.t</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+<br><code><span id="TYPEtype_kind"><span class="keyword">type</span> <code class="type"></code>type_kind</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ptype_abstract</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelations">relations</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ptype_variant</span> <span class="keyword">of</span> <code class="type">(string * core_type list * <a href="Parsetree.html#TYPErelations">relations</a> * <a href="Location.html#TYPEt">Location.t</a>) list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ptype_record</span> <span class="keyword">of</span> <code class="type">(string * <a href="Asttypes.html#TYPEmutable_flag">Asttypes.mutable_flag</a> * core_type * <a href="Parsetree.html#TYPErelations">relations</a> *<br>      <a href="Location.html#TYPEt">Location.t</a>)<br>     list</code></code></td>
+
+</tr></table>
+
+
+<br>
+<span id="2_Generatorsrelationsforrelationaltypes"><h2>Generators/relations for relational types </h2></span><br>
+<br>
+<span id="3_Definitions"><h3>Definitions </h3></span>
+<p>
+
+    <span id="4_DefinitionRelationaldatatype"><h4>Definition: Relational data type</h4></span>
+<p>
+
+         A <em>relational data type</em> is a private data type with a set of
+         relations that specifies the way the values of the type must be built.
+<p>
+
+    <span id="4_DefinitionGenerator"><h4>Definition: Generator</h4></span>
+<p>
+
+         The constructors of a relational data type are named <em>         generators</em>, to emphasis their special status of constructors with
+         relations that govern their associated construction functions.
+<p>
+
+    <span id="4_DefinitionArityofgenerators"><h4>Definition: Arity of generators</h4></span>
+<p>
+
+         A <em>zeroary</em> generator is a generator that has no argument.
+           A zeroary generator is also called a constant generator,
+<p>
+
+         A <em>unary</em> generator is a generator that has exactly one
+           argument <em>which is not a list</em>,
+<p>
+
+         A <em>binary</em> generator is a generator that has exactly two
+           arguments,
+<p>
+
+         A <em>listary</em> generator is a generator that has exactly one
+           argument which is a list.
+           A listary generator generator is also called a <em>vary-adic</em>
+           generator.
+<p>
+
+         A <em>nary</em> generator is a generator that has $n$ arguments
+           ($n &gt;= 3$).
+<p>
+
+    <span id="4_DefinitionCompatibilityofarities"><h4>Definition: Compatibility of arities</h4></span>
+<p>
+
+         The arity $e$ is <em>compatible</em> with arity $d$, if and only if
+         $e$ is listary or $e = d$.
+<p>
+
+     Note: if a relation is defined for a listary generator and the relation
+     states a particular case for singletons, then the relation <em>must</em>
+     also have a definition for unary generators and both definitions <em>     must</em> agree.
+<p>
+
+    <span id="4_DefinitionComparisonfunction"><h4>Definition: Comparison function</h4></span>
+<p>
+
+         A <em>comparison function</em> is a total ordering on the relational
+         data type that is compatible with the structural equality of the
+         language.
+<p>
+
+         In the usual mathematical sense, this definition expands to the
+         following:
+<p>
+
+           <code class="code">cmp</code> is a comparison function if and only if:
+<p>
+<ul>
+<li><code class="code">cmp</code> induces a <code class="code"> &gt;= </code> total ordering:</li>
+</ul>
+
+               Define by <code class="code"> x &gt;= y</code> if and only if <code class="code"> cmp x y &gt;= 0 </code>; then
+               <code class="code"> &gt;= </code> must be a total ordering:<ul>
+<li><code class="code"> &gt;= </code> is reflexive:
+                     for all x, x <code class="code"> &gt;= </code> x</li>
+<li><code class="code"> &gt;= </code> is transitive:
+                     for all x y z, x <code class="code"> &gt;= </code> y /\ y <code class="code"> &gt;= </code> z =&gt; x <code class="code"> &gt;= </code> z</li>
+<li><code class="code"> &gt;= </code> is anti-symmetric:
+                     for all x y, x <code class="code"> &gt;= </code> y /\ y <code class="code"> &gt;= </code> x =&gt; x $=$ y
+                     (in this definition $=$ is the syntactic equality, ie.
+                      x $=$ y if and only if <code class="code"> <span class="constructor">Pervasives</span>.compare x y = 0 </code>)</li>
+<li><code class="code"> &gt;= </code> is total:
+                     for all x y, x <code class="code"> &gt;= </code> y \/ y <code class="code"> &gt;= </code> x</li>
+</ul>
+<ul>
+<li><code class="code">cmp </code> is compatible with the language structural equality:
+                 $\forall x y. cmp x y = 0 =&gt; Pervasives.compare x y = 0$.</li>
+</ul>
+
+       Note: This definition implies that a comparison function <em>must</em> be a
+       total function (it <em>must</em> always terminates).
+<p>
+
+       The argument option of algebraic relation commutative is the name of a
+       comparison function that is used to sort the arguments of the
+       given generator. The comparison function is normally bound via a previous
+       <code class="code"><span class="constructor">Structure_item</span></code> definition of the relational data type definition.
+<p>
+
+       If the arguments of the commutative generator have type <code class="code"> t </code> then the
+       comparison function must have type <code class="code"> t <span class="keywordsign">-&gt;</span> t <span class="keywordsign">-&gt;</span> int </code>.<br>
+<br><code><span id="TYPErelation_side"><span class="keyword">type</span> <code class="type"></code>relation_side</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Left</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Right</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Both</span></code></td>
+
+</tr></table>
+
+
+<br><code><span id="TYPEdistributivity_direction"><span class="keyword">type</span> <code class="type"></code>distributivity_direction</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Dist_Inverse</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Dist_Direct</span></code></td>
+
+</tr></table>
+
+
+<br><code><span id="TYPErpo_status"><span class="keyword">type</span> <code class="type"></code>rpo_status</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Lexicographic</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Multiset</span></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPErpo_precedence"><span class="keyword">type</span> <code class="type"></code>rpo_precedence</span> = <code class="type">int</code> </pre>
+
+<br><code><span id="TYPEgenerator"><span class="keyword">type</span> <code class="type"></code>generator</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>pgen_desc&nbsp;: <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>pgen_loc&nbsp;: <code class="type"><a href="Location.html#TYPEt">Location.t</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+<br><code><span id="TYPErelations"><span class="keyword">type</span> <code class="type"></code>relations</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>prels_desc&nbsp;: <code class="type"><a href="Parsetree.html#TYPErelations_desc">relations_desc</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>prels_loc&nbsp;: <code class="type"><a href="Location.html#TYPEt">Location.t</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+<br><code><span id="TYPErelations_desc"><span class="keyword">type</span> <code class="type"></code>relations_desc</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Prels_none</span></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Prels_commented</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelations">relations</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Prels_begend</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation">relation</a> list</code></code></td>
+
+</tr></table>
+
+
+<br><code><span id="TYPErelation"><span class="keyword">type</span> <code class="type"></code>relation</span> = {</code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>prel_desc&nbsp;: <code class="type"><a href="Parsetree.html#TYPErel_desc">rel_desc</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code>prel_loc&nbsp;: <code class="type"><a href="Location.html#TYPEt">Location.t</a></code>;</code></td>
+
+</tr></table>
+}
+
+
+<br>
+<span id="2_Specificationsofalgebraicrelationsforgenerators"><h2>Specifications of algebraic relations for generators</h2></span><br>
+<br><code><span id="TYPErel_desc"><span class="keyword">type</span> <code class="type"></code>rel_desc</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Absorbent</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a> * <a href="Parsetree.html#TYPEgenerator">generator</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforAbsorbentsideA"><h3>Specification for Absorbent (side, A)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         If C has Absorbent (Both, A), then
+            C (A) -&gt; A.
+<p>
+
+         Absorbent (Left, A) and Absorbent (Right, A) are erroneous.
+<p>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Absorbent (Left, A), then
+            C (A, x) -&gt; A.
+<p>
+
+         If C has Absorbent (Right, A), then
+            C (x, A) -&gt; A.
+<p>
+
+         Absorbent (Both, A) is the conjunction of
+         Absorbent (Left, A) and Absorbent (Right, A).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Absorbent (Both, A), then
+            C <code class="code">b1; ...; bn; <span class="constructor">A</span>; c1; ...; cn</code> -&gt; A.
+         In particular:
+            C <code class="code"> <span class="constructor">A</span> </code> -&gt; A.
+<p>
+
+         If C has Absorbent (Left, A), then
+            C <code class="code">b1; ...; bn; <span class="constructor">A</span>; c1; ...; cn</code> -&gt; C <code class="code">b1; ...; bn; <span class="constructor">A</span></code>.
+            C <code class="code"> <span class="constructor">A</span> </code> -&gt; A.
+<p>
+
+         If C has Absorbent (Right, A), then
+            C <code class="code">b1; ...; bn; <span class="constructor">A</span>; c1; ...; cn</code> -&gt; C <code class="code"><span class="constructor">A</span>; c1; ...; cn</code>.
+            C <code class="code"> <span class="constructor">A</span> </code> -&gt; A.
+<p>
+
+         Absorbent (Both, A) is the conjunction of
+         Absorbent (Left, A) and Absorbent (Right, A).
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+
+     Overall hint for absorbent:
+         Absorbent (side, A) is (mostly) equivalent to
+         Distributive (side, A, None, Dist_Direct).</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Absorbing</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a> * <a href="Parsetree.html#TYPEgenerator">generator</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforAbsorbing"><h3>Specification for Absorbing</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable</li>
+</ul>
+<ul>
+<li>For unary generators: not applicable</li>
+</ul>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         if C has Absorbing (Left, D), then
+            C (D (x, y), y) -&gt; y,
+<p>
+
+         if C has Absorbing (Right, D), then
+            C (x, D (x, y)) -&gt; x,
+<p>
+
+         Absorbing (Both, D) is the conjunction of
+         Absorbing (Left, D) and Absorbing (Right, D).
+<p>
+<ul>
+<li>For listary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Associative</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Note: for the time being the <code class="code">relation_side</code> argument cannot be
+       specified in source code.
+       The default is <code class="code"><span class="constructor">Left</span></code> (hence associative means Associative <code class="code"><span class="constructor">Left</span></code>).
+<p>
+
+       <span id="3_SpecificationforAssociative"><h3>Specification for Associative</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Associative (Left), then
+            C (C (x, y), z) -&gt; C (x, C (y, z)).
+<p>
+
+         If C has Associative (Right), then
+            C (x, C (y, z)) -&gt; C (C (x, y), z).
+<p>
+
+         Associative (Both) is equivalent to
+         Associative (Left).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Associative (Left), then (flattening)
+            C <code class="code">...; <span class="constructor">C</span> [x; ...; y]; ...</code> -&gt; C <code class="code">...; x; ...; y; ...</code>,
+<p>
+
+         Associative (Both) and Associative (Right) are equivalent to
+         Associative (Left).
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Commutative</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> option</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforCommutativecmp"><h3>Specification for Commutative (cmp)</h3></span>
+<p>
+
+       The optional argument <code class="code">cmp</code> is a comparison function, as defined above.
+<p>
+
+       If no <code class="code">cmp</code> option is given, the default comparison function is <code class="code">
+       <span class="constructor">Pervasives</span>.compare </code>.
+       In other words, the relation Commutative (None) is equivalent to the
+       relation Commutative (Some Pervasives.compare).
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+           If C is not associative:
+<p>
+
+             If C has Commutative (Some cmp), then the arguments of
+             C are sorted in increasing order with respect to <code class="code">cmp</code>,
+<p>
+
+               C (x, y) -&gt; C (y, x) if cmp x y &gt; 0.
+<p>
+
+           If C is associative:
+<p>
+
+             If C has Commutative (Some cmp), then the leaves of
+             C-combs are sorted in increasing order with respect to <code class="code">cmp</code>,
+<p>
+
+               C (x, C (y, z)) -&gt; C (y, C (x, z)) if cmp x y &gt; 0.
+               C (x, y) -&gt; C (y, x) if cmp x y &gt; 0
+                                    and y not of the form C (u, v).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Commutative (Some cmp), then the elements of the list
+         argument of C are sorted in increasing order with respect to <code class="code">cmp</code>,
+<p>
+
+               C <code class="code">...; x; y; ...</code> -&gt; C <code class="code">...; y; x; ...</code> if cmp x y &gt; 0.
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Distributive</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a> * <a href="Parsetree.html#TYPEgenerator">generator</a> * <a href="Parsetree.html#TYPEgenerator">generator</a> option<br>        * <a href="Parsetree.html#TYPEdistributivity_direction">distributivity_direction</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_Prerequisitesfordistributivity"><h3>Prerequisites for distributivity</h3></span>
+<p>
+<ul>
+<li>For having Distributive (side, D, Some E, dir),
+       the arity of E must be compatible with the arity of D
+       (compatibility of arities is define above)..</li>
+</ul>
+<ul>
+<li>Distributive (side, D, None, dir) is equivalent to
+       Distributive (side, D, Some D, dir).</li>
+</ul>
+<ul>
+<li>In relation Distributive (side, D, Some E, dir), the <code class="code">dir</code> argument
+       governs the order of the arguments of generator E in the right-hand
+       side of the following definition rules for distributivity.</li>
+</ul>
+<ul>
+<li>In particular, to obtain the rules for
+              Distributive (side, D, Some E, Dist_Inverse),
+       take the rules for
+              Distributive (side, D, Some E, Dist_Direct)
+       and simply write the arguments of E in reverse order.</li>
+</ul>
+
+       <span id="3_SpecificationforDistributivesidegeneratorgeneratoroptiondir"><h3>Specification for
+         Distributive (side, generator, generator option, dir)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         If C has Distributive (Both, D, None, dir), then
+          C has Distributive (Both, D, Some D, dir), else
+<p>
+
+         If C has Distributive (Both, D, Some E, dir), then
+           if E is zeroary (then D must be zeroary),
+            C (D) -&gt; E
+<p>
+
+           if E is unary (then D must be unary),
+            C (D (x)) -&gt; E (x)
+<p>
+
+           if E is binary (then D must be binary),
+            if dir = Dist_Direct then
+             C (D (x, y)) -&gt; E (x, y) else
+             C (D (x, y)) -&gt; E (y, x)
+<p>
+
+           if E is listary then
+             if D is:<ul>
+<li>zeroary
+               C (D) -&gt; E []</li>
+<li>unary
+               C (D (y)) -&gt; E <code class="code"><span class="constructor">C</span> (y)</code></li>
+<li>binary
+               C (D (y1, y2)) -&gt; E <code class="code"><span class="constructor">C</span> (y1); <span class="constructor">C</span> (y2)</code></li>
+<li>listary
+               C (D <code class="code">y1; ...; yn</code>) -&gt; E <code class="code"><span class="constructor">C</span> (y1); ...; <span class="constructor">C</span> (yn)</code></li>
+<li>nary
+               C (D (y1; ...; yn)) -&gt; E <code class="code"><span class="constructor">C</span> (y1); ...; <span class="constructor">C</span> (yn)</code></li>
+</ul>
+
+           if E is nary (then D must be nary),
+               C (D (y1; ...; yn)) -&gt; E (C (y1); ...; C (yn))
+<p>
+
+         Distributive (Right, D, generator_option, dir) and
+         Distributive (Left, D, generator_option, dir) are errors.
+<p>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Distributive (Left, D, Some E, Dist_Direct), then
+            if E is zeroary (then D must be zeroary),
+               C (D, z) -&gt; E,
+            if E is unary (then D must be unary),
+               C (D (x), z) -&gt; E (C (x, z)),
+            if E is binary (then D must be binary),
+               C (D (x, y), z) -&gt; E (C (x, z), C (y, z)),
+            if E is listary:
+               if D is zeroary:
+                  C (D, z) -&gt; E [],
+               if D is unary:
+                  C (D (x), z) -&gt; E <code class="code"><span class="constructor">C</span> (x, z)</code>,
+               if D is binary:
+                  C (D (x, y), z) -&gt; E <code class="code"><span class="constructor">C</span> (x, z); <span class="constructor">C</span> (y, z)</code>,
+               if D is listary:
+                  C (D <code class="code">x1, ..., xn</code>, z) -&gt; E <code class="code"><span class="constructor">C</span> (x1; z), ..., <span class="constructor">C</span> (xn; z)</code>,
+               if D is nary:
+                  C (D (x1, ..., xn), z) -&gt; E <code class="code"><span class="constructor">C</span> (x1, z), ..., <span class="constructor">C</span> (xn, z)</code>,
+            if E is nary (then D must be nary),
+               C (D (x1, ..., xn), z) -&gt; E (C (x1, z), ..., C (xn, z)),
+<p>
+
+         If C has Distributive (Right, D, Some E, Dist_Direct), then
+            C (z, D) -&gt; E if D and E are zeroary,
+            C (z, D (x1, ..., xn)) -&gt; E (C (z, x1), ..., C (z, xn)) otherwise.
+<p>
+
+         Distributive (Both, D, Some E, dir) is the conjunction of
+         Distributive (Left, D, Some E, dir) and
+         Distributive (Right, D, Some E, dir).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Distributive (Both, D, Some E, Dist_Direct), then
+            if E is zeroary (then D must be zeroary),
+               C <code class="code">u1; ...; un; <span class="constructor">D</span>; t1; ...; tn </code> -&gt; E,
+            if E is unary (then D must be unary),
+               C <code class="code">u1; ...; un; <span class="constructor">D</span> (x); t1; ...; tn</code> -&gt;
+               E (C <code class="code">u1; ...; un; x; t1; ...; tn</code>),
+<p>
+
+            if E is binary (then D must be binary),
+               C <code class="code">u1; ...; un; <span class="constructor">D</span> (x, y); t1; ...; tn</code> -&gt;
+               E (C <code class="code">u1; ...; un; x; t1; ...; tn</code>,
+                  C <code class="code">u1; ...; un; y; t1; ...; tn</code>),
+<p>
+
+            if E is listary:
+               if D is zeroary:
+                  C <code class="code">u1; ...; un; <span class="constructor">D</span>; t1; ...; tn</code> -&gt; E [],
+               if D is unary:
+                  C <code class="code">u1; ...; un; <span class="constructor">D</span> (x); t1; ...; tn</code> -&gt;
+                    E <code class="code"><span class="constructor">C</span> [u1; ...; un; x; t1; ...; tn]</code>,
+               if D is binary:
+                  C <code class="code">u1; ...; un; <span class="constructor">D</span> (x, y); t1; ...; tn</code> -&gt;
+                    E <code class="code"><span class="constructor">C</span> [u1; ...; un; x; t1; ...; tn];
+                       <span class="constructor">C</span> [u1; ...; un; y; t1; ...; tn];
+                      </code>
+               if D is listary:
+                  C <code class="code">u1; ...; un; <span class="constructor">D</span> [x1; ...; xn]; t1; ...; tn</code> -&gt;
+                    E <code class="code"><span class="constructor">C</span> [u1; ...; un; x1; t1; ...; tn];
+                       ...;
+                       <span class="constructor">C</span> [u1; ...; un; xn; t1; ...; tn];
+                      </code>
+               if D is nary:
+                  C <code class="code">u1; ...; un; <span class="constructor">D</span> (x1, ..., xn); t1; ...; tn</code> -&gt;
+                    E <code class="code"><span class="constructor">C</span> [u1; ...; un; x1; t1; ...; tn];
+                       ...;
+                       <span class="constructor">C</span> [u1; ...; un; xn; t1; ...; tn];
+                      </code>
+<p>
+
+            if E is nary (then D must be nary with the same arity as E),
+              C <code class="code">u1; ...; un; <span class="constructor">D</span> (x1, ..., xn); t1; ...; tn</code> -&gt;
+               E (C <code class="code">u1; ...; un; x1; t1; ...; tn</code>,
+                  ...,
+                  C <code class="code">u1; ...; un; xn; t1; ...; tn</code>)
+<p>
+
+         Distributive (Right, D, generator_option, dir) and
+         Distributive (Left, D, generator_option, dir) are errors.
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Division_by_Absorbent</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPEgenerator">generator</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >This is an internal generator for Moca that is automatically added to
+       the relations of a generator when appropriate.
+<p>
+
+       <span id="3_SpecificationforDivisionbyAbsorbentgenerator"><h3>Specification for Division_by_Absorbent (generator)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary operators:</li>
+</ul>
+
+         If C has Division_by_Absorbent (A), then
+            C (A) -&gt; failwith "Division by absorbent element".
+<p>
+<ul>
+<li>For binary generators:
+         If C has Division_by_Absorbent (A), then
+            C (x, A) -&gt; failwith "Division by absorbent element".</li>
+</ul>
+<ul>
+<li>For listary generators and</li>
+<li>For nary generators:
+         Division_by_Absorbent is not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Idempotent</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationofIdempotentside"><h3>Specification of Idempotent (side)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         If C has Idempotent (Both), then
+            C (C x) -&gt; C x,
+<p>
+
+         Idempotent (Left) and Idempotent (Right) are errors.
+<p>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Idempotent (Left), then
+            C (C (x, y), y) -&gt; C (x, y),
+            if x and C (x, x) have the same type, then
+            C (x, x) -&gt; x,
+<p>
+
+         If C has Idempotent (Right), then
+            C (x, C (x, y)) -&gt; C (x, y),
+            if x and C (x, x) have the same type, then
+            C (x, x) -&gt; x,
+<p>
+
+         Idempotent (Both) is the conjunction of
+         Idempotent (Left) and Idempotent (Right).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Idempotent (Left), then
+            C <code class="code">...; x; x; ...</code> -&gt; C <code class="code">...; x; ...</code> if
+              the list of arguments has &gt;= 3 elements
+            if x and C <code class="code">x, x</code> have the same type, then
+            C <code class="code">x; x</code> -&gt; x,
+<p>
+
+         Idempotent (Both) and Idempotent (Right) are equivalent to
+         Idempotent (Left).
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Inverse</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a> * <a href="Parsetree.html#TYPEgenerator">generator</a> * <a href="Parsetree.html#TYPEgenerator">generator</a> option</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforInversesidegeneratorgeneratoroption"><h3>Specification for Inverse (side, generator, generator option)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         If C has (Inverse (Left, I, None), then
+            C (I (x)) -&gt; x.
+<p>
+
+         If C has (Inverse (Right, I, None), then
+            I (C (x)) -&gt; x.
+<p>
+
+         Inverse (Both, I, None) is the conjunction of
+         Inverse (Left, I, None) and Inverse (Right, I, None).
+<p>
+
+         If C has Inverse (Left, I, Some A), then
+            C (I (x)) -&gt; A.
+<p>
+
+         If C has Inverse (Right, I, Some A), then
+            I (C (x)) -&gt; A.
+<p>
+
+         Inverse (Both, I, Some A) is equivalent to
+         Inverse (Left, I, Some A) and
+         Inverse (Right, I, Some A).
+<p>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Inverse (side, I, None), then
+            C must have Neutral (side, E) and
+            Inverse (side, I, None) is equivalent to
+            Inverse (side, I, Some E).
+<p>
+
+         If C has Inverse (Left, I, Some A), then
+            I implicitely has Involutive and
+            C implicitely has
+              Distributive (Left, E, Some A, Dist_Direct) and
+<p>
+
+            C (I (x), x) -&gt; A.
+<p>
+
+         If C has Inverse (Right, I, Some A), then
+            I implicitely has Involutive and
+            C implicitely has
+              Distributive (Right, E, Some A, Dist_Direct) and
+<p>
+
+            C (x, I (x)) -&gt; A
+<p>
+
+         Inverse (Both, I, Some A) is equivalent to
+         Inverse (Left, I, Some A) and Inverse (Right, I, Some A).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Inverse (side, I, None), then
+            C must have Neutral (side, E) and
+            Inverse (side, I, None) is equivalent to
+            Inverse (side, I, Some E).
+<p>
+
+         If C has Inverse (Left, I, Some A), then
+            I implicitely has Involutive and
+            C implicitely has
+            Distributive (Left, E, Some A, Dist_Direct) and
+<p>
+
+            I implicitely has Involutive and
+            C implicitely has
+            Distributive (Right, E, Some A, Dist_Direct) and
+<p>
+
+            C <code class="code">...; <span class="constructor">I</span> (x); x; ...</code> -&gt; C <code class="code">...; <span class="constructor">A</span>; ...</code> if
+              the list of arguments has &gt;= 3 elements,
+            C <code class="code"><span class="constructor">I</span> (x); x</code> -&gt; A.
+<p>
+
+         If C has Inverse (Right, I, Some A), then
+            I implicitely has Involutive and
+            C implicitely has
+            Distributive (Right, E, Some A, Dist_Direct) and
+<p>
+
+            C <code class="code">...; x; <span class="constructor">I</span> (x); ...</code> -&gt; C <code class="code">...; <span class="constructor">A</span>; ...</code> if
+              the list of arguments has &gt;= 3 elements,
+            C <code class="code">x; <span class="constructor">I</span> (x)</code> -&gt; A.
+<p>
+
+         Inverse (Both, I, Some A) is the conjunction of
+         Inverse (Left, I, Some A) and Inverse (Right, I, Some A).
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Involutive</span></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforInvolutive"><h3>Specification for Involutive</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         If C has Involutive, then
+            C (C (x)) -&gt; x.
+<p>
+<ul>
+<li>For binary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For listary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Neutral</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a> * <a href="Parsetree.html#TYPEgenerator">generator</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforNeutralsidegenerator"><h3>Specification for Neutral (side, generator)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         C has Neutral (side, E) is equivalent to E is a fixpoint for C.
+<p>
+
+         If C has Neutral (Both, E), then
+            C (E) -&gt; E.
+<p>
+
+         Neutral (Right, E) and Neutral (Left, E) are errors.
+<p>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Neutral (Left, E), then
+            C (E, x) -&gt; x,
+<p>
+
+         If C has Neutral (Right, E), then
+            C (x, E) -&gt; x,
+<p>
+
+         Neutral (Both, E) is the conjunction of
+         Neutral (Left, E) and Neutral (Right, E).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Neutral (Left, E), then
+            C <code class="code">...; <span class="constructor">E</span>; x; ...</code> -&gt; C <code class="code">...; x; ...</code> if
+              the list of arguments has at least 2 elements,
+            C <code class="code">x</code> -&gt; x,
+            C [] -&gt; E,
+<p>
+
+         If C has Neutral (Right, E), then
+            C <code class="code">...; x; <span class="constructor">E</span>; ...</code> -&gt; C <code class="code">...; x; ...</code> if
+              the list of arguments has at least 2 elements,
+            C <code class="code">x</code> -&gt; x
+            C [] -&gt; E,
+<p>
+
+         Neutral (Both, E) is the conjunction of
+         Neutral (Left, E) and Neutral (Right, E).
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Nilpotent</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErelation_side">relation_side</a> * <a href="Parsetree.html#TYPEgenerator">generator</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforNilpotentsidegenerator"><h3>Specification for Nilpotent (side, generator)</h3></span>
+<p>
+<ul>
+<li>For zeroary generators: not applicable.</li>
+</ul>
+<ul>
+<li>For unary generators:</li>
+</ul>
+
+         If C has Nilpotent (Both, A), then
+            C (C x) -&gt; A.
+<p>
+
+         Nilpotent (Left, A) and Nilpotent (Right, A) are errors.
+<p>
+<ul>
+<li>For binary generators:</li>
+</ul>
+
+         If C has Nilpotent (Left, A), then
+            C (C (x, y), y) -&gt; C (x, A),
+            C (x, x) -&gt; A,
+<p>
+
+         If C has Nilpotent (Right, A), then
+            C (x, C (x, y)) -&gt; C (A, y),
+            C (x, x) -&gt; A,
+<p>
+
+         Nilpotent (Both, A) is the conjunction of
+         Nilpotent (Left, A) and Nilpotent (Right, A).
+<p>
+<ul>
+<li>For listary generators:</li>
+</ul>
+
+         If C has Nilpotent (Both, A), then
+<p>
+
+            C <code class="code">...; x; x; ...</code> -&gt; C <code class="code">...; <span class="constructor">A</span>; ...</code> if
+              the list has &gt;= 3 elements,
+            C <code class="code">x; x</code> -&gt; A.
+<p>
+
+         Nilpotent (Left, A) and Nilpotent (Right, A) are equivalent to Both.
+<p>
+<ul>
+<li>For nary generators: not applicable.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Precedence</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErpo_precedence">rpo_precedence</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="5_DefinitionRecursivePathOrdering"><h5>Definition: Recursive Path Ordering</h5></span>
+<p>
+
+       The <em>Recursive Path Ordering</em> (rpo for short) is an ordering for
+       terms.
+<p>
+
+       <span id="3_SpecificationforPrecedecep"><h3>Specification for Precedece p</h3></span>
+<p>
+
+       Moca uses a rpo-based completion algorithm to complete the set of
+       rules given by the programmer for the relational data type at hand.
+<p>
+
+       For any generator C, if C has Precedence (p) then C will have
+       precedence p for the rpo-based completion.
+<p>
+
+       Note: integer p must be positive and not equal to <code class="code"><span class="constructor">Pervasives</span>.max_int</code>.
+<p>
+
+       Per se, the Precedence annotation does not define any statically known
+       rewrite rule. The annotation simply helps moca to complete the set of
+       rules defined so far for the relational data type.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Rewrite</span> <span class="keyword">of</span> <code class="type">pattern * expression</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" ><span id="3_SpecificationforRewritepatternexpression"><h3>Specification for Rewrite (pattern, expression)</h3></span>
+<p>
+<ul>
+<li>For any generator C,
+         if C has relation Rewrite (pat, expr) then the
+         first clause of its construction function is</li>
+</ul>
+
+           | pat -&gt; expr
+<p>
+
+       This clause precedes any other clause necessary for non Rewrite
+       algebraic relations.
+<p>
+<ul>
+<li>Multiple Rewrite rules for generator C appears in C construction
+       function in the order of presentation in the relational data type
+       definition.</li>
+</ul>
+</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Status</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPErpo_status">rpo_status</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >The Status relation is an annotation for a companion generator
+       that mocac uses to complete the set of rules defined so far for the
+       relational data type (Knuth-Bendix competion algorithm).
+<p>
+
+       Per se, the Status relation does not define any rewrite rule.
+<p>
+
+       <span id="3_SpecificationofStatusstat"><h3>Specification of Status (stat)</h3></span>
+<p>
+<ul>
+<li>For any generator C, if C has property Status (stat) then C will
+         have the stat status for the rpo-based completion.</li>
+</ul>
+
+      The status could be <code class="code">lexicographic</code> or <code class="code">multiset</code>.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Structure_item</span> <span class="keyword">of</span> <code class="type">structure_item</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >A <code class="code"><span class="constructor">Structure_item</span></code> holds any Caml definition of some value associated
+       to the relational type specification. Functions defined that way can
+       be used inside the generated construction functions.
+       The definition of a specific <code class="code">compare</code> function for the values of the
+       relational type is typical, to get a semantically sound comparison
+       within the compiler generated construction functions.
+<p>
+
+      <span id="3_SpecificationofStructureitemstritem"><h3>Specification of Structure_item (str_item)</h3></span>
+<p>
+<ul>
+<li>For any generator C, if C has Structure_item (auxiliary_definition)
+        then the definition auxiliary_definition) is written in the resulting
+        implementation file <em>before</em> the mocac generated definitions for
+        construction functions.</li>
+</ul>
+
+        For instance, if C has annotation:
+           begin
+             let f = e;;
+           end
+        then the code "let f = e;;" will be written in the target file before
+        any other mocac generated code.</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr></table>
+
+
+</body></html>

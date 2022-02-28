@@ -1,0 +1,11 @@
+#!/bin/sh
+
+SUBDIRS=""
+
+set -x
+
+#Make the correct depend file
+for i in ${SUBDIRS}; do
+    (cd $i; ./configure;)
+done
+

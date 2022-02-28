@@ -1,0 +1,84 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: bdd.mlm,v 1.5 2009-04-22 10:00:26 weis Exp $ *)
+
+(* BDD by Shared Rewriting, van de Pol and Zantema *)
+
+type t = private
+   | Bfalse | Btrue
+   | Batom of string
+     begin
+      rule Batom p -> Bp (p, Btrue, Bfalse)
+     end
+   | Bnot of t
+     begin
+     (* If you need an heuristic define it here.
+       let comp = Pervasives.compare;;
+     *)
+       involutive
+
+       rule Bnot Bp (p, x, y) -> Bp (p, Bnot x, Bnot y)
+       rule Bnot Btrue -> Bfalse
+       rule Bnot Bfalse -> Btrue
+    end
+   | Band of t * t
+     begin
+       absorbent (Bfalse)
+       neutral (Btrue)
+
+       rule Band (Bp (p ,x, y), Bp (q, z, w)) when compare p q = 0 ->
+         Bp (p, Band (x, z), Band (y ,w))
+       rule Band (Bp (p ,x, y), Bp (q, z, w)) when compare p q < 0 ->
+         Bp (p, Band (x, Bp (q, z, w)), Band (y, Bp (q, z, w)))
+       rule Band (Bp (q ,x, y), Bp (p, z, w)) when compare p q < 0 ->
+         Bp (p, Band (Bp (q, x, y), z), Band (Bp (q, x, y), w))
+     end
+   | Bor of t * t
+     begin
+       neutral (Bfalse)
+       absorbent (Btrue)
+
+       rule Bor (Bp (p ,x, y), Bp (q, z, w)) when compare p q = 0 ->
+         Bp (p, Bor (x, z), Bor (y ,w))
+       rule Bor (Bp (p ,x, y), Bp (q, z, w)) when compare p q < 0 ->
+         Bp (p, Bor (x, Bp (q, z, w)), Bor (y, Bp (q, z, w)))
+       rule Bor (Bp (q ,x, y), Bp (p, z, w)) when compare p q < 0 ->
+         Bp (p, Bor (Bp (q, x, y), z), Bor (Bp (q, x, y), w))
+     end
+   | Bxor of t * t
+     begin
+       neutral (Bfalse)
+
+       rule Bxor (x, Btrue) -> Bnot x
+       rule Bxor (Btrue, x) -> Bnot x
+
+       rule Bxor (Bp (p ,x, y), Bp (q, z, w)) when compare p q = 0 ->
+         Bp (p, Bxor (x, z), Bxor (y ,w))
+       rule Bxor (Bp (p ,x, y), Bp (q, z, w)) when compare p q < 0 ->
+         Bp (p, Bxor (x, Bp (q, z, w)), Bxor (y, Bp (q, z, w)))
+       rule Bxor (Bp (q ,x, y), Bp (p, z, w)) when compare p q < 0 ->
+         Bp (p, Bxor (Bp (q, x, y), z), Bxor (Bp (q, x, y), w))
+    end
+   | Bimplies of t * t
+     begin
+       rule Bimplies (x, y) -> Bor (Bnot x, y)
+     end
+   | Bp of string * t * t
+     begin
+       rule Bp (_, x, y) when compare x y = 0 -> x
+     end
+;;
+

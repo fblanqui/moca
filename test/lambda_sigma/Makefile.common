@@ -1,0 +1,74 @@
+# Hey, Emacs, this is a -*- makefile -*- file
+CAMLBYT=ocamlc
+CAMLBIN=ocamlopt
+CAMLLEX=ocamllex
+CAMLYAC=ocamlyacc
+MOCAC=../../mocac
+
+LIBDEPS= unix.cma
+OPTLIBDEPS= unix.cmxa
+
+
+.PHONY: depend beforedepend default
+
+default: all
+
+depend : beforedepend
+	ocamldep *.ml *.mli > .depend
+
+
+.SUFFIXES: .cmx .cmo .cmi .ml .mli  .mlm .mlms .mll .mly
+
+
+.ml.cmo:
+	$(CAMLBYT) -c $<
+
+.mli.cmi:
+	$(CAMLBYT) -c $<
+
+.ml.cmx:
+	$(CAMLBIN) -c $<
+
+.mll.cmo:
+	$(CAMLLEX) $<
+	$(CAMLBYT) -c $*.ml
+
+.mll.cmx:
+	$(CAMLLEX) $<
+	$(CAMLBIN) -c $*.ml
+
+.mly.cmo:
+	$(CAMLYAC) $<
+	$(CAMLBYT) -c $*.mli
+	$(CAMLBYT) -c $*.ml
+
+.mly.cmx:
+	$(CAMLYAC) $<
+	$(CAMLBIN) -c $*.mli
+	$(CAMLBIN) -c $*.ml
+
+.mly.cmi:
+	$(CAMLYAC) $<
+	$(CAMLBYT) -c $*.mli
+
+.mll.ml:
+	$(CAMLLEX) $<
+
+.mly.ml:
+	$(CAMLYAC) $<
+
+.mly.mli:
+	$(CAMLYAC) $<
+
+
+.mlm.ml:
+	$(MOCAC) $<
+
+.mlm.mli:
+	$(MOCAC) $<
+
+.mlms.ml:
+	$(MOCAC) $<
+
+.mlms.mli:
+	$(MOCAC) $<

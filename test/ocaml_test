@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -x
+
+usage () {
+     echo "Please give one (and only one) file prefix as argument"
+}
+
+do_test () {
+    file=$1
+    type ledit;
+    err=$?;
+    case $err in
+        0 ) ledit="ledit -h $HOME/.ocaml-history -x";;
+        * )
+            echo "You should really use ledit!";
+            ledit="";;
+    esac
+
+    ocamlc gentest.mli
+    ocamlc gentest.ml
+    ../mocac ${file}.mlm
+    ocamlc ${file}.mli
+    ocamlc ${file}.ml
+    ${ledit} ocaml gentest.cmo ${file}.cmo
+}
+
+
+case $# in
+    0 ) usage; exit 1 ;;
+    1 ) do_test $1;;
+    * ) echo "Too many arguments were given."; usage; exit 2;;
+esac

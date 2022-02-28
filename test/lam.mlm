@@ -1,0 +1,31 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2012,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: lam.mlm,v 1.5 2012-06-04 13:01:22 weis Exp $ *)
+
+(* The definition of lambda terms.
+   Need to test addition of rules for alpha-conversion and/or beta
+   conversion.
+   Then write beta-reductors for lambda terms:
+   - weak head normal form normalization,
+   - weak beta normalization,
+   - strong beta reduction.
+   Consider then adding more rewrite rules in the type to simplify
+   the Caml code of the various reductors. *)
+
+type lam = private
+   | Lvar of string
+   | Llam of string * lam
+   | Lapp of lam * lam;;

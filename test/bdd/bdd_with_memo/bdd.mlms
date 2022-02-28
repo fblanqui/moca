@@ -1,0 +1,129 @@
+(* $Id: bdd.mlms,v 1.1 2010-08-11 21:27:22 weis Exp $ *)
+
+(* Timings:
+
+Original code:
+
+nqueens 7
+
+Version 1.4
+real    0m15.730s
+user    0m15.730s
+sys     0m0.000s
+
+nqueens 8
+
+Version 1.4
+real    14m28.991s
+user    14m28.990s
+sys     0m0.010s
+
+Revised version:
+
+queens 7
+
+real    0m1.262s
+user    0m1.250s
+sys     0m0.000s
+
+queens 8
+
+real    0m16.538s
+user    0m16.530s
+sys     0m0.010s
+
+queens 9
+
+Solution 352
+x66 x79 x98 x27 x53 x41 x15 x34 x82 
+End solution
+
+real    4m15.192s
+user    4m15.240s
+sys     0m0.020s
+
+(* Avec == dans la règle Bp dans .mlms *)
+real    4m2.422s
+user    4m2.450s
+sys     0m0.020s
+*)
+
+(* BDD by Shared Rewriting, van de Pol and Zantema *)
+
+open Atom;;
+
+type t = private
+   | Bfalse
+   | Btrue
+   | Batom of atom
+     begin
+       rule Batom p -> Bp (p, Btrue, Bfalse)
+     end
+   | Bnot of t
+     begin
+     (* If you need an heuristic define it here.
+       let comp = Pervasives.compare;; *)
+       involutive
+       rule Bnot Bp (p, x, y) -> Bp (p, Bnot x, Bnot y)
+       rule Bnot Btrue -> Bfalse
+       rule Bnot Bfalse -> Btrue
+     end
+   | Band of t * t
+     begin
+       absorbent (Bfalse)
+       neutral (Btrue)
+
+       rule Band (Bp (p, x, y), Bp (q, z, w))
+         when Atom.compare p q = 0 ->
+         Bp (p, Band (x, z), Band (y ,w))
+
+       rule Band (Bp (p, x, y), Bp (q, z, w))
+         when Atom.compare p q < 0 ->
+         Bp (p, Band (x, Bp (q, z, w)), Band (y, Bp (q, z, w)))
+       rule Band (Bp (q ,x, y), Bp (p, z, w))
+         when Atom.compare p q < 0 ->
+         Bp (p, Band (Bp (q, x, y), z), Band (Bp (q, x, y), w))
+     end
+   | Bor of t * t
+     begin
+       neutral (Bfalse)
+       absorbent (Btrue)
+
+       rule Bor (Bp (p, x, y), Bp (q, z, w))
+         when Atom.compare p q = 0 ->
+         Bp (p, Bor (x, z), Bor (y ,w))
+
+       rule Bor (Bp (p, x, y), Bp (q, z, w))
+         when Atom.compare p q < 0 ->
+         Bp (p, Bor (x, Bp (q, z, w)), Bor (y, Bp (q, z, w)))
+
+       rule Bor (Bp (q ,x, y), Bp (p, z, w))
+         when Atom.compare p q < 0 ->
+         Bp (p, Bor (Bp (q, x, y), z), Bor (Bp (q, x, y), w))
+     end
+   | Bxor of t * t
+     begin
+       neutral (Bfalse)
+       rule Bxor (x, Btrue) -> Bnot x
+       rule Bxor (Btrue, x) -> Bnot x
+
+       rule Bxor (Bp (p, x, y), Bp (q, z, w))
+         when Atom.compare p q = 0 ->
+         Bp (p, Bxor (x, z), Bxor (y ,w))
+
+       rule Bxor (Bp (p, x, y), Bp (q, z, w))
+         when Atom.compare p q < 0 ->
+         Bp (p, Bxor (x, Bp (q, z, w)), Bxor (y, Bp (q, z, w)))
+       rule Bxor (Bp (q ,x, y), Bp (p, z, w))
+         when Atom.compare p q < 0 ->
+         Bp (p, Bxor (Bp (q, x, y), z), Bxor (Bp (q, x, y), w))
+     end
+   | Bimplies of t * t
+     begin
+       rule Bimplies (x, y) -> Bor (Bnot x, y)
+     end
+   | Bp of atom * t * t
+     begin
+       rule Bp (_, x, y) when x == y (*Pervasives.compare x y = 0*) -> x
+     end
+;;

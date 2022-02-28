@@ -1,0 +1,45 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: formal_sum.mlm,v 1.5 2008-01-17 15:02:55 blanqui Exp $ *)
+
+(* From an example due to
+   Antoine SPICHER <antoine.spicher@ibisc.univ-evry.fr>. *)
+
+type formalSum = private
+   | Zero
+   | Dot of int * string
+   | Plus of formalSum * formalSum
+       begin
+
+	 let rec compare x1 x2 =
+	   match x1, x2 with
+	     | Dot (i1, s1), Dot (i2, s2) ->
+		 begin
+		   match Pervasives.compare s1 s2 with
+		     | 0 -> Pervasives.compare i1 i2
+		     | n -> n
+		 end
+	     | x1, x2 -> Pervasives.compare x1 x2;;
+
+       commutative (compare)
+       associative
+       neutral (Zero)
+       rule Plus (Dot (_i1, s1), Dot (_i2, s2))
+         when Pervasives.compare s1 s2 = 0 -> Zero
+       rule Plus (Dot (_i1, s1), Plus (Dot (_i2, s2), y))
+         when Pervasives.compare s1 s2 = 0 -> y
+     end
+;;

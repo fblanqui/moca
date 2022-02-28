@@ -1,0 +1,14 @@
+Directory contents
+==================
+
+This directory contains a bunch of helper files to enhance the documentation
+produced by OCamldoc.
+
+* jquery.js contains a version of the JQuery library used by the other scripts;
+* improve.js rewrites the html produced by OCamldoc, mostly by using well-named
+  div classes;
+
+* style.css refines the basic OCamldoc CSS stylesheet;
+
+* process.sh is a shell script called by the global Makefile to do the work
+  automagically.

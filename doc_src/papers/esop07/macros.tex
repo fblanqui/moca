@@ -1,0 +1,436 @@
+% proof trees
+\newenvironment{ded}
+   {\begin{center}\begin{prooftree}}
+   {\end{prooftree}\end{center}}
+\newcommand{\pra}[3][]{\[#2\justifies #3\using\mbox{(#1)}\]}
+\newcommand{\prb}[4][]{\[#2\quad #3\justifies #4\using\mbox{(#1)}\]}
+\newcommand{\prc}[5][]{\[#2\quad #3\quad #4\justifies #5\using\mbox{(#1)}\]}
+%\newcommand{\qed}[2][]{\justifies #2\using\mbox{(#1)}}
+
+% biblios
+\newcommand{\shortnames}{abbrev,short-names,mybib}
+\newcommand{\longnames}{abbrev,long-names,mybib}
+
+% miscellaneous
+\newcommand{\remcomment}[1]{{#1}}
+\newcommand{\comment}[1]{}
+\newcommand{\bu}{$\bullet$}
+\newcommand{\hsp}[1][3mm]{\hspace*{#1}}
+\newcommand{\vsp}[1][3mm]{\vspace*{#1}}
+\newcommand{\moins}{\setminus}
+\newcommand{\vide}{\emptyset}
+\newcommand{\ie}{{\em i.e.} }
+\newcommand{\eg}{{\em e.g.} }
+\newcommand{\etal}{{\em et al} }
+
+% number sets
+\newcommand{\bN}{\mb{N}}
+\newcommand{\bZ}{\mb{Z}}
+\newcommand{\bQ}{\mb{Q}}
+\newcommand{\bR}{\mb{R}}
+\newcommand{\bC}{\mb{C}}
+
+% substitutions
+\newcommand{\xt}{\{x\to t\}}
+\newcommand{\xu}{\{x\to u\}}
+\newcommand{\xv}{\{x\to v\}}
+\newcommand{\yu}{\{y\to u\}}
+\newcommand{\yv}{\{y\to v\}}
+\newcommand{\yw}{\{y\to w\}}
+\newcommand{\xup}{\{x\to u'\}}
+\newcommand{\XU}{\{X\to U\}}
+\newcommand{\XS}{\{X\to S\}}
+\newcommand{\xS}{\{x\to S\}}
+
+% vectorial substitutions
+\newcommand{\vyu}{\{\vy\to\vu\}}
+\newcommand{\vyt}{\{\vy\to\vt\}}
+\newcommand{\vxt}{\{\vx\to\vt\}}
+\newcommand{\vxtp}{\{\vx\to\vt'\}}
+\newcommand{\vxl}{\{\vx\to\vl\}}
+\newcommand{\vxv}{\{\vx\to\vv\}}
+\newcommand{\vxS}{\{\vx\to\vS\}}
+\newcommand{\vxu}{\{\vx\to\vu\}}
+\newcommand{\vxup}{\{\vx\to\vu'\}}
+\newcommand{\vzv}{\{\vz\to\vv\}}
+
+% function names
+\newcommand{\lfp}{\mr{lfp}}
+\newcommand{\glb}{\mr{glb}}
+\newcommand{\lub}{\mr{lub}}
+\newcommand{\dom}{\mr{dom}}
+\newcommand{\codom}{\mr{codom}}
+\newcommand{\FV}{\mr{FV}}
+\newcommand{\pos}{\mr{Pos}}
+
+% arrows
+\renewcommand{\a}{\rightarrow}
+\newcommand{\A}{\Rightarrow}
+\renewcommand{\aa}{\leftrightarrow}
+\renewcommand{\AA}{\Leftrightarrow}
+\newcommand{\Al}{\Leftarrow}
+\newcommand{\ad}{\downarrow}
+\newcommand{\Ad}{\Downarrow}
+\newcommand{\au}{\uparrow}
+\renewcommand{\to}{\mapsto}
+\newcommand{\al}{\leftarrow}
+
+% delimiters
+\newcommand{\ps}[1]{{\langle #1\rangle}}
+\newcommand{\dps}[1]{\ps{\!\ps{#1}\!}}
+\newcommand{\I}[1]{[\![#1]\!]}
+
+% fonts
+\newcommand{\bs}{\boldsymbol} % amsmath
+
+% other symbols
+\newcommand{\ex}{\exists}
+\newcommand{\all}{\forall}
+\newcommand{\ou}{\vee}
+\newcommand{\bigou}{\bigvee}
+\newcommand{\biget}{\bigwedge}
+\newcommand{\et}{\wedge}
+\newcommand{\non}{\neg}
+\newcommand{\st}{\star}
+\newcommand{\B}{\Box} % latexsym
+\renewcommand{\th}{\vdash}
+\renewcommand{\TH}{\!\th\!}
+\newcommand{\IN}{\!\in\!}
+
+% orderings
+\newcommand{\sle}{\subseteq}
+\newcommand{\sge}{\supseteq}
+\newcommand{\slt}{\subset}
+\newcommand{\sgt}{\supset}
+\newcommand{\tle}{\unlhd}
+\newcommand{\tge}{\unrhd} % latexsym
+\newcommand{\tlt}{\lhd}
+\newcommand{\tgt}{\rhd}
+\newcommand{\cle}{\preceq}
+\newcommand{\cge}{\succeq}
+\newcommand{\clt}{\prec}
+\newcommand{\cgt}{\succ}
+\newcommand{\qle}{\sqsubseteq}
+\newcommand{\qge}{\sqsupseteq}
+\newcommand{\qlt}{\sqsubset}
+\newcommand{\qgt}{\sqsupset}
+
+% extension
+\newcommand{\lex}{_\mr{lex}}
+\newcommand{\mul}{_\mr{mul}}
+
+% decorations
+\newcommand{\h}[1]{{\widehat{#1}}}
+\renewcommand{\o}[1]{{\overline{#1}}}
+\renewcommand{\u}[1]{{\underline{#1}}}
+\newcommand{\q}[1]{{\widetilde{#1}}}
+
+% greek letters
+\renewcommand{\b}{\beta}
+\newcommand{\g}{\gamma}
+\newcommand{\G}{\Gamma}
+\renewcommand{\d}{\delta}
+\newcommand{\D}{\Delta}
+\newcommand{\ep}{\epsilon}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\z}{\zeta}
+\renewcommand{\t}{\theta}
+\newcommand{\T}{\Theta}
+\newcommand{\io}{\iota}
+\newcommand{\ka}{\kappa}
+\newcommand{\la}{\lambda}
+\renewcommand{\L}{\Lambda}
+\renewcommand{\r}{\rho}
+\newcommand{\s}{\sigma}
+\renewcommand{\S}{\Sigma}
+\newcommand{\up}{\upsilon}
+\newcommand{\Up}{\Upsilon}
+\newcommand{\vphi}{\varphi}
+\newcommand{\w}{\omega}
+\newcommand{\W}{\Omega}
+
+% math styles
+\newcommand{\mi}{\mathit}
+\newcommand{\mc}{\mathcal}
+\newcommand{\mt}{\mathtt}
+\newcommand{\mr}{\mathrm}
+\newcommand{\mb}{\mathbb}
+\newcommand{\mg}{\mathbf}
+\newcommand{\mf}{\mathfrak}
+
+% calligraphical upper-case letters
+\newcommand{\cA}{\mc{A}}
+\newcommand{\cB}{\mc{B}}
+\newcommand{\cC}{\mc{C}}
+\newcommand{\cD}{\mc{D}}
+\newcommand{\cE}{\mc{E}}
+\newcommand{\cF}{\mc{F}}
+\newcommand{\cG}{\mc{G}}
+\newcommand{\cH}{\mc{H}}
+\newcommand{\cI}{\mc{I}}
+\newcommand{\cJ}{\mc{J}}
+\newcommand{\cK}{\mc{K}}
+\newcommand{\cL}{\mc{L}}
+\newcommand{\cM}{\mc{M}}
+\newcommand{\cN}{\mc{N}}
+\newcommand{\cO}{\mc{O}}
+\newcommand{\cP}{\mc{P}}
+\newcommand{\cQ}{\mc{Q}}
+\newcommand{\cR}{\mc{R}}
+\newcommand{\cS}{\mc{S}}
+\newcommand{\cT}{\mc{T}}
+\newcommand{\cU}{\mc{U}}
+\newcommand{\cV}{\mc{V}}
+\newcommand{\cW}{\mc{W}}
+\newcommand{\cX}{\mc{X}}
+\newcommand{\cY}{\mc{Y}}
+\newcommand{\cZ}{\mc{Z}}
+
+% lower-case frak letters
+\newcommand{\fa}{\mf{a}} % amssymb
+\newcommand{\fb}{\mf{b}}
+\newcommand{\fc}{\mf{c}}
+\newcommand{\fd}{\mf{d}}
+\newcommand{\fe}{\mf{e}}
+\newcommand{\ff}{\mf{f}}
+\newcommand{\fg}{\mf{g}}
+\newcommand{\fh}{\mf{h}}
+\newcommand{\mfi}{\mf{i}}
+\newcommand{\fj}{\mf{j}}
+\newcommand{\fk}{\mf{k}}
+\newcommand{\fl}{\mf{l}}
+\newcommand{\fm}{\mf{m}}
+\newcommand{\fn}{\mf{n}}
+\newcommand{\fo}{\mf{o}}
+\newcommand{\fp}{\mf{p}}
+\newcommand{\fq}{\mf{q}}
+\newcommand{\fr}{\mf{r}}
+\newcommand{\fs}{\mf{s}}
+\newcommand{\ft}{\mf{t}}
+\newcommand{\fu}{\mf{u}}
+\newcommand{\fv}{\mf{v}}
+\newcommand{\fw}{\mf{w}}
+\newcommand{\fx}{\mf{x}}
+\newcommand{\fy}{\mf{y}}
+\newcommand{\fz}{\mf{z}}
+
+% upper-case frak letters
+\newcommand{\fA}{\mf{A}}
+\newcommand{\fB}{\mf{B}}
+\newcommand{\fC}{\mf{C}}
+\newcommand{\fD}{\mf{D}}
+\newcommand{\fE}{\mf{E}}
+\newcommand{\fF}{\mf{F}}
+\newcommand{\fG}{\mf{G}}
+\newcommand{\fH}{\mf{H}}
+\newcommand{\fI}{\mf{I}}
+\newcommand{\fJ}{\mf{J}}
+\newcommand{\fK}{\mf{K}}
+\newcommand{\fL}{\mf{L}}
+\newcommand{\fM}{\mf{M}}
+\newcommand{\fN}{\mf{N}}
+\newcommand{\fO}{\mf{O}}
+\newcommand{\fP}{\mf{P}}
+\newcommand{\fQ}{\mf{Q}}
+\newcommand{\fR}{\mf{R}}
+\newcommand{\fS}{\mf{S}}
+\newcommand{\fT}{\mf{T}}
+\newcommand{\fU}{\mf{U}}
+\newcommand{\fV}{\mf{V}}
+\newcommand{\fW}{\mf{W}}
+\newcommand{\fX}{\mf{X}}
+\newcommand{\fY}{\mf{Y}}
+\newcommand{\fZ}{\mf{Z}}
+
+% lower-case vectors
+\newcommand{\va}{{\vec{a}}}
+\newcommand{\vb}{{\vec{b}}}
+\newcommand{\vc}{{\vec{c}}}
+\newcommand{\vd}{{\vec{d}}}
+\newcommand{\ve}{{\vec{e}}}
+\newcommand{\vf}{{\vec{f}}}
+\newcommand{\vg}{{\vec{g}}}
+\newcommand{\vh}{{\vec{h}}}
+\newcommand{\vi}{{\vec{i}}}
+\newcommand{\vj}{{\vec{j}}}
+\newcommand{\vk}{{\vec{k}}}
+\newcommand{\vl}{{\vec{l}}}
+\newcommand{\vm}{{\vec{m}}}
+\newcommand{\vn}{{\vec{n}}}
+\newcommand{\vo}{{\vec{o}}}
+\newcommand{\vp}{{\vec{p}}}
+\newcommand{\vq}{{\vec{q}}}
+\newcommand{\vr}{{\vec{r}}}
+\newcommand{\vs}{{\vec{s}}}
+\newcommand{\vt}{{\vec{t}}}
+\newcommand{\vu}{{\vec{u}}}
+\newcommand{\vv}{{\vec{v}}}
+\newcommand{\vw}{{\vec{w}}}
+\newcommand{\vx}{{\vec{x}}}
+\newcommand{\vy}{{\vec{y}}}
+\newcommand{\vz}{{\vec{z}}}
+
+% upper-case vectors
+\newcommand{\vA}{{\vec{A}}}
+\newcommand{\vB}{{\vec{B}}}
+\newcommand{\vC}{{\vec{C}}}
+\newcommand{\vD}{{\vec{D}}}
+\newcommand{\vE}{{\vec{E}}}
+\newcommand{\vF}{{\vec{F}}}
+\newcommand{\vG}{{\vec{G}}}
+\newcommand{\vH}{{\vec{H}}}
+\newcommand{\vI}{{\vec{I}}}
+\newcommand{\vJ}{{\vec{J}}}
+\newcommand{\vK}{{\vec{K}}}
+\newcommand{\vL}{{\vec{L}}}
+\newcommand{\vM}{{\vec{M}}}
+\newcommand{\vN}{{\vec{N}}}
+\newcommand{\vO}{{\vec{O}}}
+\newcommand{\vP}{{\vec{P}}}
+\newcommand{\vQ}{{\vec{Q}}}
+\newcommand{\vR}{{\vec{R}}}
+\newcommand{\vS}{{\vec{S}}}
+\newcommand{\vT}{{\vec{T}}}
+\newcommand{\vU}{{\vec{U}}}
+\newcommand{\vV}{{\vec{V}}}
+\newcommand{\vW}{{\vec{W}}}
+\newcommand{\vX}{{\vec{X}}}
+\newcommand{\vY}{{\vec{Y}}}
+\newcommand{\vZ}{{\vec{Z}}}
+
+% appendixes
+\newcommand{\beginappendixes}{\setcounter{section}{0}%
+  \renewcommand{\thesection}{\Alph{section}}}
+\newcommand{\append}[1]{\newpage\refstepcounter{section}%
+  \section*{Appendix \thesection: #1}}
+
+% indexes
+\newcommand{\indlem}[2][]{Lem. \ref{#1}}
+\newcommand{\inddef}[2][]{Def. \ref{#1}}
+\newcommand{\indthm}[2][]{Thm. \ref{#1}}
+\newcommand{\indcor}[2][]{Cor. \ref{#1}}
+\newcommand{\indfig}[2][]{Fig. \ref{#1}}
+\newcommand{\indsec}[2][]{Sec. \ref{#1}}
+\newcommand{\indrem}[2][]{Rem. \ref{#1}}
+\newcommand{\indconj}[2][]{Conj. \ref{#1}}
+\newcommand{\indchap}[2][]{Chap. \ref{#1}}
+\newcommand{\indtxt}[2][]{#1}
+\newcommand{\indpage}[1]{page #1}
+
+% environment for rules, etc.
+\newenvironment{rul}
+  {$\begin{array}{rcl}}
+  {\end{array}$}
+\newenvironment{rulc}
+  {\begin{center}\begin{rul}}
+  {\end{rul}\end{center}}
+
+% rule environment
+\newenvironment{rew}[1][~~\a~~]
+  {$\begin{array}{r@{#1}l}}
+  {\end{array}$}
+\newenvironment{rewc}[1][~~\a~~]
+  {\begin{center}\begin{rew}[#1]}
+  {\end{rew}\end{center}}
+
+% named rule environment
+\newenvironment{trans}[1][~~\a~~]
+  {\begin{center}$\begin{array}{rr@{#1}l}}%
+  {\end{array}$\end{center}}
+
+% typing environment
+\newenvironment{typ}[1][\,:\,]{\begin{rew}[#1]}{\end{rew}}
+\newenvironment{typc}[1][\,:\,]{\begin{rewc}[#1]}{\end{rewc}}
+
+% theorem-like environments
+\newcounter{counter}
+\newcounter{hypnum}
+\newcounter{conjnum}
+\newcounter{assnum}
+\newcounter{explnum}
+{\theorembodyfont{\rmfamily} % theorem
+  \newtheorem{dfn}[counter]{Definition}
+  \newtheorem{lem}[counter]{Lemma}
+  \newtheorem{thm}[counter]{Theorem}
+  \newtheorem{cor}[counter]{Corollary}
+  \newtheorem{rem}[counter]{Remark}
+  \newtheorem{prop}[counter]{Property}
+  \newtheorem{conj}[counter]{Conjecture}
+  \newtheorem{hyp}[hypnum]{Hypothesis}
+  \newtheorem{asm}[assnum]{Assumption}
+  \newtheorem{expl}[explnum]{Example}
+}
+
+% proof environment
+\newcommand{\cqfd}{\hfill$\blacksquare$} % amssymb
+\newcommand{\cqfdd}{\vsp[-4mm]{\flushright\hfill$\blacksquare$}} % amssymb
+\newenvironment{prf}{{\bf Proof.}}{}
+
+% list environment
+\leftmargini=4mm
+\leftmarginii=3mm
+\leftmarginiii=3mm
+\leftmarginiv=3mm
+\leftmarginv=3mm
+\leftmarginvi=3mm
+
+\newenvironment{lstgeneric}[2]
+  {\begin{list}{#1}{\topsep=.5mm\itemsep=.5mm\parsep=0mm%
+    \itemindent=-3ex\labelsep=1ex\labelwidth=0ex #2}}
+  {\end{list}}
+
+\newenvironment{lst}[1]
+  {\begin{lstgeneric}{#1}{\itemindent=-1ex}}
+  {\end{lstgeneric}}
+
+\newenvironment{enumi}[1]
+  {\begin{lstgeneric}{}{\usecounter{enumi}\leftmargin=7mm%
+    \renewcommand{\makelabel}{(#1\arabic{enumi})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{bfenumi}[1]
+  {\begin{lstgeneric}{}{\usecounter{enumi}\leftmargin=7mm%
+    \renewcommand{\makelabel}{\bf(#1\arabic{enumi})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{enumii}[1]
+  {\begin{lstgeneric}{}{\usecounter{enumii}%
+    \renewcommand{\makelabel}{(#1\arabic{enumii})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{bfenumii}[1]
+  {\begin{lstgeneric}{}{\usecounter{enumii}\leftmargin=7mm%
+    \renewcommand{\makelabel}{\bf(#1\arabic{enumii})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{enumiii}[1]
+  {\begin{lstgeneric}{}{\usecounter{enumiii}%
+    \renewcommand{\makelabel}{(#1\arabic{enumiii})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{enumalphai}
+  {\begin{lstgeneric}{}{\usecounter{enumi}\leftmargin=7mm%
+    \renewcommand{\makelabel}{(\alph{enumi})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{bfenumalphai}
+  {\begin{lstgeneric}{}{\usecounter{enumi}\leftmargin=7mm%
+    \renewcommand{\makelabel}{\bf(\alph{enumi})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{enumalphaii}
+  {\begin{lstgeneric}{}{\usecounter{enumii}\leftmargin=10mm%
+    \renewcommand{\makelabel}{(\alph{enumii})}}}
+  {\end{lstgeneric}}
+
+\newenvironment{enumalphaiii}
+  {\begin{lstgeneric}{}{\usecounter{enumiii}%
+    \renewcommand{\makelabel}{(\alph{enumiii})}}}
+  {\end{lstgeneric}}
+
+% program environment
+\newenvironment{prg}
+   {\begin{ttfamily}\begin{tabbing}%
+      aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=aaa\=\kill}
+   {\end{tabbing}\end{ttfamily}}
+

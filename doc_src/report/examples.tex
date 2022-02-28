@@ -1,0 +1,624 @@
+\chapter{Programming with \moca}
+\label{chap:examples}
+
+\section{(Lightweight) programming examples}
+
+\label{sec:lipex}
+
+\subsection{Union sets}
+
+This simple example (10 lines) introduces some useful keywords on a simple
+structure (is in {\sf test/set.mlm}). It is a straightforward and
+compact way to express sets; it is also quite efficient as occurrences
+of the same element are detected fastly as the comb is ordered (thanks
+to the structure being commutative).
+
+\begin{lstlisting}[caption={Sets in \moca}, captionpos=b]
+type 'a t = private
+  | Empty
+  | Singleton of 'a
+  | Union of 'a t * 'a t
+    begin
+     associative
+     commutative
+     neutral (Empty)
+     idempotent
+    end
+;;
+\end{lstlisting}
+
+\note{Be careful not to choose \ocaml keywords for your generators!
+  This will be rejected by the \ocaml compiler. \moca does not check
+  against such possible conflicts.} \\
+\note{\moca generates identifiers as moca\_nameofid. Try not to
+  capture them: they are as of now not ``keywords'' strictly speaking.}
+
+\subsection{Ordered lists}
+\label{sec:olist}
+
+Ordered lists are expressed here with the usual generators : a binary
+cons and a zero-ary nil. The ``list'' stays ordered by using a \moca
+rule making an insertion sort.
+
+\begin{lstlisting}[caption={Ordered lists}]
+  type 'a olist = private
+  | Cons of  'a * 'a olist
+     begin
+      rule Cons (x, Cons (y, l)) when x < y  -> Cons (y, Cons (x, l))
+     end
+  | Nil
+;;
+\end{lstlisting}
+
+\note{For any type t, the right-hand side of rules should be of type
+  $\rightarrow$ t in the, otherwise you'll get a typing error due to a
+  mismatch between the types of your generated .mli and .ml. The only
+  way to force another type on the right-hand side is as of now to
+  regenerated an interface using ocamlc -i.
+}
+
+\subsection{Sets as ordered lists}
+\label{sec:sets_olist}
+
+We will now show an example of use of listary generators. We will build
+(polymorphic) sets using \ocaml lists and \moca.
+
+\begin{lstlisting}[caption={Sets as ordered lists}]
+  type 'a set_list = private
+  | Set of ('a set_list) list
+     begin
+      associative
+      commutative
+      neutral (Empty)
+      idempotent
+     end
+  | Empty
+  | Singleton of 'a
+;;
+\end{lstlisting}
+
+This simple specification allows to build sets based upon \ocaml
+built-in lists. Now one can work on this representation and easily
+(without recursivity) define union as follows:
+\begin{verbatim}
+let union s1 s2 = match s1, s2 with
+  | Set x, Set y -> set (x @ y)
+  | Singleton x, Set y -> set (x :: y)
+  | Set x, Singleton y -> set (y :: x)
+  | Singleton x, Singleton y -> set [x; y]
+  | _, Empty -> s1
+  | Empty, _ -> s2
+\end{verbatim}
+
+\section{More programming examples}
+\label{sec:mpex}
+
+There is already a small amount of examples in the {\sf examples}
+directory of the stable distribution of \moca. There are even more in
+the {\sf test} of the cvs directory. But beware! some of them are work
+in progress and, as such, will maybe not compile.
+
+\par We will take some of them to illustrate the main features of
+\moca\ and also highlight some peculiarities. The code is mainly taken
+from the {\sf test/proptab} and {\sf test/fotab} directories of the
+cvs sources.
+
+\note{\moca does not provide type inference and thus relies on \ocaml
+  to point out errors due to type mismatches.}
+
+\section{Propositional tableaux}
+\label{sec:proptab}
+
+The name ``tableaux'' is the general term given to a 
+family of proof-search methods. Tableaux methods exist for a wide
+range of logics, including the classical propositional case, which we
+will implement using \moca. More about this subject can be found in
+the classical book \cite{Smu68} of R. Smullyan or even on the web (see
+for example {\sf
+  http://en.wikipedia.org/wiki/Method\_of\_analytic\_tableaux}). 
+
+\subsection{Introduction to the theory}
+
+Let us give a short introduction to the method. Roughly speaking,
+a tableau  constructs step-by-step a disjunctive normal form of the initial
+proposition in order to derive a contradiction from its
+sub-propositions. 
+
+Tableaux have a strong semantic content and it is how they are best
+understood in an introduction. Say you want to prove a given formula
+$F$ always holds. One will start by stating that if $\neg F$ cannot
+ever hold, then $F$ always does\footnote{Keep in mind we use here
+  classical two-valued logic}. 
+
+Tableaux can (also) be formalized by the following set of rewrite rules and
+equalities:
+\begin{eqnarray*}
+  t \neg (A\land B) &\rw & t(\neg A) \vee t(\neg B) \\
+  t \neg (A\vee B) &\rw & t(\neg A) \land t(\neg B) \\
+  t (A\land B) &\rw & t(A) \land t(B) \\
+  t (A\vee B) &\rw & t(A) \vee t(B) \\
+  t (A \land \neg A) & \rw & \bot \\
+  t (A\land B) & = & t (B\land A)
+\end{eqnarray*}
+
+The first 4 lines constructs a disjunctive normal form and the last
+two helps deriving the global contradiction which says the initial
+formula is semantically equivalent to $\bot$.
+
+These equations represent the basics of tableaux. More can be added to
+be more efficient as we will see in the following subsections.
+
+Once a contradiction has been derived from a given proposition, we
+know it is semantically equivalent to $\bot$. However, we just know
+that any other proposition which does not yield a closed tableau is
+satisfiable. The tableau algorithm provides a way to decide
+propositional logic. 
+
+\subsection{Disjunctive Normal Form}
+We consider the following pretty standard definition of booleans,
+where atoms are represented by names (hence {\sf string}).
+
+Notice that we do not use the names {\sf True, False, And} for our
+constructors as
+the generated construction functions would have been called 
+{\sf true, false, and}, which are keywords of \ocaml.
+
+\begin{lstlisting}
+type boolean = private
+  | Btrue | Bfalse
+  | Batom of string
+  | Bnot of boolean
+  | Band of boolean * boolean
+  | Bor of boolean * boolean
+  | Bimplies of boolean * boolean 
+;;
+\end{lstlisting}
+
+The disjunctive normal form (for short DNF) represents any proposition
+under a totally equivalent from which is a disjunction ($\vee$) of
+conjunctions ($\land$). This is the chosen representation over which
+tableaux operate.
+
+Other useful normal forms include clausal (or
+conjunctive) normal form, used by resolution, and negation normal form
+(pushing the negations inside until they are only applied on atoms).
+
+The following \moca specification normalizes any proposition to its
+equivalent DNF. Involutivity is used to get rid of double negations.
+
+\begin{lstlisting}[float, caption={Propositional tableaux}, label={lst:proptab}]
+ type boolean = private
+  | Btrue | Bfalse
+  | Batom of string
+  | Bnot of boolean
+     begin 
+         involutive 
+         distributive (Band, Bor) 
+         distributive (Bor, Band) 
+     end 
+
+  | Band of boolean * boolean
+     begin 
+         distributive (Bor) 
+     end
+
+  | Bor of boolean * boolean      
+  | Bimplies of boolean * boolean 
+      begin 
+        rule Bimplies (x, y) -> Bor (Bnot x, y) 
+      end
+;;
+
+\end{lstlisting}
+
+These simple algorithm coupled with a function which finds opposite
+proposition in a comb of $\land$ suffices to have an implementation of
+propositional tableaux. This is what has been done as a first tableau
+implementation. 
+
+\subsection{On the way to normalization}
+In order to see how efficient it was to let \moca handle the
+normalization, three different implementations were proposed, each of
+which letting more and more \moca generate the code.
+
+The first implementation lets \moca put formulas into DNF and has
+functions to close the tableaux.
+
+The second does the same but adds some tweaks to the \moca part
+removing duplicates, adding information about absorbent and neutral
+elements, ... 
+
+The third one is described the next section.
+
+The difference in efficiency are summarized in the
+\mysec{sec:benchmarks}. We can already say here that \moca-generated code
+is faster than a naive equivalent code.
+
+\subsection{The whole process}
+
+After trying the former two implementations, it was natural to try to
+have an all-generated version which solved the problem. The current
+stable version has actually enough expressive power to be able to
+code propositional tableaux for all logical connectors in a compact way.
+
+See listing \ref{lst:proptab}
+\begin{lstlisting}[float,
+  caption={Propositional tableaux},
+  label={lst:whole_proptab}]
+ type boolean = private
+  | Btrue | Bfalse
+   
+  | Batom of string
+ 
+  | Bnot of boolean
+     begin 
+         involutive 
+         distributive (Band, Bor) 
+         distributive (Bor, Band) 
+     end 
+
+  | Band of boolean * boolean
+        begin
+           associative 
+           idempotent 
+           commutative 
+           distributive (Bor) 
+           inverse(Bnot, Bfalse)
+        end
+
+
+  | Bor of boolean * boolean
+        begin
+          associative  
+          commutative 
+          idempotent
+          inverse (Bnot, Btrue)
+          neutral (Bfalse)
+          absorbent (Btrue)
+        end
+
+   | Bimplies of boolean * boolean 
+         begin 
+           rule Bimplies (x, y) -> Bor (Bnot x, y) 
+         end
+;;
+
+\end{lstlisting}
+
+\subsection{With sharing}
+\label{sec:shared_proptab}
+
+The same path was followed using a shared relational
+data type. However, the results were not good due to the lack of
+memoization. 
+
+\subsection{Listary boolean generators}
+\label{sec:list_proptab}
+
+The exponential time taken by the problems linked to nested equivalences.
+For the time being, implication is handled as a binary constructor:
+the next test will be to use implication ($\Rightarrow$) as a
+non-associative non-commutative listary generator.
+
+\subsection{Comparing the execution time}
+\label{sec:benchmarks}
+
+Some testing was done in order to test the soundness of the
+specification/implementation. It was also a way to compare the
+different ways of expressing tableaux with \moca. 
+
+The tests yielded the following results (time used to solve the given
+problem):
+\[
+\begin{array}{|c|c|c|c|c|c|}
+  \hline
+  \text{n} & \text{bbns} & \text{more} & \text{all} & \text{bbs} &
+  \text{bbs+all} \\
+  \hline
+  1 & 0 & 0  & 0 & 0 & 0\\
+  2 & 0 & 0 & 0 & 0 & 0 \\
+  3 & 0 & 0 & 0 & 0 & 0 \\
+  4 & 8 (99) & 3 (81) & 0 & 17 & 0 \\
+  5 & - & 138 (243) & 0.5 & -& 1 \\
+  6 & - & - & 12 & - & 27 \\
+  7 & - & - & 305 & - & 832 \\
+  8 & - & - & 7868 & - & - \\
+ \hline
+\end{array}
+\]
+
+
+\section{First-order tableaux}
+\label{sec:fotab}
+
+\subsection{Expanding propositional tableaux}
+\label{sec:prop2fo}
+
+First-order tableaux are mostly an expansion of the propositional
+case. Nonetheless, it is not trivial as it represents a version of the
+sequent calculus polished and upgraded for automated theorem proving.
+
+The treatment of the connectors stays the same but the handling of
+quantifiers is quite fine. Existential quantificators trigger the use
+of skolemization\footnote{As we are trying to refute the formula they
+  are indeed the so-called strong quantifiers.} and universal ones
+have to be instantiated as intelligently as possible, thus using
+tricks for delaying instantiations until further
+notice\footnote{Actually, it uses placeholders (metavariables) waiting
+  for an instantiation by unification whenever enough information is
+  available.}. 
+
+\subsection{In \moca}
+\label{sec:moca_fo}
+
+In this is an example, functions are declared in quotient type.
+Take care of the evaluation order (for skolemization).
+First-order logic being undecidable, it is necessary to be able to
+loop forever. In practice, the prover will either answer ``yes'' or ``I don't
+know because'' we will set a limit on the number of possible 
+$\gamma$-expansions performed.
+
+\todo{EIther make the example work again or delete section}
+
+\section{Around combinators and $\lambda$-calculus}
+\label{sec:lambda2ski}
+
+$\lambda$-calculus and combinators being cornerstones of theoretical computer
+science, it was quite straightforward to have examples in \moca using
+it. The two untyped formalisms are equivalent but have the property of
+not being strongly normalizing, as the well-known following example:
+\[ (\lambda x.x x)(\lambda x.x x) \]
+
+In order to play a little with \moca, the following scheme was adopted:
+\begin{itemize}
+\item The user inputs a combinator expression which is translated to
+  $\lambda$-calculus; 
+\item (Simple) type inference is ran on the $\lambda$-expression:
+  typable expressions have a $\beta$-normal form and their reduction
+  terminates, so now we can reduce the input term;
+\item The $\lambda$-expression is translated back into a SK-term,
+  which is then reduced, yielding its normal form.
+\end{itemize}
+
+The code is rather simple and includes three different relational
+data types as well as the simple classical unification algorithm (found
+for example in \cite{BPie02}):
+\begin{itemize}
+\item Ski2lam terms whose input term is a SK-term and its canonical
+  form is the equivalent $\lambda$-term;
+\item Lam2ski terms whose input term is a $\lambda$-term and its canonical
+  form is the equivalent SK-term;
+\item SK-combinators and their reduction rules;
+\end{itemize}
+
+\section{Binary decision diagrams}
+\label{sec:bdd}
+
+This example was written in order to use the sharing capability of
+\moca. It is a straightforward implementation of van de Pol and
+Zantema's article \cite{JVdPolHZan00} on shared rewriting and binary
+decision diagrams. The binary decision decision
+diagrams were used to implement a solver for the N-queens problems as
+described in \cite{HRAnd97}.
+
+The \moca code is relatively short but makes only use of \mrule
+constructs. All of it and the code for the N-queens can be found in
+the {\sf bdd} subdirectory. 
+\begin{lstlisting}
+type t = private
+  | Bfalse | Btrue
+  | Batom of string
+        begin
+          rule Batom p -> Bp (p, Btrue, Bfalse)
+        end
+  | Bnot of t
+        begin
+          let comp = Pervasives.compare ;;
+          involutive
+          rule Bnot Bp (p, x, y) -> Bp (p, Bnot x, Bnot y) 
+          rule Bnot Btrue -> Bfalse
+          rule Bnot Bfalse -> Btrue
+       end
+  | Band of t * t
+        begin
+          absorbent (Bfalse)
+          neutral (Btrue)
+          rule Band (Bp (p ,x, y), Bp (q, z, w)) when p = q ->
+            Bp (p, Band (x, z), Band (y ,w))
+
+          rule Band (Bp (p ,x, y), Bp (q, z, w))
+            when comp p q < 0 ->
+             Bp (p, Band (x, Bp(q, z, w)), Band(y, Bp (q, z, w)))
+            
+          rule Band (Bp (q ,x, y), Bp (p, z, w))
+            when comp p q < 0 ->
+              Bp (p, Band (Bp(q, x, y), z), Band(Bp (q, x, y), w))
+        end
+  | Bor of t* t
+        begin
+          neutral (Bfalse)
+          absorbent (Btrue)
+
+           rule Bor (Bp (p ,x, y), Bp (q, z, w)) when p = q ->
+            Bp (p, Bor (x, z), Bor (y ,w))
+
+          rule Bor (Bp (p ,x, y), Bp (q, z, w))
+            when comp p q < 0 ->
+              Bp (p, Bor (x, Bp(q, z, w)), Bor(y, Bp (q, z, w)))
+
+        rule Bor (Bp (q ,x, y), Bp (p, z, w))
+            when comp p q < 0 ->
+              Bp (p, Bor (Bp(q, x, y), z), Bor(Bp (q, x, y), w))
+          
+        end
+  | Bxor of t * t
+        begin
+          neutral (Bfalse)
+          rule Bxor (x, Btrue) -> Bnot x
+          rule Bxor (Btrue, x) -> Bnot x
+          
+          rule Bxor (Bp (p ,x, y), Bp (q, z, w)) when p = q ->
+            Bp (p, Bxor (x, z), Bxor (y ,w))
+
+          rule Bxor (Bp (p ,x, y), Bp (q, z, w))
+            when comp p q < 0 ->
+              Bp (p, Bxor (x, Bp(q, z, w)), Bxor(y, Bp (q, z, w)))
+           rule Bxor (Bp (q ,x, y), Bp (p, z, w))
+            when comp p q < 0 ->
+              Bp (p, Bxor (Bp(q, x, y), z), Bxor(Bp (q, x, y), w))
+          
+       end
+  | Bimplies of t * t 
+        begin
+          rule Bimplies (x, y) -> Bor (Bnot x, y)
+        end
+  | Bp of string * t * t
+        begin
+          rule Bp (_, x, y) when x = y -> x          
+        end
+
+\end{lstlisting}
+
+The only problem encountered is a source of possible future work
+around \moca : the use of sharing is not really meaningful and --- more
+crucially --- not efficient without memoization. From the point of
+view of automatic code generation, it would make sense to add
+automatic memoization of function calls too to \moca.
+
+The lack of memoization is obvious on the N-queens problems which
+should be solved rather quickly but are actually rather slow, and
+slower with sharing than without. This will be interesting to see how
+\moca-generated code fares once this functionality is added.
+
+\section{Deep inference}
+\label{sec:deepinf}
+
+\subsection{A short introduction to deep inference}
+\label{sec:di}
+
+My interest for deep inferences goes back to my PhD thesis on
+deduction modulo. The two formalisms indeed share some similarities,
+as they focus on studying proof theory and rely on some sort of
+propositional rewriting in their expressions. I decided to try and
+implement a quick deep inference system in \moca to study \moca's
+expressivity and deep inference properties.
+
+\todo{Notes on inference rules of SKS and BV}
+\subsubsection{SKS}
+
+\subsubsection{BV}
+\label{sec:bv}
+
+This system is described in \cite{OKah06} and is, according to the
+author, of the more prover-ready deep inference system.  This made it
+the system of choice to have a try at implementing deep inferences in \moca.
+
+\subsection{Experimenting with \moca}
+\label{sec:di_exp}
+
+After discussing with O. Kahramanogullari, I settled on implementing
+BV. The approach was rather naive and used a straightforward encoding
+of the theory into and \mlm file. This yielded the following result:
+\begin{lstlisting}
+  (* Implementing BV deep inference calculus with Moca *)
+(* See:
+   O. Kahramanogullari
+   "Reducing nondeterminism in the calculus of structures"
+   LPAR 2006
+   for details and hints
+*)
+ 
+
+type structure = private
+  | Sunit
+  | Satom of string
+  | Sseq of structure * structure
+        begin
+          associative
+          neutral (Sunit)
+        end
+  | Spar of structure * structure
+        begin
+          associative
+          commutative
+          neutral (Sunit)
+          rule Spar (Satom x, Sneg (Satom y)) when x = y -> Sunit
+          rule Spar (Scopar (x, y), z) -> Scopar (Spar (x, z), y)
+          rule Spar (Sseq (w, x), Sseq (y, z)) ->
+            Sseq (Spar (w, y), Spar (x, z))
+        end
+  | Scopar of structure * structure
+        begin
+          associative
+          commutative
+          neutral (Sunit)
+        end
+  | Sneg of structure
+       begin
+         rule Sneg (Sseq (x, y)) -> Sseq (Sneg x, Sneg y)
+         rule Sneg (Spar (x, y)) -> Scopar (Sneg x, Sneg y)
+         rule Sneg (Scopar (x, y)) -> Spar (Sneg x, Sneg y)
+       end
+;;
+
+\end{lstlisting}
+
+The experiment was interesting but stopped rather quickly as we found
+out on paper that the system was not even confluent. A lot more work
+had to be done in order to even hope to have an interesting system for
+\moca. However it was let down in favor of other examples.
+
+Interesting but in the end failed experiment as the rewriting
+systems modeling either BV or SKS is neither confluent nor terminating.
+
+\section{Advanced (experimental) features}
+\label{sec:adv}
+
+This section describes the use of more advanced \moca features, which
+may be incomplete. 
+
+\subsection{Testing normalization}
+\label{sec:testing}
+
+\moca has an automated feature to test your relational types, which
+you can activate using the following flag at your prompt:
+\begin{verbatim}
+$ moca -test file.mlm
+\end{verbatim}
+
+This command generates a corresponding \verb£file_<test>.ml£
+
+Tests are randomly generated, so if you happen to encounter a bug you
+want to chase down, you can replay the same exact test set by using
+the {\sf -seed} flag and giving it the seed number of your previously
+generated test set.
+
+
+
+\subsection{Completion}
+\label{sec:comp}
+
+\begin{lstlisting}{float, caption={Incomplete group}}
+  type 'a t = private
+  | Unit
+      begin
+        completion precedence 10
+      end
+  | Gen of 'a
+      begin
+        completion precedence 20
+      end
+  | Opp of 'a t
+      begin
+        completion precedence 40
+      end
+  | Mult of 'a t * 'a t
+      begin
+        completion precedence 30
+        associative
+        neutral left (Unit)
+        neutral right (Unit)
+        opposite (Opp)
+      end
+;;
+\end{lstlisting}

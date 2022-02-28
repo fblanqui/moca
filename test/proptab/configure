@@ -1,0 +1,11 @@
+#!/bin/sh
+
+SUBDIRS="bbns bbns+all bbns+more bbs bbs+all vbns vbns+all"
+
+set -x
+
+#Make the correct depend file
+for i in ${SUBDIRS}; do
+    (cd $i; touch .depend; make depend;)
+done
+

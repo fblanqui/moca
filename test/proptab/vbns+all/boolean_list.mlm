@@ -1,0 +1,47 @@
+type boolean = private
+  | Btrue
+  | Bfalse
+  | Batom of string
+ 
+  | Bnot of boolean 
+     begin 
+        involutive  
+        rule Bnot (Band l) -> Bor (List.map Bnot l)
+        rule Bnot (Bor l) -> Band (List.map Bnot l)
+     end 
+
+  | Band of boolean list
+        begin
+           associative
+           idempotent
+           commutative
+           distributive (Bor)
+           inverse (Bnot, Bfalse)
+           neutral (Btrue)
+           absorbent (Bfalse)
+        end
+
+  | Bor of boolean list
+        begin
+          associative 
+          (* The following means that if we have twice the same branch
+             they will be nearby and only one instance will be kept
+             in the bor comb
+          *)
+          commutative
+          idempotent
+          inverse (Bnot, Btrue)
+          neutral (Bfalse)
+          absorbent (Btrue)
+        end
+  | Bimplies of boolean * boolean
+        begin
+          rule Bimplies (x, y) -> Bor [Bnot x; y]
+        end
+  | Bequiv of boolean list
+        begin
+          associative
+          commutative
+          nilpotent (Btrue)
+        end
+;;

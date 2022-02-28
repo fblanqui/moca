@@ -1,0 +1,92 @@
+let f x  = x ;;  
+(*
+  T[ ] may be defined as follows:
+1. T[x] => x
+2. T[(E₁ E₂)] => (T[E₁] T[E₂])
+3. T[λx.E] => (K T[E]) (if x is not free in E)
+4. T[λx.x] => I
+5. T[λx.λy.E] => T[λx.T[λy.E]] (if x is free in E)
+6. T[λx.(E₁ E₂)] => (S T[λx.E₁] T[λx.E₂])
+*)
+
+(*
+T[λx.λy.(y x)]
+= T[λx.T[λy.(y x)]] (by 5)
+= T[λx.(S T[λy.y] T[λy.x])] (by 6)
+= T[λx.(S I T[λy.x])] (by 4)
+= T[λx.(S I (K x))] (by 3 and 1)
+= (S T[λx.(S I)] T[λx.(K x)]) (by 6)
+= (S (K (S I)) T[λx.(K x)]) (by 3)
+= (S (K (S I)) (S T[λx.K] T[λx.x])) (by 6)
+= (S (K (S I)) (S (K K) T[λx.x])) (by 3)
+= (S (K (S I)) (S (K K) I)) (by 4)
+*)
+
+open Skilam;;
+open Gensymb;;
+
+type tlam2ski = private
+  | Lapp of tlam2ski * tlam2ski
+  | Labst of string * tlam2ski
+  | Lvar of string
+  | Ssvar of string
+  | Ss | Sk | Si 
+  | Ssapp of tlam2ski * tlam2ski
+  | Ski of tski
+  | Toski of tlam2ski 
+      begin
+   let rec is_free x t =
+   match t with
+   | Lvar y | Ssvar y when x = y -> true
+   | Lvar y | Ssvar y -> false
+   | Labst (s, t) when x = s ->  false
+   | Labst (s, t) -> is_free x t
+   | Lapp (t, u) | Ssapp (t, u) -> is_free x t || is_free x u
+   | Ss | Sk | Si  -> false
+   | Toski t -> is_free x t
+   | _ -> assert false 
+   ;;
+  
+  (*1*)
+      rule Toski(Lvar x) -> Lvar x
+   (*2*)
+      rule Toski(Lapp(t, u)) -> Lapp (Toski t, Toski u)
+  (*4*)
+      rule Toski(Labst(x, e)) when (Lvar x) = e -> Si
+  
+  (*3*)
+      rule Toski(Labst(x, e)) when not (is_free x e) -> Lapp (Sk, Toski e)
+  (*5*)
+     rule Toski(Labst(x, Labst(y, e))) when (is_free x e) ->
+          Toski(Labst(x, Toski (Labst(y, e))))
+ (* 6. T[λx.(E₁ E₂)] => (S T[λx.E₁] T[λx.E₂]) *)
+      rule Toski(Labst(x, Lapp(t, u))) ->
+        Lapp (Lapp (Ss, Toski( Labst(x,t))),
+                            Toski( Labst(x,u)))
+      end
+
+
+   | Tolam of tski
+        begin
+      rule Tolam S ->
+          let x = newsymb () and y = newsymb () and z = newsymb () in
+          Labst (x, Labst (y, Labst (z,
+         Lapp (Lapp (Lvar x, 
+                  Lvar z), Lapp (Lvar y, Lvar z)))))
+
+            
+      rule Tolam K ->
+        let x = newsymb () and y = newsymb () in
+        Labst (x, Labst (y, Lvar x))
+        
+      rule Tolam I ->
+        let y = newsymb () in
+        Labst(y, Lvar y)
+          
+      rule Tolam (Sapp (x, y)) -> Lapp (Tolam x, Tolam y)
+
+      rule Tolam (Svar x) -> Lvar x
+        end
+        
+
+;;

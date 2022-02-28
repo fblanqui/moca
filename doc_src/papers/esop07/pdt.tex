@@ -1,0 +1,208 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Relational data types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Concrete data types with private constructors}
+\label{sec-pdt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First-order term algebra
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We first recall the definition of a first-order term algebra. It will
+be useful for defining the values of concrete and private data types.
+
+\begin{dfn}[First-order term algebra]
+A {\em sorted term algebra definition} is a triplet $\cA=(\cS,\cC,\S)$
+where $\cS$ is a non-empty set of {\em sorts}, $\cC$ is a non-empty
+set of {\em constructor symbols} and $\S:\cC\a\cS^+$ is a {\em
+signature} mapping a non-empty sequence of sorts to every constructor
+symbol. We write $C:\s_1 \ldots\s_n\s_{n+1}\in\S$ to denote the fact
+that $\S(C)=\s_1 \ldots\s_n\s_{n+1}$. Let $\cX=(\cX_\s)_{\s\in\cS}$ be
+a family of pairwise disjoint sets of {\em variables}. The sets
+$\cT_\s(\cA,\cX)$ of {\em terms of sort $\s$} are inductively defined
+as follows:
+
+\begin{lst}{--}
+\item If $x\in\cX_\s$, then $x\in\cT_\s(\cA,\cX)$.
+\item If $C:\s_1\ldots\s_{n+1}\in\S$ and
+$t_i\in\cT_{\s_i}(\cA,\cX)$, then
+${C(t_1,\ldots,t_n)}\in\cT_{\s_{n+1}}(\cA,\cX)$.
+\end{lst}
+
+\noindent
+Let $\cT_\s(\cA)$ be the set of terms of sort $\s$ containing no
+variable.% We assume that $\cT_\s(\cA)\neq\vide$.
+\end{dfn}
+
+In the following, we assume given a set $\cS_0$ of primitive types
+like {\tt int}, {\tt string}, \ldots and a set $\cC_0$ of primitive
+constants {\tt 0}, {\tt 1}, {\tt "foo"}, \ldots  Let $\S_0$ be the
+corresponding signature ($\S_0({\tt 0})={\tt int}$, \ldots).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% concrete data types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this paper, we call {\em concrete data type} (CDT) an inductive
+type {\em\`a la} ML defined by a set of {\em constructors}. More
+formally:
+
+\begin{dfn}[Concrete data type]
+A {\em concrete data type definition} is a triplet $\G=(\g,\cC,\S)$
+where $\g$ is a sort, $\cC$ is a non-empty set of {\em constructor
+symbols} and $\S:\cC\a(\cS_0\cup\{\g\})^+$ is a {\em signature} such
+that, for all $C\in\cC$, $\S(C)=\s_1..\s_n\g$. The set $Val(\g)$ of
+{\em values of type $\g$} is the set of terms $\cT_\g(\cA_\G)$ where
+$\cA_\G=(\cS_0\cup\{\g\},\cC_0\cup\cC,\S_0\cup\S)$.
+\end{dfn}
+
+This definition of CDTs corresponds to a small but very useful subset
+of all the possible types definable in ML-like programming
+languages. For the purpose of this paper, it is not necessary to use a
+more complex definition.
+
+\begin{expl}
+The following type\footnote{Examples are written with
+\ocaml\ \cite{ocaml3.09}, they can be readily translated in any
+programming language offering pattern-matching with textual priority,
+as Haskell, SML, etc.} {\tt cexp} is a CDT definition with two
+constant constructors of sort {\tt cexp} and a binary operator of sort
+{\tt cexp} {\tt cexp} {\tt cexp}.
+
+{\small\begin{verbatim}
+type cexp =  Zero | One | Opp of cexp | Plus of cexp * cexp
+\end{verbatim}}
+\end{expl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% private data types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Now, a private data type definition is like a CDT definition together
+with construction functions as in abstract data types. Constructors
+can be used as patterns as in concrete data types but they {\em
+cannot} be used for value creation (except in the definition of
+construction functions). For building values, one must use
+construction functions as in abstract data types. Formally:
+
+\begin{dfn}[Private data type]
+A {\em private data type definition} is a pair $\Pi=(\G,\cF)$ where
+$\G=(\pi,\cC,\S)$ is a CDT definition and $\cF$ is a family of {\em
+construction functions} $(f_C)_{C\in\cC}$ such that, for all
+$C:\s_1..\s_n\pi\in\S$,
+$f_C:\cT_{\s_1}(\cA_\G)\times\ldots\times\cT_{\s_n}(\cA_\G)\a\cT_\pi(\cA_\G)$.
+Let $Val(\pi)$ be the set of the {\em values of type $\pi$}, that is,
+the set of terms that one can build by using the construction
+functions only. The function $f:\cT_\pi(\cA_\G)\a\cT_\pi(\cA_\G)$ such
+that, for all $C:\s_1..\s_n\pi\in\S$ and $t_i\in\cT_{\s_i}(\cA_\G)$,
+$f(C(t_1..t_n))=f_C(f(t_1)..f(t_n))$, is called the {\em normalization
+function associated to $\cF$}.
+\end{dfn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% values of private data types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This is quite immediate to see that:
+
+\begin{lemma}
+$Val(\pi)$ is the image of $f$.
+\end{lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% implementation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+PDTs have been implemented in \ocaml\ by the third author
+\cite{weis03}.  Extending a programming language with PDTs is not very
+difficult: one only needs to modify the compiler to parse the PDT
+definitions and check that the conditions on the use of constructors
+are fulfilled.
+
+Note that construction functions have no constraint in general: the
+full power of the underlying programming language is available to
+define them.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pattern matching
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+It should also be noted that, because the set of values of type $\pi$
+is a subset of the set of values of the underlying CDT $\g$, a
+function on $\pi$ defined by pattern matching may be a total function
+even though it is not defined on all the possible cases of
+$\g$. Defining a function with patterns that match no value of type
+$\pi$ does not harm since the corresponding code will never be run. It
+however reveals that the developer is not aware of the distinction
+between the values of the PDT and those of the underlying CDT, and
+thus can be considered as a programming error. To avoid this kind of
+errors, it is important that a PDT comes with a clear identification
+of its set of possible values. To go one step further, one could
+provide a tool for checking the completeness and usefulness of
+patterns that takes into account the invariants, when it is
+possible. We leave this for future work.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% subset example
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{expl}
+Let us now start our running example with the type {\tt exp}
+describing operations on arithmetic expressions.
+
+{\small\begin{verbatim}
+type exp = private Zero | One | Opp of exp | Plus of exp * exp
+\end{verbatim}}
+
+This type {\tt exp} is indeed a PDT built upon the CDT {\tt
+cexp}. Prompted by the keyword {\tt private}, the \ocaml\ compiler
+forbids the use of {\tt exp} constructors (outside the module {\tt
+my\_exp.ml} containing the definition of {\tt exp}) except in
+patterns.  If {\tt Zero} is supposed to be neutral by the writer of
+{\tt my\_exp.ml}, then he/she will provide construction functions as
+follows:
+
+{\small\begin{verbatim}
+let rec zero = Zero and one = One and opp x = Opp x
+and plus = function
+| (Zero,y) ->  y
+| (y,Zero) -> y
+| (x,y) -> Plus(x,y)
+\end{verbatim}}
+\end{expl}
+
+
+\comment{Let us now give a very simple example showing how PDTs can be used for
+representing subsets:\footnote{For our examples, we use the \ocaml\
+\cite{ocaml3.09} syntax but they could easily be translated to other
+programming languages.}
+
+{\small\begin{verbatim}
+(* interface file nat.mli *)
+type nat = private Nat of int
+val nat_of_int : int -> nat
+
+(* implementation file nat.ml *)
+type nat = Nat of int
+let nat_of_int x = if x<0 then invalid_arg "negative" else Nat x
+
+(* interface file array.mli *)
+open Nat
+type array
+val array_make : nat -> string -> array
+
+(* implementation file array.ml *)
+open Nat
+type array = ...
+let int_of_nat (Nat x) = x
+let array_make n s = ... (* here, we have [int_of_nat n >= 0] *)
+\end{verbatim}}
+
+A value $n$ of type {\tt nat} can be obtained only by using {\tt
+int\_of\_nat} which ensures that $n$ is a non-negative integer. Note
+that the test $n\ge 0$ is done only once, at value creation.
+We think that it should be possible to get rid of the constructor {\tt
+Nat} and allow declarations like {\tt type nat = private int}.
+}

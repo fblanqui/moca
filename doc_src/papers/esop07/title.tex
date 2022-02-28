@@ -1,0 +1,43 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{On the implementation of construction functions for non-free concrete data types}
+
+\author{Fr\'ed\'eric Blanqui\inst{1}
+\and Th\'er\`ese Hardin\inst{2}
+\and Pierre Weis\inst{3}}
+
+\institute{INRIA \& LORIA, BP 239,
+54506 Villers-l\`es-Nancy Cedex, France
+\and UPMC,
+LIP6, 104, Av. du Pr. Kennedy, 75016 Paris, France
+\and INRIA, Domaine de Voluceau, BP 105,
+78153 Le Chesnay Cedex, France}
+
+\maketitle
+
+\begin{abstract}
+Many algorithms use concrete data types with some additional invariants. The
+set of values satisfying the invariants is often a set of representatives for
+the equivalence classes of some equational theory. For instance, a sorted list
+is a particular representative wrt commutativity. Theories like associativity,
+neutral element, idempotence, etc. are also very common. Now, when one wants to
+combine various invariants, it may be difficult to find the suitable
+representatives and to efficiently implement the invariants. The preservation
+of invariants throughout the whole program is even more difficult and error
+prone. Classically, the programmer solves this problem using a combination of
+two techniques: the definition of appropriate construction functions for the
+representatives and the consistent usage of these functions ensured via
+compiler verifications. The common way of ensuring consistency is to use an
+abstract data type for the representatives; unfortunately, pattern matching on
+representatives is lost. A more appealing alternative is to define a concrete
+data type with private constructors so that both compiler verification and
+pattern matching on representatives are granted. In this paper, we detail the
+notion of private data type and study the existence of construction
+functions. We also describe a prototype, called \moca, that addresses the
+entire problem of defining concrete data types with invariants: it generates
+efficient construction functions for the combination of common invariants and
+builds representatives that belong to a concrete data type with private
+constructors.
+\end{abstract}

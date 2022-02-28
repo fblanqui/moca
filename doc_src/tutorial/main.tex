@@ -1,0 +1,314 @@
+\documentclass{article}
+\title{A Gentle Introduction to \moca}
+\author{Richard Bonichon \footnote{{\sf richard.bonichon@loria.fr}}}
+\date{March 2008}
+
+\input{macros}
+
+
+\begin{document}
+  \begin{abstract}
+   You will (hopefully!) find in this tutorial the complement of the
+already available documentation for \moca. \moca relies heavily on the
+\ocaml programming language: some prior knowledge of \ocaml is
+therefore recommended but non-\ocaml functional
+programmers\footnote{Should other programmers be called
+  ``dysfunctional'' programmers?} should have no problem reading the examples. 
+
+You can download stable versions from \mocaweb\ or browse the cvs
+archive from \mocacvs.
+
+\end{abstract}
+\maketitle
+\tableofcontents
+
+
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{What is \moca ?}
+\moca\ is a general construction functions generator for \ocaml\ data types
+with invariants.
+
+\moca\ allows the high-level definition and automatic management of
+complex invariants for data types. In addition, \moca\ provides the
+automatic generation of maximally shared values, independantly or in
+conjunction with the declared invariants.
+
+A relational data type is a concrete data type that declares
+invariants or relations that are verified by its constructors. For
+each relational data type definition, \moca\ compiles a set of
+construction functions that implements the declared relations.
+
+\moca\ supports two kinds of relations:
+\begin{itemize}
+\item algebraic relations (such as associativity or commutativity of a
+binary constructor), 
+\item general rewrite rules that map some pattern constructors
+of \moca\ and variables to some arbitrary user's define expression.
+\end{itemize}
+
+Algebraic relations are primitive, so that \moca\ ensures the
+correctness of their treatment. By contrast, the general rewrite rules
+are under the programmer's responsability, so that the desired
+properties must be verified by a programmer's proof before compilation
+(including for completeness, termination, and confluence of the
+resulting term rewriting system).
+
+Algebraic invariants are specified by using keywords denoting
+equational theories like commutativity and associativity. \moca\
+generates construction functions that allow each equivalence class to
+be uniquely represented by their canonical value.
+
+For theoretical details, have a look at \cite{moca07} which should be
+included in the distribution.
+
+\subsection{Building \moca}
+
+First download the last stable version from \mocaweb. Or do a checkout
+of the current cvs archive as follows\footnote{The line {\sf export
+    CVSROOT=:pserver:anoncvs@camlcvs.inria.fr:/caml} works with {\sf
+    bash} or {\sf zsh}. Read your shell manual if you do not know how
+  to set environment variables with your shell.}:
+
+\begin{verbatim}
+export CVSROOT=:pserver:anoncvs@camlcvs.inria.fr:/caml
+cvs login (* hit the enter key at the CVS password prompt*)
+cvs checkout bazar-ocaml/moca
+\end{verbatim}
+
+Whatever you have done in the previous step, read {\em carefully} the
+README and INSTALL files even if it will most probably be enough to
+type the usual: 
+\begin{verbatim}
+./configure
+make
+make install
+\end{verbatim}
+
+The BSD-style manpage of \moca is intended to be a handy full documentation of
+the software once you have mastered it enough. Do not hesitate to use
+it as well!
+
+\section{Features}
+\label{sec:features}
+
+As of version \vnumber\ the following features are available:
+
+For the upcoming versions the development will focus on the following themes:
+\begin{itemize}
+\item Completion
+\item Limited strategies
+\end{itemize}
+
+
+\section{(Lightweight) programming examples}
+\label{sec:lipex}
+
+
+\subsection{Sets}
+
+Introduces keywords on a simple structure (is in {\sf test/set.mlm}).
+
+\begin{lstlisting}[float, caption={Sets in \moca}, captionpos=b]
+type 'a t = private
+  | Empty
+  | Singleton of 'a
+  | Union of 'a t * 'a t
+    begin
+     associative
+     commutative
+     neutral (Empty)
+     idempotent
+    end
+;;
+\end{lstlisting}
+
+\note{Be careful not to choose \ocaml keywords for your generators!
+  This will be rejected by the \ocaml compiler. \moca does not check
+  against such possible conflicts.} \\
+\note{\moca generates identifiers as moca\_nameofid. Try not to
+  capture them: they are as of now not ``keywords'' strictly speaking.}
+
+\subsection{Ordered lists}
+\label{sec:olist}
+
+\begin{lstlisting}[caption={Ordered lists}]
+  type 'a olist = private
+  | Cons of  'a * 'a olist
+     begin
+      rule Cons (x, Cons (y, l)) when x < y  -> Cons (y, Cons (x, l))
+     end
+  | Nil
+;;
+\end{lstlisting}
+
+\note{For any type t, the right-hand side of rules should be of type
+  $\rightarow$ t in the, otherwise you'll get a typing error due to a
+  mismatch between the types of your generated .mli and .ml. The only
+  way to force another type on the right-hand side is as of now to
+  regenerated an interface using ocamlc -i.
+}
+\section{More programming examples}
+\label{sec:mpex}
+
+There is already a small amount of examples in the {\sf examples}
+directory of the stable distribution of \moca. There are even more in
+the {\sf test} of the cvs directory. But beware! some of them are work
+in progress and, as such, will maybe not compile.
+
+\par We will take some of them to illustrate the main features of
+\moca\ and also highlight some peculiarities. The code is mainly taken
+from the {\sf test/proptab} and {\sf test/fotab} directories of the
+cvs sources.
+
+\note{No type inference}
+\subsection{Propositional tableaux}
+\label{sec:proptab}
+
+The name ``tableaux'' is the general term given to a 
+family of proof-search methods. Tableaux methods exist for a wide
+range of logics, including the classical propositional case, which we
+will implement using \moca. More about this subject can be found in
+the classical book \cite{Smu68} of R. Smullyan or even on the web (see
+for example {\sf http://en.wikipedia.org/wiki/Method\_of\_analytic\_tableaux}).
+
+\subsubsection{Disjunctive Normal Form}
+We consider the following pretty standard definition of booleans,
+where atoms are represented by names (hence {\sf string}).
+
+Notice that we do not use the names {\sf True, False, And} for our
+constructors as
+the generated construction functions would have been called 
+{\sf true, false, and}, which are keywords of \ocaml.
+
+\begin{lstlisting}
+type boolean = private
+  | Btrue | Bfalse
+  | Batom of string
+  | Bnot of boolean
+  | Band of boolean * boolean
+  | Bor of boolean * boolean
+  | Bimplies of boolean * boolean 
+;;
+\end{lstlisting}
+
+\subsubsection{The whole process}
+See listing \ref{lst:proptab}
+\begin{lstlisting}[float, caption={Propositional tableaux}, label={lst:proptab}]
+ type boolean = private
+  | Btrue | Bfalse
+   
+  | Batom of string
+ 
+  | Bnot of boolean
+     begin 
+         involutive 
+         distributive (Band, Bor) 
+         distributive (Bor, Band) 
+     end 
+
+  | Band of boolean * boolean
+        begin
+           associative 
+           idempotent 
+           commutative 
+           distributive (Bor) 
+           inverse(Bnot, Bfalse)
+        end
+
+
+  | Bor of boolean * boolean
+        begin
+          associative  
+(*           (\* The following means that if we have twice the same branch *)
+(*              they will be nearby and only one instance will be kept *)
+(*              in the bor comb *)
+(*           *\) *)
+           commutative 
+          idempotent
+          inverse (Bnot, Btrue)
+          neutral (Bfalse)
+          absorbent (Btrue)
+        end
+
+   | Bimplies of boolean * boolean 
+         begin 
+           rule Bimplies (x, y) -> Bor (Bnot x, y) 
+         end
+;;
+
+\end{lstlisting}
+\subsection{First-order tableaux}
+\label{sec:fotab}
+
+In this is an example, functions are declared in quotient type.
+Take care of the evaluation order (for skolemization).
+
+
+\section{Advanced features}
+\label{sec:adv}
+
+This section describes the use of more advanced \moca features, which
+may be incomplete. 
+
+\subsection{Testing normalization}
+\label{sec:testing}
+
+\moca has an automated feature to test your realtional types, which
+you can activate using the following flag at your prompt:
+\begin{verbatim}
+$ moca -test file.mlm
+\end{verbatim}
+
+Tests are randomly generated, so if you happend to encounter a bug you
+want to chase down, you can replay the same exact test set by using
+the {\sf -seed} flag and giving it the seed number of your previously
+generated test set.
+
+
+
+\subsection{Completion}
+\label{sec:comp}
+
+\begin{lstlisting}{float, caption={Incomplete group}}
+  type 'a t = private
+  | Unit
+      begin
+        completion precedence 10
+      end
+  | Gen of 'a
+      begin
+        completion precedence 20
+      end
+  | Opp of 'a t
+      begin
+        completion precedence 40
+      end
+  | Mult of 'a t * 'a t
+      begin
+        completion precedence 30
+        associative
+        neutral left (Unit)
+        neutral right (Unit)
+        opposite (Opp)
+      end
+;;
+\end{lstlisting}
+
+\section{And now ?}
+\label{sec:conc}
+
+Here we are at the end of this tutorial. Hopefully you can now develop
+your own programs using \moca and \ocaml.
+
+We have not talked about some of the optional flags that can be
+activated on the command-line. They are described in the man page. Try
+them !
+
+%\nocite{*}
+\bibliographystyle{alpha}
+\bibliography{biblio}
+
+\end{document}

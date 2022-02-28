@@ -1,0 +1,7 @@
+boolean_sharing.cmo: boolean_sharing.cmi
+boolean_sharing.cmx: boolean_sharing.cmi
+tableau_sharing.cmo: boolean_sharing.cmi
+tableau_sharing.cmx: boolean_sharing.cmx
+test_sharing.cmo: tableau_sharing.cmo boolean_sharing.cmi
+test_sharing.cmx: tableau_sharing.cmx boolean_sharing.cmx
+boolean_sharing.cmi:

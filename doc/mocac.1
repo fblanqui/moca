@@ -1,0 +1,3236 @@
+.if !\n(.g .ab GNU tbl requires GNU troff.
+.if !dTS .ds TS
+.if !dTE .ds TE
+.lf 1 -
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH MOCAC 1 "June 4th, 2012"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+.B mocac
+\-\- a generator of construction functions for Caml relational types
+.UR http://moca.inria.fr/
+(http://moca.inria.fr/).
+
+.SH VERSION
+Mocac version 0.7.0
+.SH SYNOPSIS
+.B mocac
+.RI [ options ]\ [ source\ file ]
+.SH DESCRIPTION
+The
+.B mocac
+compiler is a Caml source file generator. It parses a special ".mlm"
+or ".mlms" file and produces a regular Caml module (interface + implementation).
+The ".mlm(s)" file is similar to a Caml ".mli" file: it must define a
+(private) type with possibly the addition of special annotations to
+specify the relations that the constructors must verify.
+.B mocac
+then generates construction functions for the constructors, such that
+all the specified relations hold for the values of the type defined.
+.P
+In addition to declarative algebraic properties specification,
+.B mocac
+offers the generation of construction functions that ensure maximal
+sharing of values, by giving a ".mlms" input file or by using the
+.I \-\-sharing
+switch.
+.P
+Last but not least, the construction functions may be made memo, if option
+.I \-\-memo
+is set  (see
+.B OPTIONS
+below).
+
+.SH CURRENTLY SUPPORTED FEATURES:
+\- Associative, commutative binary relations.
+
+\- Inverse relations.
+
+\- Absorbent, absorbing, or neutral elements.
+
+\- Idempotent, nilpotent, distributive, involutive unary and binary
+relations.
+
+\- General rewrite rules.
+
+\- Maximal sharing of values built.
+
+\- Memoization of construction functions.
+
+\- Listary relations (variable arity).
+
+\- User-defined comparison function for commutative relations.
+
+.SH EXPERIMENTAL FEATURES:
+
+\- Completion of theories
+
+\- Automatic term generation for testing purposes
+
+.SH SYNTAX ADDITIONS TO TYPE DEFINITIONS
+
+To specify  relations on constructors,
+.B mocac
+adds some extra syntax rules to the  grammar of type definitions.
+
+
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.nr 3w2 \n(.H
+.nr 3aw2 0
+.nr 3lnw2 0
+.nr 3rnw2 0
+.lf 90 -
+.nr 3w0 \n[3w0]>?\w\[tbl]constr-decl \[tbl]
+.lf 90
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 90
+.nr 3w2 \n[3w2]>?\w\[tbl] constr-name [ annotation ]\[tbl]
+.lf 91
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 91
+.nr 3w2 \n[3w2]>?\w\[tbl] constr-name of typexpr [ annotation ]\[tbl]
+.lf 93
+.nr 3w0 \n[3w0]>?\w\[tbl]annotation \[tbl]
+.lf 93
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 93
+.nr 3w2 \n[3w2]>?\w\[tbl] begin\[tbl]
+.lf 94
+.nr 3w0 \n[3w0]>?\w\[tbl]           \[tbl]
+.lf 94
+.nr 3w1 \n[3w1]>?\w\[tbl]   \[tbl]
+.lf 94
+.nr 3w2 \n[3w2]>?\w\[tbl] { relation | completion_hint }+\[tbl]
+.lf 95
+.nr 3w0 \n[3w0]>?\w\[tbl]           \[tbl]
+.lf 95
+.nr 3w1 \n[3w1]>?\w\[tbl]   \[tbl]
+.lf 95
+.nr 3w2 \n[3w2]>?\w\[tbl] end\[tbl]
+.lf 97
+.nr 3w0 \n[3w0]>?\w\[tbl]relation \[tbl]
+.lf 97
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 98
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 98
+.nr 3w2 \n[3w2]>?\w\[tbl] commutative [(compare)]\[tbl]
+.lf 99
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 99
+.nr 3w2 \n[3w2]>?\w\[tbl] associative\[tbl]
+.lf 100
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 100
+.nr 3w2 \n[3w2]>?\w\[tbl] involutive\[tbl]
+.lf 101
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 101
+.nr 3w2 \n[3w2]>?\w\[tbl] idempotent [side]\[tbl]
+.lf 102
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 102
+.nr 3w2 \n[3w2]>?\w\[tbl] neutral [side] (constr-name)\[tbl]
+.lf 103
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 103
+.nr 3w2 \n[3w2]>?\w\[tbl] nilpotent (constr-name)\[tbl]
+.lf 104
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 104
+.nr 3w2 \n[3w2]>?\w\[tbl] invopp [side] (constr-name [, constr-name])\[tbl]
+.lf 105
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 105
+.nr 3w2 \n[3w2]>?\w\[tbl] distributive [invopp] [side]\[tbl]
+.lf 106
+.nr 3w1 \n[3w1]>?\w\[tbl] \[tbl]
+.lf 106
+.nr 3w2 \n[3w2]>?\w\[tbl] (constr-name [, constr_name])\[tbl]
+.lf 107
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 107
+.nr 3w2 \n[3w2]>?\w\[tbl] absorbent [side] (constr-name)\[tbl]
+.lf 108
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 108
+.nr 3w2 \n[3w2]>?\w\[tbl] absorbing [side] (constr-name)\[tbl]
+.lf 109
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 109
+.nr 3w2 \n[3w2]>?\w\[tbl] rule pattern\ ->\ expression\[tbl]
+.lf 111
+.nr 3w0 \n[3w0]>?\w\[tbl]side \[tbl]
+.lf 111
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 111
+.nr 3w2 \n[3w2]>?\w\[tbl]\ left\ |\ right\[tbl]
+.lf 113
+.nr 3w0 \n[3w0]>?\w\[tbl]invopp \[tbl]
+.lf 113
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 113
+.nr 3w2 \n[3w2]>?\w\[tbl]\ inverse\ |\ opposite\[tbl]
+.lf 115
+.nr 3w0 \n[3w0]>?\w\[tbl]rpo_status \[tbl]
+.lf 115
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 115
+.nr 3w2 \n[3w2]>?\w\[tbl]\ lexicographic\ |\ multiset\[tbl]
+.lf 117
+.nr 3w0 \n[3w0]>?\w\[tbl]completion_hint \[tbl]
+.lf 117
+.nr 3w1 \n[3w1]>?\w\[tbl]::=\[tbl]
+.lf 118
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 118
+.nr 3w2 \n[3w2]>?\w\[tbl] completion precedence int\[tbl]
+.lf 119
+.nr 3w1 \n[3w1]>?\w\[tbl]|\[tbl]
+.lf 119
+.nr 3w2 \n[3w2]>?\w\[tbl] completion status rpo_status\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3w2 \n[3w2]>?(\n[3lnw2]+\n[3rnw2])
+.if \n[3aw2] .nr 3w2 \n[3w2]>?(\n[3aw2]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-\n[3w2]-6n
+.if \n[3expand]<0 \{.lf 90
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cl2 \n[3ce1]+(3*\n[3sep])
+.nr 3cd2 \n[3ce1]+\n[3cl2]/2
+.nr 3ce2 \n[3cl2]+\n[3w2]
+.nr 3cd3 \n[3ce2]+(0*\n[3sep])
+.nr TW \n[3cd3]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 90
+\&\h'|\n[3cl0]u'constr-decl \h'|\n[3cl1]u'::=\h'|\n[3cl2]u' constr-name [ annotation ]
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 91
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' constr-name of typexpr [ annotation ]
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 92
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 93
+\&\h'|\n[3cl0]u'annotation \h'|\n[3cl1]u'::=\h'|\n[3cl2]u' begin
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt4
+\*[3trans].nr 3crow 4
+.3keep
+.mk 3rs4
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 94
+\&\h'|\n[3cl0]u'           \h'|\n[3cl1]u'   \h'|\n[3cl2]u' { relation | completion_hint }+
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs4]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt5
+\*[3trans].nr 3crow 5
+.3keep
+.mk 3rs5
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 95
+\&\h'|\n[3cl0]u'           \h'|\n[3cl1]u'   \h'|\n[3cl2]u' end
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs5]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt6
+\*[3trans].nr 3crow 6
+.3keep
+.mk 3rs6
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 96
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs6]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt7
+\*[3trans].nr 3crow 7
+.3keep
+.mk 3rs7
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u
+.lf 97
+\&\h'|\n[3cl0]u'relation \h'|\n[3cl1]u'::=
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs7]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt8
+\*[3trans].nr 3crow 8
+.3keep
+.mk 3rs8
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 98
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' commutative [(compare)]
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs8]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt9
+\*[3trans].nr 3crow 9
+.3keep
+.mk 3rs9
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 99
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' associative
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs9]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt10
+\*[3trans].nr 3crow 10
+.3keep
+.mk 3rs10
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 100
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' involutive
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs10]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt11
+\*[3trans].nr 3crow 11
+.3keep
+.mk 3rs11
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 101
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' idempotent [side]
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs11]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt12
+\*[3trans].nr 3crow 12
+.3keep
+.mk 3rs12
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 102
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' neutral [side] (constr-name)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs12]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt13
+\*[3trans].nr 3crow 13
+.3keep
+.mk 3rs13
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 103
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' nilpotent (constr-name)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs13]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt14
+\*[3trans].nr 3crow 14
+.3keep
+.mk 3rs14
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 104
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' invopp [side] (constr-name [, constr-name])
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs14]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt15
+\*[3trans].nr 3crow 15
+.3keep
+.mk 3rs15
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 105
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' distributive [invopp] [side]
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs15]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt16
+\*[3trans].nr 3crow 16
+.3keep
+.mk 3rs16
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 106
+\&\h'|\n[3cl1]u' \h'|\n[3cl2]u' (constr-name [, constr_name])
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs16]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt17
+\*[3trans].nr 3crow 17
+.3keep
+.mk 3rs17
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 107
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' absorbent [side] (constr-name)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs17]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt18
+\*[3trans].nr 3crow 18
+.3keep
+.mk 3rs18
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 108
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' absorbing [side] (constr-name)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs18]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt19
+\*[3trans].nr 3crow 19
+.3keep
+.mk 3rs19
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 109
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' rule pattern\ ->\ expression
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs19]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt20
+\*[3trans].nr 3crow 20
+.3keep
+.mk 3rs20
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 110
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs20]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt21
+\*[3trans].nr 3crow 21
+.3keep
+.mk 3rs21
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 111
+\&\h'|\n[3cl0]u'side \h'|\n[3cl1]u'::=\h'|\n[3cl2]u'\ left\ |\ right
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs21]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt22
+\*[3trans].nr 3crow 22
+.3keep
+.mk 3rs22
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 112
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs22]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt23
+\*[3trans].nr 3crow 23
+.3keep
+.mk 3rs23
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 113
+\&\h'|\n[3cl0]u'invopp \h'|\n[3cl1]u'::=\h'|\n[3cl2]u'\ inverse\ |\ opposite
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs23]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt24
+\*[3trans].nr 3crow 24
+.3keep
+.mk 3rs24
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 114
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs24]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt25
+\*[3trans].nr 3crow 25
+.3keep
+.mk 3rs25
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u \n[3ce2]u
+.lf 115
+\&\h'|\n[3cl0]u'rpo_status \h'|\n[3cl1]u'::=\h'|\n[3cl2]u'\ lexicographic\ |\ multiset
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs25]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt26
+\*[3trans].nr 3crow 26
+.3keep
+.mk 3rs26
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 116
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs26]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt27
+\*[3trans].nr 3crow 27
+.3keep
+.mk 3rs27
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce0]u \n[3ce1]u
+.lf 117
+\&\h'|\n[3cl0]u'completion_hint \h'|\n[3cl1]u'::=
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs27]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt28
+\*[3trans].nr 3crow 28
+.3keep
+.mk 3rs28
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 118
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' completion precedence int
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs28]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt29
+\*[3trans].nr 3crow 29
+.3keep
+.mk 3rs29
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u \n[3ce2]u
+.lf 119
+\&\h'|\n[3cl1]u'|\h'|\n[3cl2]u' completion status rpo_status
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs29]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt30
+\*[3trans].nr 3crow 30
+.3keep
+.mk 3rs30
+.mk 3bot
+.3rvpt 0
+.ta
+.lf 120
+\&
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs30]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt31
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 121
+.TE
+
+.P
+The
+.I compare
+construction refers to the name of a user-defined comparison function.
+This comparison function can be defined in any of the constructors of the
+variant type (but must be defined in one).
+
+.P
+Additional completion hints can be given to define a precedence over the
+generators when using lpo, mpo or rpo. A status -- lexicographic or multiset --
+can also be given when using rpo.
+
+.SH MEANING OF ALGEBRAIC PROPERTIES OF CONSTRUCTORS
+
+The declaration of a constructor
+.B C
+may be annotated by one or more algebraic properties among the one below.
+
+.P
+The basic properties are as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 147 -
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x, y) = C (y, x)\[tbl]
+.lf 148
+.nr 3w1 \n[3w1]>?\w\[tbl] If a value matches C (x, y), we have compare x y < 0,\[tbl]
+.lf 149
+.nr 3w1 \n[3w1]>?\w\[tbl] where compare is Pervasives.compare\[tbl]
+.lf 150
+.nr 3w1 \n[3w1]>?\w\[tbl] or the comparison function specified.\[tbl]
+.lf 152
+.nr 3w1 \n[3w1]>?\w\[tbl] C (C (x, y), z) = C (x, C (y, z))\[tbl]
+.lf 153
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (C (x, y), z).\[tbl]
+.lf 155
+.nr 3w1 \n[3w1]>?\w\[tbl] C (C (x)) = x\[tbl]
+.lf 156
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (C (x)).\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 147
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 146
+.IR commutative\ [(compare)]
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 147 -
+\&\h'|\n[3cl1]u' C (x, y) = C (y, x)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 148
+\&\h'|\n[3cl1]u' If a value matches C (x, y), we have compare x y < 0,
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 149
+\&\h'|\n[3cl1]u' where compare is Pervasives.compare
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 150
+\&\h'|\n[3cl1]u' or the comparison function specified.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt4
+.cp \n(3c
+.lf 151
+.IR associative
+.cp 0
+\*[3trans].nr 3crow 4
+.3keep
+.mk 3rs4
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 152 -
+\&\h'|\n[3cl1]u' C (C (x, y), z) = C (x, C (y, z))
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs4]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt5
+\*[3trans].nr 3crow 5
+.3keep
+.mk 3rs5
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 153
+\&\h'|\n[3cl1]u' No value matches C (C (x, y), z).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs5]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt6
+.cp \n(3c
+.lf 154
+.IR involutive
+.cp 0
+\*[3trans].nr 3crow 6
+.3keep
+.mk 3rs6
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 155 -
+\&\h'|\n[3cl1]u' C (C (x)) = x
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs6]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt7
+\*[3trans].nr 3crow 7
+.3keep
+.mk 3rs7
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 156
+\&\h'|\n[3cl1]u' No value matches C (C (x)).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs7]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt8
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 157
+.TE
+
+.P
+The neutral, nilpotent and idempotent properties are as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 165 -
+.nr 3w1 \n[3w1]>?\w\[tbl] neutral\ left\ (D) and neutral\ right\ (D).\[tbl]
+.lf 167
+.nr 3w1 \n[3w1]>?\w\[tbl] C (D, x) = x\[tbl]
+.lf 168
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (D, x).\[tbl]
+.lf 170
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x, D) = x\[tbl]
+.lf 171
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (x, D).\[tbl]
+.lf 173
+.nr 3w1 \n[3w1]>?\w\[tbl] nilpotent\ left\ (A) and nilpotent\ right\ (A).\[tbl]
+.lf 175
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x, C (x, y)) = A\[tbl]
+.lf 176
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (x, C (x, y)).\[tbl]
+.lf 178
+.nr 3w1 \n[3w1]>?\w\[tbl] C (C (x, y), y) = A\[tbl]
+.lf 179
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (C (x, y), y).\[tbl]
+.lf 181
+.nr 3w1 \n[3w1]>?\w\[tbl] idempotent\ left and idempotent\ right.\[tbl]
+.lf 183
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x, C (x, y)) = C (x, y)\[tbl]
+.lf 184
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (x, C (x, y)).\[tbl]
+.lf 186
+.nr 3w1 \n[3w1]>?\w\[tbl] C (C (x, y), y) = C (x, y)\[tbl]
+.lf 187
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (C (x, y), y).\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 165
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 164
+.IR neutral\ (D)
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 165 -
+\&\h'|\n[3cl1]u' neutral\ left\ (D) and neutral\ right\ (D).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+.cp \n(3c
+.lf 166
+.IR neutral\ left\ (D)
+.cp 0
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 167 -
+\&\h'|\n[3cl1]u' C (D, x) = x
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 168
+\&\h'|\n[3cl1]u' No value matches C (D, x).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+.cp \n(3c
+.lf 169
+.IR neutral\ right\ (D)
+.cp 0
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 170 -
+\&\h'|\n[3cl1]u' C (x, D) = x
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt4
+\*[3trans].nr 3crow 4
+.3keep
+.mk 3rs4
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 171
+\&\h'|\n[3cl1]u' No value matches C (x, D).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs4]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt5
+.cp \n(3c
+.lf 172
+.IR nilpotent\ (A)
+.cp 0
+\*[3trans].nr 3crow 5
+.3keep
+.mk 3rs5
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 173 -
+\&\h'|\n[3cl1]u' nilpotent\ left\ (A) and nilpotent\ right\ (A).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs5]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt6
+.cp \n(3c
+.lf 174
+.IR nilpotent\ left\ (A)
+.cp 0
+\*[3trans].nr 3crow 6
+.3keep
+.mk 3rs6
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 175 -
+\&\h'|\n[3cl1]u' C (x, C (x, y)) = A
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs6]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt7
+\*[3trans].nr 3crow 7
+.3keep
+.mk 3rs7
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 176
+\&\h'|\n[3cl1]u' No value matches C (x, C (x, y)).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs7]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt8
+.cp \n(3c
+.lf 177
+.IR nilpotent\ right\ (A)
+.cp 0
+\*[3trans].nr 3crow 8
+.3keep
+.mk 3rs8
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 178 -
+\&\h'|\n[3cl1]u' C (C (x, y), y) = A
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs8]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt9
+\*[3trans].nr 3crow 9
+.3keep
+.mk 3rs9
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 179
+\&\h'|\n[3cl1]u' No value matches C (C (x, y), y).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs9]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt10
+.cp \n(3c
+.lf 180
+.IR idempotent
+.cp 0
+\*[3trans].nr 3crow 10
+.3keep
+.mk 3rs10
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 181 -
+\&\h'|\n[3cl1]u' idempotent\ left and idempotent\ right.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs10]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt11
+.cp \n(3c
+.lf 182
+.IR idempotent\ left
+.cp 0
+\*[3trans].nr 3crow 11
+.3keep
+.mk 3rs11
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 183 -
+\&\h'|\n[3cl1]u' C (x, C (x, y)) = C (x, y)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs11]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt12
+\*[3trans].nr 3crow 12
+.3keep
+.mk 3rs12
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 184
+\&\h'|\n[3cl1]u' No value matches C (x, C (x, y)).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs12]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt13
+.cp \n(3c
+.lf 185
+.IR idempotent\ right
+.cp 0
+\*[3trans].nr 3crow 13
+.3keep
+.mk 3rs13
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 186 -
+\&\h'|\n[3cl1]u' C (C (x, y), y) = C (x, y)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs13]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt14
+\*[3trans].nr 3crow 14
+.3keep
+.mk 3rs14
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 187
+\&\h'|\n[3cl1]u' No value matches C (C (x, y), y).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs14]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt15
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 188
+.TE
+
+.P
+The inverse and opposite properties are as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 196 -
+.nr 3w1 \n[3w1]>?\w\[tbl] inverse\ left\ (I,\ E) and inverse\ right\ (I,\ E).\[tbl]
+.lf 198
+.nr 3w1 \n[3w1]>?\w\[tbl] C (I (x),\ x) = E\[tbl]
+.lf 199
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (I (x), x).\[tbl]
+.lf 201
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x,\ I (x)) = E\[tbl]
+.lf 202
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (x, I (x)).\[tbl]
+.lf 204
+.nr 3w1 \n[3w1]>?\w\[tbl] inverse [side'] (I) is equivalent to inverse [side'] (I, E).\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 196
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 195
+.IR inverse\ (I,\ E)
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 196 -
+\&\h'|\n[3cl1]u' inverse\ left\ (I,\ E) and inverse\ right\ (I,\ E).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+.cp \n(3c
+.lf 197
+.IR inverse\ left\ (I,\ E)
+.cp 0
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 198 -
+\&\h'|\n[3cl1]u' C (I (x),\ x) = E
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 199
+\&\h'|\n[3cl1]u' No value matches C (I (x), x).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+.cp \n(3c
+.lf 200
+.IR inverse\ right\ (I,\ E)
+.cp 0
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 201 -
+\&\h'|\n[3cl1]u' C (x,\ I (x)) = E
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt4
+\*[3trans].nr 3crow 4
+.3keep
+.mk 3rs4
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 202
+\&\h'|\n[3cl1]u' No value matches C (x, I (x)).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs4]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt5
+.cp \n(3c
+.lf 203
+.IR Note:\ If\ C\ is\ neutral\ [side]\ (E),\ then
+.cp 0
+\*[3trans].nr 3crow 5
+.3keep
+.mk 3rs5
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 204 -
+\&\h'|\n[3cl1]u' inverse [side'] (I) is equivalent to inverse [side'] (I, E).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs5]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt6
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 205
+.TE
+
+.P
+The distributivity properties are as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 213 -
+.nr 3w1 \n[3w1]>?\w\[tbl] distributive\ left\ (D,\ E) and distributive\ right\ (D,\ E).\[tbl]
+.lf 215
+.nr 3w1 \n[3w1]>?\w\[tbl] distributive\ (D,\ D)\[tbl]
+.lf 217
+.nr 3w1 \n[3w1]>?\w\[tbl] C (D (x1,\ ...,\ xn),\ z) = E (C (x1,\ z),\ ...,\ C (xn,\ z))\[tbl]
+.lf 218
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (D (x1,\ ...,\ xn), z).\[tbl]
+.lf 220
+.nr 3w1 \n[3w1]>?\w\[tbl] C (z,\ D (x1,\ ...,\ xn)) = E (C (z,\ x1),\ ...,\ C (z,\ xn))\[tbl]
+.lf 221
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (z, D (x1, ..., xn)).\[tbl]
+.lf 223
+.nr 3w1 \n[3w1]>?\w\[tbl] C (D (x1,\ ...,\ xn),\ z) = E (C (xn,\ z),\ ...,\ C (x1,\ z))\[tbl]
+.lf 224
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (D (x1,\ ...,\ xn), z).\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 213
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 212
+.IR distributive\ (D,\ E)
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 213 -
+\&\h'|\n[3cl1]u' distributive\ left\ (D,\ E) and distributive\ right\ (D,\ E).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+.cp \n(3c
+.lf 214
+.IR distributive\ (D)
+.cp 0
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 215 -
+\&\h'|\n[3cl1]u' distributive\ (D,\ D)
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+.cp \n(3c
+.lf 216
+.IR distributive\ left\ (D,\ E)
+.cp 0
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 217 -
+\&\h'|\n[3cl1]u' C (D (x1,\ ...,\ xn),\ z) = E (C (x1,\ z),\ ...,\ C (xn,\ z))
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 218
+\&\h'|\n[3cl1]u' No value matches C (D (x1,\ ...,\ xn), z).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt4
+.cp \n(3c
+.lf 219
+.IR distributive\ right\ (D,\ E)
+.cp 0
+\*[3trans].nr 3crow 4
+.3keep
+.mk 3rs4
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 220 -
+\&\h'|\n[3cl1]u' C (z,\ D (x1,\ ...,\ xn)) = E (C (z,\ x1),\ ...,\ C (z,\ xn))
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs4]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt5
+\*[3trans].nr 3crow 5
+.3keep
+.mk 3rs5
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 221
+\&\h'|\n[3cl1]u' No value matches C (z, D (x1, ..., xn)).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs5]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt6
+.cp \n(3c
+.lf 222
+.IR distributive\ inverse\ left\ (D,\ E)
+.cp 0
+\*[3trans].nr 3crow 6
+.3keep
+.mk 3rs6
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 223 -
+\&\h'|\n[3cl1]u' C (D (x1,\ ...,\ xn),\ z) = E (C (xn,\ z),\ ...,\ C (x1,\ z))
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs6]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt7
+\*[3trans].nr 3crow 7
+.3keep
+.mk 3rs7
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 224
+\&\h'|\n[3cl1]u' No value matches C (D (x1,\ ...,\ xn), z).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs7]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt8
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 225
+.TE
+
+.P
+The absorbing and absorbent properties are as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 233 -
+.nr 3w1 \n[3w1]>?\w\[tbl] absorbent left\ (A) and absorbent right (A) (A, x) = A.\[tbl]
+.lf 235
+.nr 3w1 \n[3w1]>?\w\[tbl] C (A, x) = A\[tbl]
+.lf 236
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (A, x).\[tbl]
+.lf 238
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x, A) = A\[tbl]
+.lf 239
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (x, A).\[tbl]
+.lf 241
+.nr 3w1 \n[3w1]>?\w\[tbl] absorbing left (D) and absorbing right (D).\[tbl]
+.lf 243
+.nr 3w1 \n[3w1]>?\w\[tbl] C (D (x, y), y) = y\[tbl]
+.lf 244
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (D (x, y), y).\[tbl]
+.lf 246
+.nr 3w1 \n[3w1]>?\w\[tbl] C (x, D (x, y)) = x\[tbl]
+.lf 247
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (x, D (x, y)).\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 233
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 232
+.IR absorbent\ (A)
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 233 -
+\&\h'|\n[3cl1]u' absorbent left\ (A) and absorbent right (A) (A, x) = A.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+.cp \n(3c
+.lf 234
+.IR absorbent\ left\ (A)
+.cp 0
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 235 -
+\&\h'|\n[3cl1]u' C (A, x) = A
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 236
+\&\h'|\n[3cl1]u' No value matches C (A, x).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+.cp \n(3c
+.lf 237
+.IR absorbent\ right\ (A)
+.cp 0
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 238 -
+\&\h'|\n[3cl1]u' C (x, A) = A
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt4
+\*[3trans].nr 3crow 4
+.3keep
+.mk 3rs4
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 239
+\&\h'|\n[3cl1]u' No value matches C (x, A).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs4]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt5
+.cp \n(3c
+.lf 240
+.IR absorbing\ (D)
+.cp 0
+\*[3trans].nr 3crow 5
+.3keep
+.mk 3rs5
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 241 -
+\&\h'|\n[3cl1]u' absorbing left (D) and absorbing right (D).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs5]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt6
+.cp \n(3c
+.lf 242
+.IR absorbing\ left\ (D)
+.cp 0
+\*[3trans].nr 3crow 6
+.3keep
+.mk 3rs6
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 243 -
+\&\h'|\n[3cl1]u' C (D (x, y), y) = y
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs6]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt7
+\*[3trans].nr 3crow 7
+.3keep
+.mk 3rs7
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 244
+\&\h'|\n[3cl1]u' No value matches C (D (x, y), y).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs7]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt8
+.cp \n(3c
+.lf 245
+.IR absorbing\ right\ (D)
+.cp 0
+\*[3trans].nr 3crow 8
+.3keep
+.mk 3rs8
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 246 -
+\&\h'|\n[3cl1]u' C (x, D (x, y)) = x
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs8]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt9
+\*[3trans].nr 3crow 9
+.3keep
+.mk 3rs9
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 247
+\&\h'|\n[3cl1]u' No value matches C (x, D (x, y)).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs9]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt10
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 248
+.TE
+
+.P
+User-defined rewrite rules are as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 256 -
+.nr 3w1 \n[3w1]>?\w\[tbl] C (pat) = expr\[tbl]
+.lf 257
+.nr 3w1 \n[3w1]>?\w\[tbl] No value matches C (pat).\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 256
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 255
+.IR rule\ pat\ ->\ expr
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 256 -
+\&\h'|\n[3cl1]u' C (pat) = expr
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 257
+\&\h'|\n[3cl1]u' No value matches C (pat).
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt2
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 258
+.TE
+
+.P
+Completion hints can be given as follows:
+.TS
+.nr 3c \n(.C
+.cp 0
+.nr 3lps \n[.s]
+.nr 3cent \n[.ce]
+.de 3init
+.ft \n[.f]
+.ps \n[.s]
+.vs \n[.v]u
+.in \n[.i]u
+.ll \n[.l]u
+.ls \n[.L]
+.ad \n[.j]
+.ie \n[.u] .fi
+.el .nf
+.ce \n[.ce]
+..
+.nr 3ind \n[.i]
+.nr 3fnt \n[.f]
+.nr 3sz \n[.s]
+.nr 3fll \n[.u]
+.nr T. 0
+.nr 3crow 0-1
+.nr 3passed 0-1
+.nr 3sflag 0
+.ds 3trans
+.ds 3quote
+.nr 3brule 1
+.nr 3supbot 0
+.eo
+.de 3rmk
+.mk \$1
+.if !'\n(.z'' \!.3rmk "\$1"
+..
+.de 3rvpt
+.vpt \$1
+.if !'\n(.z'' \!.3rvpt "\$1"
+..
+.de 3keep
+.if '\n[.z]'' \{.ds 3quote \\
+.ds 3trans \!
+.di 3section
+.nr 3sflag 1
+.in 0
+.\}
+..
+.de 3release
+.if \n[3sflag] \{.di
+.in \n[3ind]u
+.nr 3dn \n[dn]
+.ds 3quote
+.ds 3trans
+.nr 3sflag 0
+.if \n[.t]<=\n[dn] \{.nr T. 1
+.T#
+.nr 3supbot 1
+.sp \n[.t]u
+.nr 3supbot 0
+.mk #T
+.\}
+.if \n[.t]<=\n[3dn] .tm warning: page \n%: table text block will not fit on one page
+.nf
+.ls 1
+.3section
+.ls
+.rm 3section
+.\}
+..
+.nr 3tflag 0
+.de 3tkeep
+.if '\n[.z]'' \{.di 3table
+.nr 3tflag 1
+.\}
+..
+.de 3trelease
+.if \n[3tflag] \{.br
+.di
+.nr 3dn \n[dn]
+.ne \n[dn]u+\n[.V]u
+.ie \n[.t]<=\n[3dn] .tm error: page \n%: table will not fit on one page; use .TS H/.TH with a supporting macro package
+.el \{.in 0
+.ls 1
+.nf
+.3table
+.\}
+.rm 3table
+.\}
+..
+.ec
+.ce 0
+.nf
+.nr 3sep 1n
+.nr 3w0 \n(.H
+.nr 3aw0 0
+.nr 3lnw0 0
+.nr 3rnw0 0
+.nr 3w1 \n(.H
+.nr 3aw1 0
+.nr 3lnw1 0
+.nr 3rnw1 0
+.lf 266 -
+.nr 3w1 \n[3w1]>?\w\[tbl] s can be lexicographic or multiset.\[tbl]
+.lf 267
+.nr 3w1 \n[3w1]>?\w\[tbl] s is the RPO status of the generator.\[tbl]
+.lf 269
+.nr 3w1 \n[3w1]>?\w\[tbl] i is an integer.\[tbl]
+.lf 270
+.nr 3w1 \n[3w1]>?\w\[tbl] The integers define the precedence on generator symbols.\[tbl]
+.nr 3w0 \n[3w0]>?(\n[3lnw0]+\n[3rnw0])
+.if \n[3aw0] .nr 3w0 \n[3w0]>?(\n[3aw0]+2n)
+.nr 3w1 \n[3w1]>?(\n[3lnw1]+\n[3rnw1])
+.if \n[3aw1] .nr 3w1 \n[3w1]>?(\n[3aw1]+2n)
+.nr 3expand \n[.l]-\n[.i]-\n[3w0]-\n[3w1]-3n
+.if \n[3expand]<0 \{.lf 266
+.tm1 "warning: file `\n[.F]', around line \n[.c]:
+.tm1 "  table wider than line width
+.nr 3expand 0
+.\}
+.nr 3cd0 0
+.nr 3cl0 0*\n[3sep]
+.nr 3ce0 \n[3cl0]+\n[3w0]
+.nr 3cl1 \n[3ce0]+(3*\n[3sep])
+.nr 3cd1 \n[3ce0]+\n[3cl1]/2
+.nr 3ce1 \n[3cl1]+\n[3w1]
+.nr 3cd2 \n[3ce1]+(0*\n[3sep])
+.nr TW \n[3cd2]
+.if \n[3cent] \{.in +(u;\n[.l]-\n[.i]-\n[TW]/2>?-\n[.i])
+.nr 3ind \n[.i]
+.\}
+.eo
+.de T#
+.if !\n[3supbot] \{.3rvpt 0
+.mk 3vert
+.ls 1
+.ls
+.nr 3passed \n[3crow]
+.sp |\n[3vert]u
+.3rvpt 1
+.\}
+..
+.ec
+.fc 
+.3keep
+.3rmk 3rt0
+.cp \n(3c
+.lf 265
+.IR completion\ status\ s
+.cp 0
+\*[3trans].nr 3crow 0
+.3keep
+.mk 3rs0
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 266 -
+\&\h'|\n[3cl1]u' s can be lexicographic or multiset.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs0]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt1
+\*[3trans].nr 3crow 1
+.3keep
+.mk 3rs1
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 267
+\&\h'|\n[3cl1]u' s is the RPO status of the generator.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs1]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt2
+.cp \n(3c
+.lf 268
+.IR completion\ precedence\ i
+.cp 0
+\*[3trans].nr 3crow 2
+.3keep
+.mk 3rs2
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 269 -
+\&\h'|\n[3cl1]u' i is an integer.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs2]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.3keep
+.3rmk 3rt3
+\*[3trans].nr 3crow 3
+.3keep
+.mk 3rs3
+.mk 3bot
+.3rvpt 0
+.ta \n[3ce1]u
+.lf 270
+\&\h'|\n[3cl1]u' The integers define the precedence on generator symbols.
+.nr 3bot \n[3bot]>?\n[.d]
+.sp |\n[3rs3]u
+.3rvpt 1
+.sp |\n[3bot]u
+\*[3trans].nr 3brule 1
+.3release
+.mk 3rt4
+.nr 3brule 1
+.nr T. 1
+.T#
+.3init
+.fc
+.cp \n(3c
+.lf 271
+.TE
+
+.SH OPTIONS
+The following command-line options are recognized by
+.B mocac
+:
+.TP
+.B \-c
+Generate a module for the input file argument.
+.TP
+.B \-d
+Debugging mode: generate a trace of pattern matching clauses used in construction functions.
+.TP
+.B \-help | \-\-help
+Display the list of options.
+.TP
+.B \-i
+Generate a module interface for the input file argument
+.TP
+.B \-kb
+Set completion on (experimental).
+.TP
+.BI \-limit\ <n>
+Set an upper bound  <n> to completion steps..
+.TP
+.BI \-ntests\ <n>
+Set the number of generated tests per equation (use with the
+.B -test
+option).
+.TP
+.BI \-I\ <dir>
+Add the directory <dir> to the search path.
+.TP
+.BI \-o\ <file>
+Output the generated module with name the file name argument.
+.TP
+.BI \-oml\ <file>
+Output the generated module implementation in the file argument.
+.TP
+.BI \-omli\ <file>
+Output the generated module interface in the file argument.
+.TP
+.BI \-seed\ <n>
+Sets seed number to <n> for random test generation.
+.TP
+.B \-\-sharing
+Add maximal sharing to the values built by the construction functions.
+.br This is the same as giving a ".mlms" input file.
+.TP
+.B \-\-memo
+Equip the construction functions with a so-called memoization table,
+so that the function remembers the argument \-\> result mapping:
+the image of any argument is only computed once and for all.
+.TP
+.B \-test
+Generate a file to test the code generated by
+.B mocac
+(experimental).
+.TP
+.B \-urorder
+Relations code generation for normalization is made as given in the source file.
+.TP
+.B \-v
+Print
+.B mocac
+version string.
+.TP
+.BI \-valdepth\ <n>
+Set the maximal constructor depth of the values generated for testing (use with the
+.B -test
+option).
+.TP
+.B \-\-verbose
+Be verbose.
+.TP
+.B \-\-version
+Print
+.B mocac
+long version string.
+
+.SH EXAMPLES
+.TP
+.BI mocac\ \-\-sharing\ filename
+.B mocac
+generates a module for
+.I filename
+and the associated construction functions ensure maximal sharing between the
+values of the private type defined in
+.IR filename  .
+
+.TP
+.BI mocac\ filename
+generates a module for
+.IR filename  .
+
+.SH FULL EXAMPLE
+
+If
+.I group.mlm
+contains the following (private) type definition with
+.B mocac
+annotations:
+.P
+type t = private
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+     begin
+       associative
+       commutative
+       neutral (Zero)
+       opposite (Opp)
+     end
+;;
+
+.P
+Then the command
+.B mocac
+.I group.mlm
+generates the module interface file
+.I group.mli
+containing:
+.P
+type t = private
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+   (* begin
+        associative
+        commutative
+        neutral (Zero)
+        inverse (Opp)
+      end *)
+;;
+val zero : t
+;;
+
+val one : t
+;;
+
+val opp : t -> t
+;;
+
+val add : t * t -> t
+;;
+
+val eq_t : t -> t -> bool
+;;
+
+
+.P
+.B mocac
+also generates the module implementation file
+.I group.ml
+with the proper definitions for the construction functions declared in
+.IR group.mli  :
+.P
+type t =
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+   (* begin
+        associative
+        commutative
+        neutral (Zero)
+        inverse (Opp)
+      end *)
+;;
+let rec compare_add moca_x moca_y =
+  match (moca_x, moca_y) with
+  | (Opp moca_x, Opp moca_y) -> compare_add moca_x moca_y
+  | (Opp moca_x, moca_y) -> compare_add moca_x moca_y
+  | (moca_x, Opp moca_y) -> compare_add moca_x moca_y
+  | (moca_x, moca_y) -> Pervasives.compare moca_x moca_y
+
+and add moca_z =
+  match moca_z with
+  | (moca_x, Zero) -> moca_x
+  | (Zero, moca_x) -> moca_x
+  | (moca_x, Opp moca_y) when Pervasives.compare moca_x moca_y = 0 -> zero
+  | (Opp moca_x, moca_y) when Pervasives.compare moca_x moca_y = 0 -> zero
+  | (moca_x, Add ((Opp moca_y), moca_z))
+      when
+      Pervasives.compare moca_x moca_y = 0 ->
+    moca_z
+  | (Opp moca_x, Add (moca_y, moca_z))
+      when
+      Pervasives.compare moca_x moca_y = 0 ->
+    moca_z
+  | (Add (moca_x, moca_y), moca_z) -> add (moca_x, (add (moca_y, moca_z)))
+  | (moca_x, Add (moca_y, moca_z)) ->
+    if compare_add moca_x moca_y > 0
+    then add (moca_y, (add (moca_x, moca_z)))
+    else Add (moca_x, (Add (moca_y, moca_z)))
+  | (moca_x, moca_y) when compare_add moca_x moca_y > 0 ->
+    add (moca_y, moca_x)
+  | (moca_x, moca_y) -> Add (moca_x, moca_y)
+
+and zero = Zero
+
+and one = One
+
+and opp moca_x =
+  match moca_x with
+  | Opp moca_x -> moca_x
+  | Add (moca_x1, moca_x2) -> add ((opp moca_x2), (opp moca_x1))
+  | Zero -> zero
+  | _ -> Opp moca_x
+;;
+
+external eq_t : t -> t -> bool = "%equal"
+;;
+
+
+.P
+Now the values of type
+.I Group.t
+can (only) be built using the construction functions defined in
+.IR group.ml
+\.
+For instance, the value
+.P
+.I z
+= add (one, add (zero, opp one))
+.P
+is a valid value of type
+.IR t.
+.P
+Thanks to the declared properties of the constructors of type
+.IR t,
+and due to the corresponding semantics of the construction functions,
+the value
+.I z
+is indeed bound to
+.IR Zero.
+
+.SH NOTES
+.P
+It is highly recommended that source files for
+.B mocac
+only contain relational type definitions.
+Although
+.B mocac
+allows arbitrary Caml code in .mlm(s) files,
+mixing relational type definitions and ordinary Caml code is considered
+bad practice, since it is usually extremely confusing.
+
+.P
+Completion is as of now highly experimental and relatively slow. It
+is a straightforward implementation of syntactic completion. In
+particular, it does not handle completion modulo AC.
+
+.SH COPYRIGHT
+This program is distributed under the artistic license found in the
+LICENSE file in the root directory of the distribution.
+.SH SEE ALSO
+The
+.B mocac
+user's manual (http://moca.inria.fr/eng.htm)
+(French version at http://moca.inria.fr/fra.htm).
+.SH AUTHORS
+Pierre Weis <Pierre.Weis@inria.fr>,
+.br
+Frédéric Blanqui <Frederic.Blanqui@inria.fr>
+.P
+This manual page was written by Pierre Weis and revised by Richard Bonichon
+and Pierre Weis for
+.B mocac
+version 0.7.0.
+.P
+Institut National de Recherche en Informatique et en Automatique
+(2005-2012)

@@ -1,0 +1,35 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: skiwrong.mlm,v 1.2 2007-04-25 14:46:13 weis Exp $ *)
+
+(* This SKI implementation is erroneous, since rules for S just define S, not
+   its reduction behaviour.
+   An additional rule App (App (S, K), x) -> I is needed. *)
+
+type ski = private
+   | S
+   begin
+    rule App (App (App (S, x), y), z) -> App (App (x, z), (App (y, z))) 
+   end
+   | K
+   begin
+    rule App (App (K, x), y) -> x
+   end
+   | I
+   begin
+    rule App (I, x) -> x
+   end
+   | App of ski * ski;;

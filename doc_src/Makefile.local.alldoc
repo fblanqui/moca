@@ -1,0 +1,28 @@
+#*********************************************************************#
+#								      #
+#				 Moca				      #
+#								      #
+#	     Pierre Weis, projet Cristal, INRIA Rocquencourt	      #
+#								      #
+#  Copyright 2005 Institut National de Recherche en Informatique et   #
+#  en Automatique.  Distributed only by permission.		      #
+#								      #
+#*********************************************************************#
+
+# $Id: Makefile.local.alldoc,v 1.2 2007-11-22 22:48:46 weis Exp $
+
+# The makefile build the cmi files of the compiler.
+
+include ../config/Makefile.config
+
+CAMLBYT = ocamlc
+CMIFILES = $(MLIFILES:%.mli=%.cmi)
+
+include .depend
+
+all: $(CMIFILES)
+
+.SUFFIXES: .cmx .cmo .cmi .ml .mli .mlm .mlms .mll .mly
+
+.mli.cmi:
+	$(CAMLBYT) -c $<

@@ -1,0 +1,28 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2012,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: semi_group_commutative_1_list.mlm,v 1.4 2012-06-04 13:01:22 weis Exp $ *)
+
+(* Semi-group structure: just an associative commutative relation with
+   only one constant generator. *)
+
+type t = private
+   | One
+   | Add of t * t
+   begin
+     associative
+     commutative
+   end
+;;

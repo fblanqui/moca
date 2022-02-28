@@ -1,0 +1,62 @@
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2012,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+# $Id: Makefile.distrib,v 1.14 2012-06-04 13:01:21 weis Exp $
+
+# The Makefile to distribute moca
+
+# This one includes the main Makefile and config/Makefile.config
+include Mk/Distrib.mk
+
+HTMLCCONFENV=-env $(SRCROOTDIR)/doc_src/Includes/env
+
+BANNERFILE=$(MAKEFILES_DIR)/banner
+BHFLAGS=-bf $(BANNERFILE) -bft ml
+
+$(BANNERFILE): $(MAKEFILES_DIR)/banner-moca.in
+	$(HTMLC) -i $(MAKEFILES_DIR)/banner-moca.in -o $(BANNERFILE)
+
+BHFILES=INSTALL README Makefile Makefile.distrib
+BHMFILES=configure configure.win
+
+SUBDIRS=Mk doc_src test compiler config
+
+.PHONY: test examplesdir docsrc docdir
+
+examplesdir: test
+	cd test; $(MAKE) examplesdir
+clean::
+	$(RM) examples
+
+test: compiler
+	cd test; $(MAKE) clean
+	cd test; $(MAKE) all
+
+all:: test
+
+docsrc:
+	cd doc_src; $(MAKE) all
+clean::
+	cd doc_src; $(MAKE) clean
+all:: docsrc
+
+docdir: docsrc
+	cd doc_src; $(MAKE) docdir
+clean::
+	$(RM) doc
+all:: docdir
+
+# This one includes the bannerization rules.
+include $(MAKEFILES_DIR)/Banner.mk

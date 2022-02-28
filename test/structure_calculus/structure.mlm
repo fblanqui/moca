@@ -1,0 +1,48 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: structure.mlm,v 1.5 2007-11-30 16:44:44 blanqui Exp $ *)
+
+(* Calculus of structures. *)
+
+type t = private
+   | Strue
+   | Sfalse
+   | Atom of string
+
+   | Sbrack of t * t (* Equivalent of or *)     
+   begin
+     associative
+     commutative
+     neutral (Sfalse)
+     absorbent (Strue)
+     inverse (Sneg, Strue)
+   end
+
+   | Sparen of t * t (* Equivalent of and *)
+    begin
+      associative
+      commutative
+      neutral (Strue)
+      absorbent (Sfalse)
+    end
+
+   | Sneg of t
+   begin
+     involutive
+     (*unary*) distributive (Sparen, Sbrack)
+     (*unary*) distributive (Sbrack, Sparen)
+   end
+;;

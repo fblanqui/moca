@@ -1,0 +1,40 @@
+(* Implementing BV deep inference calculus with Moca *)
+(* See:
+   O. Kahramanogullari
+   "Reducing nondeterminism in the calculus of structures"
+   LPAR 2006
+   for details and hints
+*)
+ 
+
+type structure = private
+  | Sunit
+  | Satom of string
+  | Sseq of structure * structure
+        begin
+          associative
+          neutral (Sunit)
+        end
+  | Spar of structure * structure
+        begin
+          associative
+          commutative
+          neutral (Sunit)
+          rule Spar (Satom x, Sneg (Satom y)) when x = y -> Sunit
+          rule Spar (Scopar (x, y), z) -> Scopar (Spar (x, z), y)
+          rule Spar (Sseq (w, x), Sseq (y, z)) ->
+            Sseq (Spar (w, y), Spar (x, z))
+        end
+  | Scopar of structure * structure
+        begin
+          associative
+          commutative
+          neutral (Sunit)
+        end
+  | Sneg of structure
+       begin
+         rule Sneg (Sseq (x, y)) -> Sseq (Sneg x, Sneg y)
+         rule Sneg (Spar (x, y)) -> Scopar (Sneg x, Sneg y)
+         rule Sneg (Scopar (x, y)) -> Spar (Sneg x, Sneg y)
+       end
+;;

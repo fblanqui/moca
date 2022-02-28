@@ -1,0 +1,522 @@
+<!--#include virtual="beforetitle.en.html"-->
+Moca
+<!--#include virtual="aftertitle.en.html"-->
+
+<!-- \$Id: mocac.en.html,v 1.39 2012-06-04 14:29:25 weis Exp $ -->
+
+<h1 id="title"><img src="imgs/JoeCaml.png" alt="Caml masquotte"/>
+  Mocac : a module generator for relational types
+</h1>
+
+<!--#include virtual="mocac-version.html"-->
+
+<h2>Where is it ?</h2>
+
+<p><a href="archive/moca-$mocac_version.tgz">
+<strong>Moca</strong>'s source files are here</a>.
+</p>
+
+<p>The generated source documentation is available
+  from <a href="ocamldoc/index.html">here</a>. </p>
+<!--=======================================================================-->
+
+<h2>How to install it?</h2>
+
+<p>See the INSTALL file in the source directory.
+<br/>
+For Windows: see the INSTALL.win file in the source directory.
+</p>
+
+<!--=======================================================================-->
+
+<h2 >What is it ?</h2>
+
+<p><strong>Moca</strong> is a general construction functions generator for
+Caml data types with invariants.
+</p>
+<p><strong>Moca</strong> allows the high-level definition and automatic
+management of complex invariants for data types. In addition,
+<strong>Moca</strong> provides the automatic generation of maximally shared
+values, independantly or in conjunction with the declared invariants.
+</p>
+
+<p>A <em>relational data type</em> is a concrete data type that declares
+invariants or relations that are verified by its constructors. For each
+relational data type definition, <strong>Moca</strong> compiles a set of
+construction functions that implements the declared relations.
+</p>
+
+<p><strong>Moca</strong> supports two kinds of relations: </p>
+<ul>
+  <li>algebraic relations (such as associativity or commutativity of a binary
+  constructor),
+    </li>
+  <li>general rewrite rules that map some pattern of constructors and variables
+  to some arbitrary user's define expression.
+    </li>
+</ul>
+
+
+<p>Algebraic relations are primitive, so that <strong>Moca</strong> ensures the
+correctness of their treatment. By contrast, the general rewrite rules are
+under the programmer's responsability, so that the desired properties must be
+verified by a programmer's proof before compilation (including for
+completeness, termination, and confluence of the resulting term rewriting
+system).
+</p>
+
+<p>Algebraic invariants are specified by using keywords denoting equational
+theories like commutativity and associativity. <strong>Moca</strong> generates
+construction functions that allow each equivalence class to be uniquely
+represented by their canonical value.
+</p>
+<!--=======================================================================-->
+
+<h2 >How does it work ?</h2>
+
+<p>The <strong>mocac</strong> compiler parses a
+  special <code>.mlm</code> or
+<code>.mlms</code> file
+and produces a regular Caml module (i.e. a pair of an interface file and an
+implementation file).
+
+<br/>The <code>.mlm(s)</code> file is similar to a Caml <code>.mli</code>
+file: it must declare a (private) data type with the possible addition of
+special annotations to specify the relations that the constructors
+verify.
+
+<br/>Then the <strong>mocac</strong> compiler generates construction functions
+for the constructors, such that all the specified relations indeed hold for the
+values of the type defined.
+</p>
+
+<p>Type definitions for <strong>Moca</strong> have the same syntax as those for
+Objective Caml with the addition of the invariants and/or algebraic relations
+associated to the constructors defined in the type.
+</p>
+
+<p>As an additional benefit, you can obtain maximal sharing between
+the values built by the construction functions, if you use the special
+<code>--sharing</code> option of the <strong>mocac</strong> compiler.
+<br/>This option is also automatically activated with a <code>.mlms</code>
+file input.
+</p>
+
+<!--=======================================================================-->
+
+<h2>How can one use it ?</h2>
+
+<p>Simply call <strong>mocac</strong> with your <code>.mlm(s)</code> file as
+argument.
+<br/> For Windows: call <strong>sh mocac</strong> with your
+<code>.mlm(s)</code> file as argument.
+</p>
+
+<!--=======================================================================-->
+
+<h2 >Examples</h2>
+
+<p>Here is the suitable definition for the data type representing the values of
+an additive group with one binary operation <code>Add</code>, a neutral element
+<code>Zero</code>, an opposite unary operator <code>Opp</code>, and a generator
+<code>One</code>: </p>
+<pre>
+<!--#include virtual="Includes/group.mlm"-->
+</pre>
+
+<p>The algebraic properties of all the operators of the group operators are
+simply specified for the <code>Add</code> operation. The keywords
+<code>associative</code>, <code>commutative</code>, <code>neutral</code>, and
+<code>opposite</code> are Moca specific and set the expected properties of the
+constructor <code>Add</code>.
+</p>
+<p>If we suppose this code to be in the file <code>group.mlm</code>, then the
+call <code>mocac group.mlm</code> generates the module <code>Group</code>
+as the two files <code>group.mli</code> and <code>group.ml</code>.
+</p>
+<p>The interface file <code>group.mli</code> <strong>declares</strong> the
+<code>t</code> private type that is the support for the values of the group,
+and declares the signature of the construction functions for the
+constructors. It contains the following declarations:
+</p>
+
+<pre>
+<!--#include verbatim="Includes/group.mli"-->
+</pre>
+
+<p>Now the file <code>group.ml</code> <strong>defines</strong> the type
+<code>t</code> and the corresponding construction functions. It is equivalent
+to:
+</p>
+<pre>
+<!--#include verbatim="Includes/group.ml"-->
+</pre>
+
+<p>All the values of the type <code>t</code> are now normalized with
+respect to the group's rules (put it another way: there is no value of type
+<code>t</code> that is not normalized). For instance:
+</p>
+
+<pre>
+# add (one, add (zero, opp one));;
+- : t = Zero
+</pre>
+
+<p>The directory <code>examples</code> in the distribution contains many other
+examples of data structures with their corresponding modules generated by
+<code>mocac</code>.
+</p>
+<!--=======================================================================-->
+
+<h2 >Syntax</h2>
+
+<p><strong>Moca</strong> extends the Caml syntax for type definitions as
+follows:</p>
+
+<div class="bnf">
+  <!--#include virtual="grammar.html"-->
+</div>
+
+
+<!--=======================================================================-->
+
+<h2 >Semantics</h2>
+
+<p>This section briefly describes the equational theory corresponding to every
+  keyword and the properties of representatives generated
+  by <strong>Moca</strong>. More detailed specifications for each algebraic
+  relation is available from the <a href="./ocamldoc/Parsetree.html#2_Specificationsofalgebraicrelationsforgenerators">source
+  documentation </a>.
+</p>
+
+<h3 class="relation">Commutative</h3>
+<dl class="semantics">
+ <dt><font class="keyword">commutative</font></dt>
+
+ <dd>
+   behaves
+   like <font class="keyword">commutative</font>
+   <code>(Pervasives.compare)</code>.
+ </dd>
+
+ <dt>If <code>C</code> is <font class="keyword">commutative</font>
+   <code>(comp)</code>,</dt>
+
+ <dd>
+  then <code>C (x, y) = C (y, x)</code> and, for every value matching <code>C
+  (x, y)</code>, we have <code>comp x y &lt;
+  0</code>.
+  <br/> <code>comp</code> is the identifier of a comparison
+ function given by the user.
+  <br/> It must be a total order on the terms for the defined types.
+</dd>
+
+</dl>
+
+<h3 class="relation">Associative</h3>
+<dl>
+ <dt>If <code>C</code> is <font class="keyword">associative</font>,</dt>
+ <dd>
+ then <code>C (C (x, y), z) = C (x, C (y, z))</code> and no value matches
+ <code>C (C (x, y), z)</code>.</dd>
+</dl>
+
+<h3 class="relation">Involutive</h3>
+<dl>
+<dt>If <code>C</code> is <font class="keyword">involutive</font>,</dt>
+
+ <dd>
+ then <code>C (C (x)) = x</code> and no value matches <code>C (C (x))</code>.
+ </dd>
+</dl>
+
+<h3 class="relation">Idempotent</h3>
+<dl>
+<dt><font class="keyword">idempotent</font></dt>
+
+ <dd>
+   is the conjunction of <font class="keyword">idempotent left</font>
+   and <font class="keyword">idempotent right.</font>
+</dd>
+
+<dt>If <code>C</code> is <font class="keyword">idempotent left</font>,</dt>
+
+ <dd>
+   then <code>C (x, C (x, y)) = C (x, y)</code> and no value matches <code>C (x,
+     C (x, y))</code>.
+ </dd>
+
+<dt>If <code>C</code> is <font class="keyword">idempotent right</font>,
+</dt>
+
+ <dd>
+   then <code>C (C (x, y), y) = C (x, y)</code> and no value matches <code>C (C
+     (x, y), y)</code>.
+ </dd>
+
+</dl>
+
+<h3 class="relation">Neutral</h3>
+<dl>
+
+<dt><font class="keyword">neutral</font> <code>(D)</code>,</dt>
+ <dd>
+ is the conjunction of <font class="keyword">neutral
+     left</font> <code>(D)</code>
+ and <font class="keyword">neutral right</font>
+ <code>(D)</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">neutral left</font>
+ <code>(D)</code>,</dt>
+
+ <dd>
+ then <code>C (D, x) = x</code> and no value matches <code>C (D, x)</code>.
+ </dd>
+
+<dt>If <code>C</code> is <font class="keyword">neutral right</font>
+ <code>(D)</code>,</dt>
+
+ <dd>
+ then <code>C (x, D) = x</code> and no value matches <code>C (x, D)</code>.
+ </dd>
+</dl>
+
+<h3 class="relation">Nilpotent</h3>
+<dl>
+<dt><font class="keyword">nilpotent</font><code>(A)</code></dt>
+ <dd>
+   is the conjunction of <font class="keyword">nilpotent
+     left</font> <code>(A)</code> and
+   <font class="keyword">nilpotent right</font> <code>(A)</code>.
+ </dd>
+
+<dt>If <code>C</code> is <font class="keyword">nilpotent
+      left</font> <code>(A)</code>,</dt>
+
+ <dd>
+ then <code>C (x, C (x, y)) = (A)</code> and no value matches <code>C (x,
+ C (x, y))</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">nilpotent
+right</font> <code>(A)</code>,</dt>
+ <dd>
+ then <code>C (C (x, y), y) = (A)</code> and no value matches <code>C (C
+ (x, y), y)</code>.  </dd>
+</dl>
+
+<h3 class="relation">Inverse</h3>
+<dl>
+<dt><font class="keyword">inverse</font> <code>(I, E)</code></dt>
+
+ <dd>
+ is the conjunction of <font class="keyword">inverse left</font> <code>(I, E)</code> and <font class="keyword">inverse right</font>
+ <code>(I, E)</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">inverse left</font>
+ <code>(I, E)</code>,</dt>
+
+ <dd>
+ then <code>C (I (x), x) = E</code> and no value matches <code>C (I (x),
+ x)</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">inverse right</font>
+ <code>(I, E)</code>,</dt>
+
+ <dd>
+ then <code>C (x, I (x)) = E</code> and no value matches <code>C (x, I
+ (x))</code>.  </dd>
+
+<dt>
+  If <code>C</code> is <font class="keyword">neutral</font>
+  [side] <code>(E)</code>,
+</dt>
+
+ <dd>
+ then <font class="keyword">inverse</font> [side'] <code>(I)</code> is
+ equivalent to inverse [side'] <code>(I, E)</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">inverse</font> [side] <code>(I,
+ E)</code> and <font class="keyword">absorbent</font>
+ [side'] <code>(A)</code>,</dt>
+
+ <dd>
+ then the construction function associated to <code>C</code> raises the
+ exception (<code>Failure "Division by Absorbent"</code>) when one of its
+ arguments is <code>A</code>.  </dd>
+
+</dl>
+
+<h3 class="relation">Distributive</h3>
+<dl>
+<dt><font class="keyword">distributive</font> <code>(D, E)</code></dt>
+
+ <dd>
+   is the conjunction of <font class="keyword">distributive left</font>
+   <code>(D, E)</code> and <font class="keyword">distributive right</font>
+   <code>(D, E)</code>.
+ </dd>
+
+<dt><font class="keyword">distributive</font> <code>(D)</code></dt>
+<dd>
+ is the same as <font class="keyword">distributive</font> <code>(D, D)</code>
+</dd>
+
+<dt>
+  If <code>C</code> is <font class="keyword">distributive left</font>
+ <code>(D, E)</code>,
+</dt>
+<dd>
+ then <code>C (D (x, y), z) = E (C (x, z), C (y, z))</code> and no value
+ matches <code>C (D (x, y), z)</code>.
+</dd>
+
+<dt>If <code>C</code> is <font class="keyword">distributive right</font>
+ <code>(D, E)</code>,</dt>
+
+ <dd>
+ then <code>C (z, D (x, y)) = E (C (z, x), C (z, y))</code> and no value
+ matches <code>C (z, D (x, y))</code>.  </dd>
+
+
+<dt>If <code>C</code> is <font class="keyword">distributive inverse left</font>
+ <code>(D, E)</code>,</dt>
+
+ <dd>
+ then <code>C (D (x, y), z) = E (C (y, z), C (x, z))</code> and no value
+ matches <code>C (D (x, y), z)</code>.  </dd>
+
+</dl>
+
+<h3 class="relation">Absorbent</h3>
+<dl>
+<dt><font class="keyword">absorbent</font> <code>(A)</code></dt>
+
+ <dd>
+ is the conjunction of <font class="keyword">absorbent
+ left</font> <code>(A)</code> and <font class="keyword">absorbent right</font>
+ <code>(A)</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">absorbent left</font>
+ <code>(A)</code>,</dt>
+
+ <dd>
+ then <code>C (A, x) = A</code> and no value matches <code>C (A, x)</code>.
+ </dd>
+
+<dt>If <code>C</code> is <font class="keyword">absorbent right</font>
+ <code>(A)</code>,</dt>
+
+ <dd>
+ then <code>C (x, A) = A</code> and no value matches <code>C (x, A)</code>.
+ </dd>
+
+</dl>
+
+<h3 class="relation">Absorbing</h3>
+<dl>
+<dt><font class="keyword">absorbing</font> <code>(D)</code></dt>
+
+ <dd>
+   is the conjunction of <font class="keyword">absorbing
+     left</font> <code>(D)</code> and <font class="keyword">absorbing right</font>
+   <code>(D)</code>.
+</dd>
+
+<dt>If <code>C</code> is <font class="keyword">absorbing left</font>
+ <code>(D)</code>,</dt>
+
+ <dd>
+ then <code>C (D (x, y), y) = y</code> and no value matches <code>C (D (x, y),
+ y)</code>.  </dd>
+
+<dt>If <code>C</code> is <font class="keyword">absorbing right</font>
+ <code>(D)</code>,</dt>
+
+ <dd>
+ then <code>C (x, D (x, y)) = x</code> and no value matches <code>C (x, D (x,
+ y))</code>.  </dd>
+
+</dl><dl>
+<dt>If <code>C</code> has <font class="keyword">rule</font> <code>l -&gt;
+   r</code>,</dt>
+
+ <dd>
+ then <code>C (l) = r</code> and no value matches <code>C (l)</code>.  </dd>
+
+ <dd>
+ This annotation is provided for expert user, and should only be used when the
+ previous predefined annotations are not sufficient. In the generated code, the
+ constructors in <code>r</code> are replaced by calls to the corresponding
+ construction functions; the simplifications induced by user's rules are
+ applied first and as much as possible. When there is a user's defined rule
+ annotation in the type specification, the code generated by Moca is not
+ guaranteed to be correct or even to terminate anymore.  </dd>
+
+</dl>
+
+<h3 class="relation">Completion hints</h3>
+<p>If trying out the experimental completion feature
+  of <strong>Moca</strong>, some parameters may be
+  specified using the following keywords in the
+  source code:
+</p>
+
+<dl>
+<dt> If <code>C</code>
+  has <font class="keyword">completion status</font> <code>s</code>,
+</dt>
+<dd>then the generator <code>c</code> will have
+  status <code>s</code>,
+i.e. lexicographic (<font class="keyword">lex</font>) or
+  multiset (<font class="keyword">mul</font>), for the RPO order
+  during completion.
+</dd>
+
+<dt>If <code>C</code>
+  has <font class="keyword">completion precedence</font> <code>i</code>,
+</dt>
+<dd>
+  then the integer <code>i</code> will represent <code>C</code>
+  in the order on the integers which will induce a precedence on
+  generator symbols.
+</dd>
+</dl>
+
+<!--=======================================================================-->
+
+<h2>Bibliography</h2>
+<p>
+<a href="http://hal.inria.fr/inria-00095110">On the implementation of
+construction functions for non-free concrete data types</a>,
+F. Blanqui, T. Hardin and P. Weis, ESOP'07.
+<br/>
+Download: <a href="./papers/esop07/main.ps">[ps]</a>,
+  <a href="./papers/esop07/main.pdf">[pdf]</a>,
+    <a href="./papers/esop07/main.dvi">[dvi]</a>.
+</p>
+
+<p>
+  Go <a href="./talks/eng.htm">there</a> to see the slides
+  of <strong>Moca</strong> talks.
+</p>
+
+<!--=======================================================================-->
+
+<h2 >Contact</h2>
+
+<p>The first version of <strong>Moca</strong> has been developped by the <em>ARC</em>
+<strong>Quotient</strong> (more information on Quotient is
+given <a href="http://quotient.loria.fr/">here</a>).<BR>
+Moca is currently developped by Fr&eacute;d&eacute;ric Blanqui, Richard Bonichon, and Pierre Weis.
+</p>
+
+<p>If you want to get in touch with implementors, contact
+<a href="http://bat8.inria.fr/~weis/">Pierre Weis</a>,
+<a href="http://www.loria.fr/~blanqui/">Fr&eacute;d&eacute;ric
+Blanqui</a>, or
+Richard Bonichon (Richard dot Bonichon at gmail.com).
+</p>
+
+<p>This file was created on the 11th of April 2005.
+</p>
+<!--#include virtual="endofpage.en.html"-->

@@ -1,0 +1,50 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: cantor.mlm,v 1.4 2007-11-22 15:35:28 weis Exp $ *)
+
+(* Cantor's ordinals: w^x1.k1 + ... + w^xn.kn with x1 > ... > xn *)
+
+open Peano;;
+
+type t = private
+  | Zero
+  | Cons of Peano.t * t * t (* Cons(k,x,y) represents w^x.k + y *)
+      begin
+
+	let rec compare x y =
+	  match x, y with
+	  | Zero, Zero -> 0
+	  | Zero, _ -> -1
+	  | _, Zero -> 1
+	  | Cons (k, x, y), Cons (l, z, t) ->
+	      (match compare x z with
+	      | 0 ->
+		  (match Pervasives.compare k l with
+		  | 0 -> compare y t
+		  | n -> n)
+	      | n -> n)
+        ;;
+
+	rule Cons (Peano.Zero, _x, y)
+          -> y
+
+        rule Cons (k, x, Cons (l, y, z)) when compare x y < 0
+          -> Cons (l, y, Cons (k, x, z))
+
+        rule Cons (k, x, Cons (l, y, z)) when compare x y = 0
+	  -> Cons (Peano.add k l, x, z)
+
+      end
+;;

@@ -1,0 +1,275 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOWARDS EFFICIENT CONSTRUCTION FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Towards efficient construction functions}
+\label{sec-genr}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% without commutative symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+When there is no commutative symbol, construction functions can be
+easily implemented by simulating innermost rewriting as follows:
+
+\begin{dfn}[Linearization]
+Let $\vpos(t)$ be the set of positions $p\in\pos(t)$ such that $t|_p$
+is a variable $x\in\cX$. Let $\r:\vpos(t)\a\cX$ be an injective
+mapping and $lin(t)$ be the term obtained by replacing in $t$ every
+subterm at position $p\in\vpos(t)$ by $\r(p)$. Let now $Eq(t)$ be the
+conjunction of {\tt true} and of the equations $\r(p)=\r(q)$ such that
+$t|_p=t|_q$ and $p,q\in\vpos(t)$.
+\end{dfn}
+
+\begin{dfn}
+\label{dfn-r}
+Given a set $\cR$ of rewrite rules, let $\cF(\cR)$ be the family of
+construction functions $(f_C)_{C\in\cC}$ defined as follows:
+
+\begin{lst}{\bu}
+\item For every rule $l\a r\in\cR$ with $l=C(l_1,\ldots,l_n)$,
+add to the definition of $f_C$ the clause {\tt
+$lin(l_1),\ldots,lin(l_n)$ when $Eq(l)$ -> $\h{lin(r)}$}, where
+$\h{t}$ is the term obtained by replacing in $t$ every occurrence of a
+constructor $C$ by a call to its construction function $f_C$.
+\item Terminate the definition of $f_C$ by the {\em default clause}
+{\tt x -> C(x)}.
+\end{lst}
+\end{dfn}
+
+\begin{thm}
+\label{thm-1}
+Assume that $\cE_{AC}=\vide$ and $\cE$ has a complete presentation
+$\cR$. Then, $\cF(\cR)$ is valid wrt $\cE$ (whatever the order of the
+non-default clauses is).
+\end{thm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% with commutative symbols
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We now consider the case of commutative symbols. We are going to
+describe a modular way of defining the construction functions by
+pursuing our running  example, with the type {\tt exp}. 
+Assume that {\tt Plus} is declared to be associative
+and commutative only. The construction functions can then be defined
+as follows:
+
+{\small\begin{verbatim}
+let zero = Zero and one = One and opp x = Opp x
+
+and plus = function
+| Plus(x,y), z -> plus (x, plus (y,z))
+| x, y -> insert_plus x y
+
+and insert_plus x = function
+| Plus(y,_) as u when x <= y -> Plus(x,u)
+| Plus(y,t) -> Plus (y, insert_plus x t)
+| u when x > u -> Plus(u,x)
+| u -> Plus(x,u)
+\end{verbatim}}
+
+One can easily see that {\tt plus} does the same job as the function
+$\sort\circ\comb$ used in Theorem \ref{thm-ac} but in a slightly more
+efficient way since $\cA$-normalization and sorting are interleaved.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% with neutral
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Assume moreover that {\tt Zero} is neutral. The AC-completion of
+$\{$ {\tt Plus}$(${\tt Zero}$,x)$ $=x\}$ gives $\{$ {\tt Plus}$(${\tt
+Zero}$,x)\a x\}$. Hence, if $x$ and $y$ are terms in normal form, then
+{\tt Plus}$(x,y)$ can be rewritten modulo AC only if $x=$ {\tt Zero}
+or $y= $ {\tt Zero}. Thus, the function {\tt plus} needs to be
+extended with two new clauses only:
+
+{\small\begin{verbatim}
+and plus = function
+| Zero, y -> y
+| x, Zero -> x
+| Plus(x,y), z -> plus (x, plus (y,z))
+| x, y -> insert_plus x y
+\end{verbatim}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% inverse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Assume now that {\tt Plus} is declared to have {\tt Opp} as
+inverse. Then, the completion modulo AC of
+$\{$ {\tt Plus}$(${\tt Zero}$,x)=x,$
+{\tt Plus}$(${\tt Opp}$(x),x)=$ {\tt Zero}$\}$ 
+gives the following well known rules for
+abelian groups \cite{hullot80thesis}: 
+$\{$ {\tt Plus}$(${\tt Zero}$,x)\a x$,\quad
+{\tt Plus}$(${\tt Opp}$(x),x)\a $ {\tt Zero},\quad
+{\tt Plus}$(${\tt Plus}$(${\tt Opp}$(x),x),y)\a y$,\quad
+{\tt Opp}$(${\tt Zero}$)\a${\tt Zero},\quad
+{\tt Opp}$(${\tt Opp}$(x))\a x$,\quad
+{\tt Opp}$(${\tt Plus}$(x,y))\a$
+{\tt Plus}$(${\tt Opp}$(y),${\tt Opp}$(x))\,\}$.
+
+The rules for {\tt Opp} are easily translated as follows:
+
+{\small\begin{verbatim}
+and opp = function
+| Zero -> Zero
+| Opp(x) -> x
+| Plus(x,y) -> plus (opp y, opp x)
+| _ -> Opp(x)
+\end{verbatim}}
+
+The third rule of abelian groups is called an {\em extension} of the
+second one since it is obtained by first adding the context
+$Plus([],y)$ on both sides of this second rule,then normalizing the
+right hand side. Take now two terms $x$ and $y$ in normal form and
+assume that $(x,y)$ matches none of the three clauses previously
+defining {\tt plus}, that is, $x$ and $y$ are distinct from {\tt
+Zero}, and $x$ is not of the form {\tt Plus}$(x_1,x_2)$. To get the
+normal form of {\tt Plus}$(x,y)$, we need to check that $x$ and the
+normal form of its opposite {\tt Opp}$(x)$ do not occur in $y$. The
+last clause defining {\tt plus} needs therefore to be modified as
+follows:
+
+{\small\begin{verbatim}
+and plus = function
+| Zero, y -> y
+| x, Zero -> x
+| Plus(x,y), z -> plus (x, plus (y,z))
+| x, y -> insert_opp_plus (opp x) y
+
+and insert_opp_plus x y =
+  try delete_plus x y
+  with Not_found -> insert_plus (opp x) y
+
+and delete_plus x = function
+| Plus(y,_) when x < y -> raise Not_found
+| Plus(y,t) when x = y -> t
+| Plus(y,t) -> Plus (y, delete_plus x t)
+| y when y = x -> Zero
+| _ -> raise Not_found
+\end{verbatim}}
+
+Forgetting about {\tt Zero} and {\tt Opp}, suppose now that {\tt Plus}
+is declared associative, commutative and idempotent. The function {\tt
+plus} is kept but the {\tt insert} function is modified as follows:
+
+{\small\begin{verbatim}
+and insert_plus x = function
+| Plus(y,_) as u when x = y -> u
+| Plus(y,_) as u when x < y -> Plus(x,u)
+| Plus(y,t) -> Plus (y,insert_plus x t)
+| u when x > u -> Plus(u,x)
+| u when x = u -> u
+| u -> Plus(x,u)
+\end{verbatim}}
+
+Nilpotence can be dealt with in a similar way.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% theorem
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In conclusion, for various combinations of the equations of Figure
+\ref{fig-eq}, we can define in a nice modular way construction
+functions that are more efficient than the ones based on rewriting
+modulo AC. We summarize this as follows:
+
+\begin{dfn}
+A set of equations $\cE$ is a theory of type:
+\begin{enumi}{}
+\item if $\cE_{AC}=\vide$ and $\cE$ has a complete presentation,
+\item if $\cE$ is the union of $\{Assoc(C),Com(C)\}$
+with either $\{Neu(C,E),Inv(C,I,E)\}$,
+$\{Idem(C)\}$, $\{Neu(C,E),Idem(C)\}$
+$\{Nil(C,A)\}$ or $\{Neu(C,E),Nil(C,A)\}$.
+\end{enumi}
+
+\noindent
+Two theories are disjoint if they share no symbol.
+\end{dfn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% construction functions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Let us give schemes for construction functions for theories of type 2.
+A clause is generated only if the conditions {\tt Neu(C,E)}, {\tt
+Inv(C,I,E)}, etc. are satisfied. These conditions are not part of the
+generated code.
+
+{\small\begin{verbatim}
+let f_C = function
+| E, x when Neu(C,E) -> x
+| x, E when Neu(C,E) -> x
+| C(x,y), z when Assoc(C) -> f_C(x,f_C(y,z))
+| x, y when Inv(C,I,E) -> insert_inv_C (f_I x) y
+| x, y -> insert_C x y
+
+and f_I = function
+| E -> E
+| I(x) -> x
+| C(x,y) -> f_C(f_I y, f_I x)
+| x -> I x
+
+and insert_inv_C x y =
+  try delete_C x y
+  with Not_found -> insert_C (f_I x) y
+
+and delete_C x = function
+| Plus(y,_) when x < y -> raise Not_found
+| Plus(y,t) when x = y -> t
+| Plus(y,t) -> C(y, delete_C x t)
+| y when y = x -> E
+| _ -> raise Not_found
+
+
+
+and insert_C x = function
+| C(y,_) as u when x = y & idem -> u
+| C(y,t) when x = y & nil -> f_C(A,t)
+| C(y,_) as u when x <= y & com -> C(x,u)
+| C(y,t) when Com(C) -> C(y, insert_C x t)
+| u when x > u & Com(C) -> C(u,x)
+| u when x = u & Idem(C) -> u
+| u when x = u & Nil(C,A) -> A
+| u -> C(x,u)
+\end{verbatim}}
+
+\begin{thm}
+Let $\cE$ be the union of pairwise disjoint theories of type 1 or
+2. Assume that, for all constructor $C$ which theory is of type $k$,
+$f_C$ is defined as in Definition \ref{dfn-r} if $k=1$, and as above
+if $k=2$. Then, $(f_C)_{C\in\cC}$ is valid wrt $\cE$.
+\end{thm}
+
+\begin{prf}
+Assume that $\cE=\bigcup_{i=1}^n\cE_i$ where $\cE_1,\ldots,\cE_n$ are
+pairwise disjoint theories of type 1 or 2. Whatever the type of
+$\cE_i$ is, we saw that $\cE_i$ has a complete presentation
+$\cR_i$. Therefore, since $\cE_1,\ldots,\cE_n$ share no symbol, by
+definition of completion, the $AC$-completion of $\cE$ successfully
+terminates with $\cR=\bigcup_{i=1}^n\cR_i$. Thus, $\a_{\cR,AC}$ is
+terminating and $AC$-confluent. Since $\cF=(f_C)_{C\in\cC}$
+computes $\cR,AC$-normal forms in $AC$-normal forms, by Theorem
+\ref{thm-valid}, $\cF$ is valid.\cqfd\\
+\end{prf}
+
+The construction functions of type 2 can be easily extended to deal
+with ring or lattice structures (distributivity and absorbance
+equations).
+
+More general results can be expected by using or extending results on
+the modularity of completeness for the combination of rewrite
+systems. The completeness of hierarchical combinations of
+non-$AC$-rewrite systems is studied in \cite{rao93fsttcs}. Note
+however that the modularity of confluence for $AC$-rewrite systems has
+been formally established only recently in \cite{jouannaud06rta}.
+
+Note that the construction function definitions of type 1 or 2 provide
+the same results with call-by-value, call-by-name or lazy evaluation
+strategy.
+
+The detailed study of the complexity of theses definitions (compared
+to AC-rewriting) is left for future work.

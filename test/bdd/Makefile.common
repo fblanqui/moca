@@ -1,0 +1,87 @@
+#**********************************************************************#
+#                                                                      #
+#                            Moca                                      #
+#                                                                      #
+#           Pierre Weis, INRIA Rocquencourt                            #
+#           Frédéric Blanqui, projet Protheo, INRIA Lorraine           #
+#                                                                      #
+#   Copyright 2005-2008,                                               #
+#   Institut National de Recherche en Informatique et en Automatique.  #
+#   All rights reserved.                                               #
+#                                                                      #
+#   This file is distributed under the terms of the Q Public License.  #
+#                                                                      #
+#**********************************************************************#
+
+# $Id: Makefile.common,v 1.3 2011-06-21 12:47:07 weis Exp $
+
+CFLAGS=-g
+CAMLBYT=ocamlc $(CFLAGS)
+CAMLBIN=ocamlopt $(CFLAGS)
+CAMLLEX=ocamllex
+CAMLYAC=ocamlyacc
+MOCAC=../../mocac $(MOCACFLAGS)
+
+LIBDEPS=
+OPTLIBDEPS=
+
+.PHONY: depend beforedepend default
+
+default: all
+
+depend : beforedepend
+	 ocamldep *.ml *.mli > .depend
+
+.SUFFIXES: .cmx .cmo .cmi .ml .mli  .mlm .mlms .mll .mly
+
+.ml.cmo:
+	$(CAMLBYT) -c  $<
+
+.mli.cmi:
+	$(CAMLBYT) -c  $<
+
+.ml.cmx:
+	$(CAMLBIN) -c  $<
+
+.mll.cmo:
+	$(CAMLLEX) $<
+	$(CAMLBYT) -c  $*.ml
+
+.mll.cmx:
+	$(CAMLLEX) $<
+	$(CAMLBIN) -c  $*.ml
+
+.mly.cmo:
+	$(CAMLYAC) $<
+	$(CAMLBYT) -c  $*.mli
+	$(CAMLBYT) -c  $*.ml
+
+.mly.cmx:
+	$(CAMLYAC) $<
+	$(CAMLBIN) -c  $*.mli
+	$(CAMLBIN) -c  $*.ml
+
+.mly.cmi:
+	$(CAMLYAC) $<
+	$(CAMLBYT) -c  $*.mli
+
+.mll.ml:
+	$(CAMLLEX) $<
+
+.mly.ml:
+	$(CAMLYAC) $<
+
+.mly.mli:
+	$(CAMLYAC) $<
+
+.mlm.ml:
+	$(MOCAC) -c $<
+
+.mlm.mli:
+	$(MOCAC) -c $<
+
+.mlms.ml:
+	$(MOCAC) -c $<
+
+.mlms.mli:
+	$(MOCAC) $<

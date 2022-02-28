@@ -1,0 +1,7 @@
+formula.cmi:
+semi_algebra.cmi:
+tableau.cmi: semi_algebra.cmi formula.cmi
+semi_algebra.cmo: semi_algebra.cmi
+semi_algebra.cmx: semi_algebra.cmi
+tableau.cmo: semi_algebra.cmi formula.cmi tableau.cmi
+tableau.cmx: semi_algebra.cmx formula.cmi tableau.cmi

@@ -1,0 +1,188 @@
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{geometry}
+\usepackage{xspace, alltt}
+\usepackage{fullpage}
+%\usepackage{hevea}
+\usepackage{ifthen}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[a4paper,pdftex,pdfstartview=FitH]{hyperref}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage[leftbars]{changebar}
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{amsmath,amssymb,amsthm}
+\theoremstyle{plain} 
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Note}
+
+\def\bitem{\item[$\bullet$]}
+
+\def\moca{{\sf Moca}\xspace}
+\def\zenon{{\sf Zenon}\xspace}
+\def\focal{{\sf Focal}\xspace}
+\def\ocaml{{\sf OCaml}\xspace}
+\def\coq{{\sf Coq}\xspace}
+\def\tamed{{\sf TaMed}\xspace}
+\def\why{{\sf Why}\xspace}
+\def\zenonweb{{\sf http://focal.inria.fr/zenon}\xspace}
+\def\mocaweb{{\sf http://moca.inria.fr/}\xspace}
+\def\mocacvs{{\sf http://camlcvs.inria.fr/cgi-bin/cvsweb/bazar-ocaml/moca/}\xspace}
+\def\vnumber{{\sf 0.5.0}}
+\def\C{$C$\xspace}
+
+\newcommand{\todo}[1]{\hspace*{-3cm}
+  \begin{minipage}{1.0\linewidth}
+    {\bf TODO: \\ #1}
+  \end{minipage}
+}
+
+\newcommand{\note}[1]{{\bf NOTE:} #1}
+\newcommand{\ift}[2]{If \C has #1 then
+\[
+  \begin{array}{ll}
+   #2 
+  \end{array}
+\]
+}
+
+\newcommand{\chaptitle}[1]{
+\part*{#1}
+\setcounter{section}{0}
+\addcontentsline{toc}{part}{\protect{#1}}
+\def\chapname{#1}
+}
+
+\newcommand{\secpage}[1]{section \ref{#1}, p.\pageref{#1}}
+\newcommand{\mysec}[1]{Sec.\ref{#1}\xspace}
+
+\newcommand{\pagetitle}[2]{
+\vspace*{3cm}
+\thispagestyle{empty}
+\begin{center}
+  {\Huge\bf #1}
+\end{center}
+
+\vspace*{2cm}
+\begin{center}
+  {\Large #2}
+\end{center}
+\vspace*{1cm}
+\begin{center}
+  {\Large Richard Bonichon}
+\end{center}
+\vfill
+\def\postes{#2}
+}
+
+
+\usepackage{listings}
+
+% \lstdefinelanguage{Moca}[Objective]{Caml}
+% {morekeywords={rule, associative, commutative, nilpotent, inverse,
+%     opposite, neutral, idempotent, distributive, absorbing, absorbent,
+%   left, right, involutive, status, precedence, completion},%
+% }%
+
+\lstloadlanguages{[Objective]Caml,Moca}
+
+\definecolor{lstbg}{gray}{0.98} \definecolor{lstfg}{gray}{0.10}
+\definecolor{lstrule}{gray}{0.6} \definecolor{lstnum}{gray}{0.4}
+\definecolor{lsttxt}{rgb}{0.3,0.2,0.6}
+\newcommand{\lstbrk}{\mbox{$\color{blue}\scriptstyle\cdots$}}
+
+\def\lp@basic{
+  \ifmmode\normalfont\mathtt\mdseries\scriptsize
+  \else\normalfont\ttfamily\mdseries\scriptsize
+  \fi
+}
+
+\def\lp@inline{
+  \ifmmode\normalfont\mathtt\scriptstyle
+  \else\normalfont\ttfamily\mdseries\small
+  \fi}
+
+\def\lp@keyword{}
+\def\lp@special{\color{lstfg}}
+\def\lp@comment{\normalfont\ttfamily\mdseries}
+\def\lp@string{\color{lstfg}}
+\def\lp@ident{}
+\def\lp@number{\rmfamily\tiny\color{lstnum}}
+
+\lstdefinestyle{moca-style}{%
+  basicstyle={\ifmmode\normalfont\mathtt\scriptstyle
+  \else\normalfont\ttfamily\mdseries\small
+  \fi},%
+  identifierstyle={},%
+  commentstyle={\normalfont\ttfamily\mdseries},%
+  keywordstyle={\ifmmode\mathsf\else\sffamily\fi},%
+  keywordstyle=[2]\color{lstfg},%
+  stringstyle={\color{lstfg}},%
+  emphstyle={}\underbar,%
+  showstringspaces=false,%
+  mathescape=true,%
+  numberstyle={\rmfamily\tiny\color{lstnum}},%
+  xleftmargin=6ex,xrightmargin=2ex,%
+  framexleftmargin=1ex,%
+  frame=l,%
+  framerule=1pt,%
+  rulecolor=\color{lstrule},%
+  backgroundcolor=\color{lstbg},%
+  moredelim={*[s]{/*@}{*/}},%
+  moredelim={*[l]{//@}},
+  morecomment={[is]{//NOPP-BEGIN}{NOPP-END}},
+  mathescape=true,
+  escapechar=`
+% breaklines is broken when using a inline and background
+%  breaklines,prebreak={\lstbrk},postbreak={\lstbrk},breakindent=5ex %
+}
+
+\lstdefinestyle{moca}{
+  language={[Objective]Caml},
+  alsolanguage=Moca,
+  style=moca-style
+}
+
+\lstset{
+  language=Moca,
+  style=moca,
+  basicstyle={ \ifmmode\normalfont\mathtt\mdseries\scriptsize
+  \else\normalfont\ttfamily\mdseries\scriptsize
+  \fi},
+  stepnumber=1,
+  numbers=left
+}
+
+% \lstset{
+%   language=Moca,
+%   captionpos=b,
+%   xleftmargin=10mm,
+%   xrightmargin=10mm,
+% %%  frame=lines,
+%   columns=[c]{fixed},
+% %%  numbers=right,
+%   stepnumber=2,
+%   numberfirstline=false
+% }
+
+\def\mlm{{\sf .mlm}\xspace}
+\def\mlms{{\sf .mlms}\xspace}
+\def\cons{{\sf cons}\xspace}
+\def\insertf{{\sf insert}\xspace}
+\def\delete{{\sf delete}\xspace}
+\def\potent{{\sf potent}\xspace}
+\def\return{{\sf return}\xspace}
+\def\compare{{\sf compare}\xspace}
+\def\mrule{{\sf rule}\xspace}
+\def\testd{{\sf test}\xspace}
+\def\na{{\it not applicable}.}
+\def\rw{\longrightarrow}
+\newcommand{\ret}[1]{{\sf return\_#1}\xspace}
+
+\newenvironment{foo}[0]{~\begin{\itemize}}{\end{itemize}}

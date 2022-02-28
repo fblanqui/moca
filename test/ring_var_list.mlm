@@ -1,0 +1,45 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2012,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: ring_var_list.mlm,v 1.7 2012-06-04 13:01:22 weis Exp $ *)
+
+(* Defining a ring structure with variables. *)
+
+(* ((x * y ) + z) * x -> xxy + xz *)
+type t = private
+   | Zero
+   | One
+
+   | Opp of t
+   | Var of string
+
+   | Add of t list
+   begin
+     associative
+     commutative
+     neutral (Zero)
+     opposite (Opp)
+   end
+
+   | Mul of t list
+   begin
+     associative
+     commutative
+     neutral (One)
+     absorbent (Zero)
+     distributive (Add)
+     distributive inverse (Opp)
+   end
+;;

@@ -1,0 +1,392 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<script src="jquery.js"></script>
+<script src="improve.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Pr_ocaml.html">
+<link rel="next" href="Pr_code.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Parsetree" rel="Chapter" href="Parsetree.html">
+<link title="Asttypes" rel="Chapter" href="Asttypes.html">
+<link title="Misc" rel="Chapter" href="Misc.html">
+<link title="Tbl" rel="Chapter" href="Tbl.html">
+<link title="Config" rel="Chapter" href="Config.html">
+<link title="Clflags" rel="Chapter" href="Clflags.html">
+<link title="Terminfo" rel="Chapter" href="Terminfo.html">
+<link title="Ccomp" rel="Chapter" href="Ccomp.html">
+<link title="Warnings" rel="Chapter" href="Warnings.html">
+<link title="Consistbl" rel="Chapter" href="Consistbl.html">
+<link title="Linenum" rel="Chapter" href="Linenum.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Longident" rel="Chapter" href="Longident.html">
+<link title="Syntaxerr" rel="Chapter" href="Syntaxerr.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Lexer" rel="Chapter" href="Lexer.html">
+<link title="Parse" rel="Chapter" href="Parse.html">
+<link title="Printast" rel="Chapter" href="Printast.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="File" rel="Chapter" href="File.html">
+<link title="Useful" rel="Chapter" href="Useful.html">
+<link title="Debug" rel="Chapter" href="Debug.html">
+<link title="Mylist" rel="Chapter" href="Mylist.html">
+<link title="Myset" rel="Chapter" href="Myset.html">
+<link title="Relation" rel="Chapter" href="Relation.html">
+<link title="Otype" rel="Chapter" href="Otype.html">
+<link title="Pr_ocaml" rel="Chapter" href="Pr_ocaml.html">
+<link title="Code" rel="Chapter" href="Code.html">
+<link title="Pr_code" rel="Chapter" href="Pr_code.html">
+<link title="Check" rel="Chapter" href="Check.html">
+<link title="Var" rel="Chapter" href="Var.html">
+<link title="Symb" rel="Chapter" href="Symb.html">
+<link title="Term" rel="Chapter" href="Term.html">
+<link title="Term_utils" rel="Chapter" href="Term_utils.html">
+<link title="Subterm" rel="Chapter" href="Subterm.html">
+<link title="Order" rel="Chapter" href="Order.html">
+<link title="Prec" rel="Chapter" href="Prec.html">
+<link title="Subs" rel="Chapter" href="Subs.html">
+<link title="Match" rel="Chapter" href="Match.html">
+<link title="Rename" rel="Chapter" href="Rename.html">
+<link title="Unif" rel="Chapter" href="Unif.html">
+<link title="Rule" rel="Chapter" href="Rule.html">
+<link title="Equation" rel="Chapter" href="Equation.html">
+<link title="Cparser" rel="Chapter" href="Cparser.html">
+<link title="Clexer" rel="Chapter" href="Clexer.html">
+<link title="Cp" rel="Chapter" href="Cp.html">
+<link title="Norm" rel="Chapter" href="Norm.html">
+<link title="Norm_ml" rel="Chapter" href="Norm_ml.html">
+<link title="Comp" rel="Chapter" href="Comp.html">
+<link title="Axiom" rel="Chapter" href="Axiom.html">
+<link title="Genr_pattern" rel="Chapter" href="Genr_pattern.html">
+<link title="Genr_base" rel="Chapter" href="Genr_base.html">
+<link title="Genr_memo" rel="Chapter" href="Genr_memo.html">
+<link title="Genr_sharing" rel="Chapter" href="Genr_sharing.html">
+<link title="Genr_expression" rel="Chapter" href="Genr_expression.html">
+<link title="Eqnrel" rel="Chapter" href="Eqnrel.html">
+<link title="Complete" rel="Chapter" href="Complete.html">
+<link title="Genr_nary" rel="Chapter" href="Genr_nary.html">
+<link title="Genr_listary" rel="Chapter" href="Genr_listary.html">
+<link title="Genr_binary" rel="Chapter" href="Genr_binary.html">
+<link title="Genr_unary" rel="Chapter" href="Genr_unary.html">
+<link title="Genr_nullary" rel="Chapter" href="Genr_nullary.html">
+<link title="Genr" rel="Chapter" href="Genr.html">
+<link title="Genr_mli" rel="Chapter" href="Genr_mli.html">
+<link title="Listutils" rel="Chapter" href="Listutils.html">
+<link title="Randomutils" rel="Chapter" href="Randomutils.html">
+<link title="Tgenr_base" rel="Chapter" href="Tgenr_base.html">
+<link title="Genr_values" rel="Chapter" href="Genr_values.html">
+<link title="Typed_vars" rel="Chapter" href="Typed_vars.html">
+<link title="Genr_listary_equations" rel="Chapter" href="Genr_listary_equations.html">
+<link title="Genr_substitutions" rel="Chapter" href="Genr_substitutions.html">
+<link title="Genr_equalities" rel="Chapter" href="Genr_equalities.html">
+<link title="Genr_testing" rel="Chapter" href="Genr_testing.html">
+<link title="Main" rel="Chapter" href="Main.html"><link title="Application macros " rel="Section" href="#1_Applicationmacros">
+<link title="Other useful auxiliaries " rel="Section" href="#1_Otherusefulauxiliaries">
+<title>Code</title>
+</head>
+<body>
+<div class="navbar"><a href="Pr_ocaml.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Pr_code.html">Next</a>
+</div>
+<center><h1>Module <a href="type_Code.html">Code</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Code: <code class="code"><span class="keyword">sig</span></code> <a href="Code.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><span id="4_DefinitionsandlibraryfortheemittedAST"><h4>Definitions and library for the emitted AST </h4></span><br>
+<hr width="100%">
+<pre><span id="TYPElident"><span class="keyword">type</span> <code class="type"></code>lident</span> = <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code> </pre>
+<div class="info">
+Lowercase ident.<br>
+</div>
+
+<pre><span id="TYPEuident"><span class="keyword">type</span> <code class="type"></code>uident</span> = <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code> </pre>
+<div class="info">
+Uppercase ident.<br>
+</div>
+
+<pre><span id="TYPEiident"><span class="keyword">type</span> <code class="type"></code>iident</span> = <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code> </pre>
+<div class="info">
+Infix ident.<br>
+</div>
+
+<pre><span id="TYPEident"><span class="keyword">type</span> <code class="type"></code>ident</span> = <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code> </pre>
+<div class="info">
+Any kind of ident.<br>
+</div>
+
+<pre><span id="TYPEiname"><span class="keyword">type</span> <code class="type"></code>iname</span> = <code class="type">string</code> </pre>
+<div class="info">
+The name of an infix symbol.<br>
+</div>
+
+<pre><span id="TYPEtname"><span class="keyword">type</span> <code class="type"></code>tname</span> = <code class="type">string</code> </pre>
+<div class="info">
+The name of a type declared in the AST.<br>
+</div>
+
+<pre><span id="TYPEfilename"><span class="keyword">type</span> <code class="type"></code>filename</span> = <code class="type">string</code> </pre>
+
+<br><code><span id="TYPEexp"><span class="keyword">type</span> <code class="type"></code>exp</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Constant</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEident">ident</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Var</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPElident">lident</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Match</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEclauses">clauses</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Try</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEclauses">clauses</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Generator</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEuident">uident</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Apply</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a> list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Infix</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEiident">iident</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">If</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Let</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPElident">lident</a> * <a href="Code.html#TYPEpattern">pattern</a> list * <a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Letrec</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPElident">lident</a> * <a href="Code.html#TYPEpattern">pattern</a> list * <a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Sequence</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a> list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Record</span> <span class="keyword">of</span> <code class="type">(<a href="Code.html#TYPElident">lident</a> * <a href="Code.html#TYPEexp">exp</a>) list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Tuple</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">List</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a> list</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ocaml_pattern</span> <span class="keyword">of</span> <code class="type">Parsetree.pattern</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Ocaml_expression</span> <span class="keyword">of</span> <code class="type">Parsetree.expression</code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Function</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEclauses">clauses</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Sline_directive</span> <span class="keyword">of</span> <code class="type">int * <a href="Code.html#TYPEfilename">filename</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Comment</span> <span class="keyword">of</span> <code class="type">string * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPEpattern"><span class="keyword">type</span> <code class="type"></code>pattern</span> = <code class="type"><a href="Code.html#TYPEexp">exp</a></code> </pre>
+
+<br><code><span id="TYPEclause"><span class="keyword">type</span> <code class="type"></code>clause</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Clause</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEpattern">pattern</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Clause_when</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEpattern">pattern</a> * <a href="Code.html#TYPEexp">exp</a> * <a href="Code.html#TYPEexp">exp</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPEclauses"><span class="keyword">type</span> <code class="type"></code>clauses</span> = <code class="type"><a href="Code.html#TYPEclause">clause</a> list</code> </pre>
+
+<br><code><span id="TYPEstructure_item"><span class="keyword">type</span> <code class="type"></code>structure_item</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_eval</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPEexp">exp</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Defines a set of possibly recursive functional values</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_value</span> <span class="keyword">of</span> <code class="type"><a href="Asttypes.html#TYPErec_flag">Asttypes.rec_flag</a> * (<a href="Code.html#TYPElident">lident</a> * <a href="Code.html#TYPEexp">exp</a> list * <a href="Code.html#TYPEexp">exp</a>) list</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Defines one primitive</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_primitive</span> <span class="keyword">of</span> <code class="type">string * Parsetree.value_description</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Defines one type</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_type</span> <span class="keyword">of</span> <code class="type">(string * <a href="Parsetree.html#TYPEtype_declaration">Parsetree.type_declaration</a>) list</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Defines one exception</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_exception</span> <span class="keyword">of</span> <code class="type">string * Parsetree.exception_declaration</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Opens a module</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_open</span> <span class="keyword">of</span> <code class="type"><a href="Longident.html#TYPEt">Longident.t</a></code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Includes a module</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_include</span> <span class="keyword">of</span> <code class="type">Parsetree.module_expr</code></code></td>
+<td class="typefieldcomment" align="left" valign="top" ><code>(*</code></td><td class="typefieldcomment" align="left" valign="top" >Comment belonging to a structure item</td><td class="typefieldcomment" align="left" valign="bottom" ><code>*)</code></td>
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Pstr_comment</span> <span class="keyword">of</span> <code class="type">string * <a href="Code.html#TYPEstructure_item">structure_item</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPEstructure"><span class="keyword">type</span> <code class="type"></code>structure</span> = <code class="type"><a href="Code.html#TYPEstructure_item">structure_item</a> list</code> </pre>
+
+<pre><span id="VALunderscored_ocaml_pattern"><span class="keyword">val</span> underscored_ocaml_pattern</span> : <code class="type">Parsetree.pattern -> Parsetree.pattern</code></pre><pre><span id="VALunderscored_pattern"><span class="keyword">val</span> underscored_pattern</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALunderscored_clause"><span class="keyword">val</span> underscored_clause</span> : <code class="type"><a href="Code.html#TYPEclause">clause</a> -> <a href="Code.html#TYPEclause">clause</a></code></pre><pre><span id="VALprefix_longident"><span class="keyword">val</span> prefix_longident</span> : <code class="type">string -> <a href="Longident.html#TYPEt">Longident.t</a> -> <a href="Longident.html#TYPEt">Longident.t</a></code></pre><div class="info">
+To add a prefix string to a qualified (long) identifier.<br>
+</div>
+<pre><span id="VALtopletrec"><span class="keyword">val</span> topletrec</span> : <code class="type">(<a href="Code.html#TYPElident">lident</a> * <a href="Code.html#TYPEpattern">pattern</a> list * <a href="Code.html#TYPEexp">exp</a>) list -> <a href="Code.html#TYPEstructure_item">structure_item</a></code></pre><div class="info">
+To define a toplevel let rec definition in a module implementation.<br>
+</div>
+<br>
+Globally predefined identifiers.<br>
+<pre><span id="VALunderscore"><span class="keyword">val</span> underscore</span> : <code class="type"><a href="Code.html#TYPEpattern">pattern</a></code></pre><pre><span id="VALx"><span class="keyword">val</span> x</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALy"><span class="keyword">val</span> y</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALz"><span class="keyword">val</span> z</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALt"><span class="keyword">val</span> t</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALu"><span class="keyword">val</span> u</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALxs"><span class="keyword">val</span> xs</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><div class="info">
+When binding a list of arguments.<br>
+</div>
+<pre><span id="VALgenr_args"><span class="keyword">val</span> genr_args</span> : <code class="type">string -> int -> <a href="Code.html#TYPEpattern">pattern</a> list</code></pre><div class="info">
+<code class="code">genr_args root n</code> returns the list of patterns <code class="code">root1; ...; rootn</code>.<br>
+</div>
+<pre><span id="VALgenr_numbered_args"><span class="keyword">val</span> genr_numbered_args</span> : <code class="type">string -> int -> (int * <a href="Code.html#TYPEexp">exp</a>) list</code></pre><div class="info">
+<code class="code">genr_numbered_args root n</code> returns <code class="code">1, root1; ...; n, rootn</code>.<br>
+</div>
+<pre><span id="VALgenr_underscores"><span class="keyword">val</span> genr_underscores</span> : <code class="type">int -> <a href="Code.html#TYPEpattern">pattern</a> list</code></pre><div class="info">
+<code class="code">genr_underscores n</code> returns a list of <code class="code">n</code> <code class="code">_</code> patterns.<br>
+</div>
+<pre><span id="VALmake_Constant"><span class="keyword">val</span> make_Constant</span> : <code class="type">string -> <a href="Code.html#TYPEexp">exp</a></code></pre><div class="info">
+Generate a constant expression from the given <code class="code">string</code>.<br>
+</div>
+<pre><span id="VALmake_Var"><span class="keyword">val</span> make_Var</span> : <code class="type">string -> <a href="Code.html#TYPEexp">exp</a></code></pre><div class="info">
+Generate a variable expression from the name of the given ident.<br>
+</div>
+<br>
+<span id="1_Applicationmacros"><h1>Application macros </h1></span><br>
+<pre><span id="VALapply"><span class="keyword">val</span> apply</span> : <code class="type"><a href="Code.html#TYPElident">lident</a> -> <a href="Code.html#TYPEexp">exp</a> list -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALapply1"><span class="keyword">val</span> apply1</span> : <code class="type"><a href="Code.html#TYPElident">lident</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALapply2"><span class="keyword">val</span> apply2</span> : <code class="type"><a href="Code.html#TYPElident">lident</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALapply3"><span class="keyword">val</span> apply3</span> : <code class="type"><a href="Code.html#TYPElident">lident</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><div class="info">
+Apply an ident to its argument(s).<br>
+</div>
+<pre><span id="VALinfix_apply"><span class="keyword">val</span> infix_apply</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEiident">iident</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><div class="info">
+Apply an infix ident to its arguments.<br>
+</div>
+<pre><span id="VALinfix_name"><span class="keyword">val</span> infix_name</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEiname">iname</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><div class="info">
+Apply a given infix name to its arguments.<br>
+</div>
+<br>
+<span id="1_Otherusefulauxiliaries"><h1>Other useful auxiliaries </h1></span><br>
+<pre><span id="VALlet0"><span class="keyword">val</span> let0</span> : <code class="type"><a href="Code.html#TYPElident">lident</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALlet1"><span class="keyword">val</span> let1</span> : <code class="type"><a href="Code.html#TYPElident">lident</a> -> <a href="Code.html#TYPEpattern">pattern</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALpair"><span class="keyword">val</span> pair</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALraise_error"><span class="keyword">val</span> raise_error</span> : <code class="type">string -> <a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALdivision_by_absorbent"><span class="keyword">val</span> division_by_absorbent</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALfailure_division_by_absorbent"><span class="keyword">val</span> failure_division_by_absorbent</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALfailwith_division_by_absorbent"><span class="keyword">val</span> failwith_division_by_absorbent</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a></code></pre><pre><span id="VALsequence"><span class="keyword">val</span> sequence</span> : <code class="type"><a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a> -> <a href="Code.html#TYPEexp">exp</a></code></pre></body></html>

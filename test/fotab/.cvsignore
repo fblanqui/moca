@@ -1,0 +1,9 @@
+*.bin
+*.byt
+*.cm*
+*_sharing.*
+.depend*
+a.out
+fol
+fol.mli
+fol.ml

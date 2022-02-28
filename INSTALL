@@ -1,0 +1,43 @@
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2012,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+#(* $Id: INSTALL,v 1.10 2012-06-04 13:01:21 weis Exp $ *)
+
+- Configure the software,
+
+  * If you don't want the software to be installed in /usr/local, type
+
+    ./configure <absolute path of the root directory for installation>
+
+  * If you want the software to be installed in /usr/local, type
+
+    ./configure
+
+- Compile the software, typing
+
+make
+
+- Become the super-user (if necessary) and do
+
+make install
+
+- Execute "man mocac" and enjoy :)
+
+The examples/ directory contains a set of examples: look at the
+various .mlm files. To compile them, do:
+
+cd examples
+make clean
+make

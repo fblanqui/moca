@@ -1,0 +1,315 @@
+\def\adviheader{\relax}
+
+\newslide{The idea}
+\advitransition{slide}
+
+Enhance Caml data type definitions in order to
+
+\begin{citemize}
+\item handle {\em invariants} verified by values of a type,
+
+\item provide {\em quotient data types}, in the sense of mathematical quotient
+  structures,
+
+\item define {\em automatic computation of canonical representant} of values.
+\end{citemize}
+
+\newslide{Usual data type definition kinds}
+\advitransition{slide}
+
+There are three classical {\em kinds} of data type definitions:
+\begin{citemize}
+\item {\em sum} type definitions
+ (disjoint union of sets with tagged summands),
+
+\item {\em product} type definitions
+ (anonymous cartesian products)
+ (cartesian products with named components)
+
+\item {\em abbreviation} type definitions
+ (short hands to name type expressions)
+\end{citemize}
+
+\newslide{Visibility of data type definitions}
+
+There are two classical {\em visibility} of a data type definitions:
+
+\begin{citemize}
+
+\item {\em concrete} visibility: the implementation of the type is visible,
+
+\item {\em abstract} visibility: the implementation of the type is hidden,
+\end{citemize}
+
+\newslide{Consequence of visibility for programmers}
+
+For {\em concrete} visibility:
+
+\begin{citemize}
+\item value inspection is allowed via pattern matching,
+\item value construction is not restricited,
+\end{citemize}
+
+For {\em abstract} visibility:
+
+\begin{citemize}
+\item value inspection is not possible,
+\item value construction is carefully ruled.
+\end{citemize}
+
+\newslide{Consequence of visibility for programs}
+
+For concrete types, the representation of values is manifest:
+
+\begin{citemize}
+\item the compiler can perform type based optimization,
+\item the debugger (and the toplevel) can show (print) values.
+\end{citemize}
+
+For abstract types, the representation of values is hidden:
+\begin{citemize}
+\item the compiler cannot perform type based optimization,
+\item the debugger and the toplevel system just print values as \verb"<abstr>".
+\end{citemize}
+
+\newslide{Visibility management constructs}
+
+Modules are used to define the visibility of data type definitions.
+
+\begin{citemize}
+  \item the implementation defines the data type as concrete,
+  \item the interface exports the data type as concrete/or abstract.
+\end{citemize}
+
+The interface exports the data type as concrete if it {\em declares} the data
+type with its definition (the associated constructors for a sum type, the labels for
+a record, or the defining type expression for an abbreviation).
+
+\newslide{Defining invariants}
+
+Usual (concrete) data types implement {\em free} data structures:
+\begin{citemize}
+  \item sums: free (closed) algebra (the constructors define the
+signature of the free algebra),
+  \item products: free cartesian products for records,
+  \item abbreviations: free type expressions.
+\end{citemize}
+
+By {\em free} we mean the usual mathematical meaning: no restriction on the
+construction of values of the set (type), provided the signature constraints
+are fulfilled.
+
+\newslide{Examples}
+
+\begin{alltt}
+type expression =
+   | Int of int
+   | Add of expression * expression
+   | Opp of expression
+
+type id = \{
+  firstname : string;
+  lastname : string;
+  married : bool;
+\};;
+
+type real = float;;
+\end{alltt}
+
+\newslide{Counter examples}
+
+Sum and products:
+
+\begin{alltt}
+type positive_int = Positive of int;;
+
+type rat = \{ numerator : int; denominator : int; \};;
+\end{alltt}
+
+Despite the intended meaning:
+\begin{citemize}
+\item \verb"Positive (-1)" is a valid \verb"positive_int" value,
+\item \verb"{numerator = 1; denominator = 0;}" is a valid \verb"rat".
+\end{citemize}
+
+\newslide{Counter examples}
+
+Abbreviations:
+
+\begin{alltt}
+type km = float;;
+type mile = float;;
+\end{alltt}
+Despite the intended meaning:
+\begin{citemize}
+\item \verb"-1.0" is a valid \verb"km" value,
+\item \verb"((x : km) : mile)" is not an error (a \verb"km" value is
+a \verb"mile" value).
+\end{citemize}
+
+\newslide{Non free data types}
+
+Many mathematical structures are not free.\\
+(Cf. Generators \& relations presentations of mathematical structures.)
+
+Many data structures are not free having various validity constraints.
+
+The usual feature of programming languages to deal with non free data
+structure is to provide abstract visibility and abstract data types (or ADT).
+
+\newslide{ADT as Non free data type}
+
+Using an Abstract Data Type, the constructors, labels, or the type expression
+synonym of the type defined are no more accessible to build spurious
+undesired values.
+
+{\em Construction} of values is restricted to {\em construction
+functions} defined in the implementation module of the abstract data type.
+
+Advantage: non free data types invariants are properly handled.\\
+Drawback: inspection of values is no more a built in feature. Inspection
+functions should be provided explicitely by the implementation module.
+
+There is {\bf no pattern matching} facility for ADTs.
+
+\newslide{Example}
+
+\begin{alltt}
+type positive_int = Positive of int;;
+let make_positive_int i =
+  if i < 0 then failwith "negative int" else Positive i;;
+let int_of_positive_int p = p;;
+
+type rat = \{ numerator : int; denominator : int; \};;
+let make_rat n d =
+  if d = 0 then failwith "null denominator" else
+  \{ numerator = n; denominator = d; \};;
+
+let numerator r = r.numerator;;
+let denominator r = r.denominator;;
+\end{alltt}
+
+\newslide{Example}
+
+\begin{alltt}
+type km = float;;
+let make_km k =
+  if k <= 0.0 then failwith "negative distance" else k;;
+
+let float_of_km k = k;;
+
+type mile = float;;
+let make_mile m =
+  if m <= 0.0 then failwith "negative distance" else m;;
+let float_of_mile m = m;;
+\end{alltt}
+
+\newslide{The private visibility}
+\advitransition{slide}
+
+To provide pattern matching for non free data types, we introduced a new
+visibility for data type definitions: the {\em private} visibility.
+
+A type definition with {\em private visibility}:
+
+\begin{citemize}
+\item the implementation of the type is visible,
+\item the value construction is carefully ruled.
+\end{citemize}
+
+\newslide{Private data types}
+\advitransition{slide}
+
+As a concrete data type, a private data type (or {\em PDT}) has a manifest implementation.
+As an abstract data type, a private data type limits the construction of
+values to provided construction functions.
+
+In short, private data type are:
+\begin{citemize}
+\item concrete data types that support {\em invariants} or {\em relations}
+between their values,
+\item fully compatible with pattern matching.
+\end{citemize}
+
+\newslide{Examples}
+\advitransition{slide}
+
+All the quotient sets you need can be implemented as private types.
+
+For quotient types the corresponding invariant is:\\
+any element in the private type is the canonical representant of its
+equivalence class.
+
+Formulas, groups, \ldots
+
+\newslide{Definition of private data types}
+\advitransition{wipe}
+
+As abstract and concrete data types, private data types are implemented using modules:
+
+- inside {\em implementation} of their defining module, relational data types
+are regular concrete data types,
+
+- in the {\em interface} of their defining module, private data types are simply
+declared as {\em private}.
+
+\newslide{Usage of a private data type}
+
+In client modules:\\
+\begin{citemize}
+  \item a private data type does not provide labels nor constructors to build its values,
+  \item a private data type provides labels or constructors for pattern matching.
+\end{citemize}
+
+\newslide{Consequences}
+\advitransition{wipe}
+
+The module that implements a private data type:
+
+\begin{itemize}
+ \item must export {\em construction functions} to build the values,
+ \item has not to provide {\em destruction functions} to access inside
+the values.
+\end{itemize}
+
+The pattern matching facility is available for private data types.
+
+\vfill
+
+\newslide{Comparison with abstract data types}
+
+Abstract data types also provide invariants, but:
+
+\begin{itemize}
+
+ \item once defined, an ADT is {\em closed}: new functions on the ADT
+are mere compositions of those provided by the module.
+
+ \item once defined, a private data type is {\em still open}: arbitrary new
+functions can be defined via pattern matching on the representation of
+values.
+
+\end{itemize}
+
+\newslide{Consequences}
+
+\begin{citemize}
+  \item the implementation of an ADT is big (it basically includes the set
+of functions available for the type),
+
+  \item the implementation of a PDT is small (it only includes the set of functions
+that provides the invariants),
+  \item proofs can be simpler for PDT (we must only prove that the
+mandatory construction functions indeed enforce the invariants).
+\end{citemize}
+
+\newslide{Consequences}
+
+Clients of an ADT have to use the construction and destruction
+functions provided with the ADT.
+
+Clients of a PDT must use the construction functions, to preserve
+invariants but pattern matching is still freely available.
+
+All the functions defined on an PDT {\em respect} the PDT's invariants
+(granted for free by the type-checker!)

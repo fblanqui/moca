@@ -1,0 +1,125 @@
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2012,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+#(* $Id: README,v 1.17 2012-06-04 13:01:21 weis Exp $ *)
+
+OVERVIEW:
+
+Moca is a fast code generator for Objective Caml ``types with
+relations''. Types with relations are concrete data types, the values of which
+must obey to ``invariant rules'', or relations. The constructors of those types
+are not acessible directly since types with relations are ``private'' types in
+Objective Caml parlance.
+
+Given an annotated definition of a private type, Mocac generates the interface
+and the implementation of the Caml module that implements the relational type,
+i.e. the type and the corresponding construction functions to implement the
+relations and the invariants according to the annotations.
+
+The source .mlm file is a specialized version of an Objective Caml module
+interface file. It should contain the definition of a private type; in
+addition, the constructors of the type can be annotated with relations that the
+constructors are supposed to verify. Annotations are enclosed by the keywords
+begin and end.
+
+Let's consider as an example, the regular definition of a simple type
+for arithmetic expressions, to modelize unary integers with addition
+and unary minus. We could use two constants One and Zero, a binary
+constructor Add and a unary constructor Opp, to represent 1, 0, +, and
+unary -. In regular Objective Caml, we could write:
+
+type expr =
+   | One
+   | Zero
+   | Opp of expr
+   | Add of expr * expr;;
+
+This is OK, but unfortunately we have no mean to express in the type
+definition, that in fact Add (One, Zero) is the same as Add (Zero,
+One) since the addition is commutative. Similarly, we cannot indicate
+that Add (Zero, One) is in fact One, given that Zero is the neutral
+element for addition. So that our code will be clobbered with a lot of
+pattern matchings and calls to ``normalization'' functions to handle
+this semantics properties that we need for the values of type expr. In
+fact, we would prefer to express the relations that are verified by
+the constructors and let the compiler to handle them to built a set of
+values that verify those constraints.
+
+Moca was exactly designed to deal with relations of constructors and
+to automatically generate the proper construction functions that
+ensure that the relations always hold for any value of the type expr.
+
+Hence, in the .mlm Moca source file for the type expr, we indicate the
+properties for Add as annotations, stating its algebraic laws
+
+type expr = private
+   | One
+   | Zero
+   | Opp of expr
+   | Add of expr * expr
+   begin
+     associative
+     commutative
+     neutral (Zero)
+     inverse (Opp)
+   end;;
+
+Now Moca generates the values, one : expr, zero : expr,
+opp : expr -> expr, and add : expr * expr -> expr, such that the Add
+constructor will be associative, commutative, will have Zero as
+neutral element, and Opp as its inverse operation.
+
+See the documentation for an exhaustive list of relations that Moca
+currently supports.
+
+In addition, Moca could provide maximal sharing between the values of
+the type, using dedicated hashing functions and sophisticated weak
+pointer hashtables. There is nothing to modify in the source code to
+get maximal sharing: you just have to call the mocac compiler with the
+special option that triggers the generation of maximally sharing
+construction functions (that will still implement the specified
+relations for the constructors).
+
+REQUIREMENTS:
+
+Moca requires Objective Caml 3.09 or later.
+
+INSTALLATION:
+
+See file INSTALL.
+For Windows: see file INSTALL.win.
+
+DOCUMENTATION:
+
+- The doc/ subdirectory contains the documentation in HTML.
+
+EXAMPLES:
+
+- The examples/ directory contains a set of examples: look at the
+  various .mlm files. To compile them, do:
+
+cd examples
+make clean
+make
+
+SUPPORT:
+
+- Please send bug reports and comments to caml-devel@inria.fr
+
+COPYRIGHT:
+
+All files marked "Copyright INRIA" in this distribution are copyright
+2005-2008 Institut National de Recherche en Informatique et en Automatique
+(INRIA) and distributed under the conditions stated in file LICENSE.

@@ -1,0 +1,75 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: lambda_sigma.mlm,v 1.3 2011-11-03 10:59:34 bonichon Exp $ *)
+
+(* The lambda sigma calculus with explicit substitutions and
+  * normal form = substitutions made
+ *)
+
+type nat = Zero | Suc of nat;;
+
+type ('var,'symb) lambdavar =
+  | Var of 'var
+  | Symbole of 'symb
+  | Lam of 'var * ('var, 'symb) lambdavar
+  | Appl of ('var, 'symb) lambdavar * ('var, 'symb) lambdavar
+;;
+
+type ('var,'symb) lamsig = private
+   | Fvar of 'var
+   | Symb of 'symb
+   | Bvar of nat
+   | Lambda of ('var, 'symb) lamsig
+   | Vartodb of ('var, 'symb) lambdavar
+     begin
+      rule Vartodb t -> Replacedb ([], t)
+     end
+   | App of ('var, 'symb) lamsig * ('var, 'symb) lamsig
+   | Subst of ('var, 'symb) lamsig * ('var, 'symb) subst
+     begin
+      rule Subst (App (a, b), s) -> App (Subst (a, s), Subst (b, s))
+      rule Subst (Fvar x, s) -> Fvar x
+      rule Subst (Symb x, s) -> Symb x
+      rule Subst (Bvar x, Id) -> Bvar x
+      rule Subst (Bvar Zero, Inst (a, s)) -> a
+      rule Subst (Bvar (Suc n), Inst(a, s)) -> Subst (Bvar n, s)
+      rule Subst (Lambda t, s) -> Lambda (Subst(t, s))
+      rule Subst (Subst(a, s), t) -> Subst (a, Comp(s, t))
+     end
+   | Replacedb of ('var) list * ('var, 'symb)lambdavar
+     begin
+      rule Replacedb([], Var x) -> Fvar x
+      rule Replacedb(x::l, Var y) ->
+        if x = y then Bvar Zero else
+        let varplus1 t = match t with
+        | Bvar n -> Bvar (Suc n)
+        | _ -> Bvar Zero
+        in varplus1 (Replacedb (l, Var y))
+        rule Replacedb (l, Symbole a) -> Symb a
+        rule Replacedb (l, Lam (x, t)) -> Lambda (Replacedb(x :: l, t))
+        rule Replacedb (l, Appl (t, u)) -> App (Replacedb (l, t), Replacedb (l, u))
+     end
+
+and ('var, 'symb) subst = private
+   | Id
+   | Inst of ('var, 'symb) lamsig * ('var, 'symb) subst
+   | Comp of ('var, 'symb) subst * ('var, 'symb) subst
+     begin
+      neutral left (Id)
+      associative
+      rule Comp (Inst(a, s), t) -> Inst (Subst(a, t), Comp(s, t))
+     end
+;;

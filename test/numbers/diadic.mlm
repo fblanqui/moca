@@ -1,0 +1,57 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: diadic.mlm,v 1.5 2007-11-21 14:41:05 blanqui Exp $ *)
+
+(* Implantation of:
+P. Arrighi and G. Dowek, Linear-algebraic lambda-calculus.
+http://www.lix.polytechnique.fr/~dowek/Publi/qpl.ps.gz *)
+
+open Natdigit_by_hand;;
+open Natdigit_by_hand.Decimal;;
+open Sign;;
+open Peano;;
+
+type t = private Mk of Sign.t * Decimal.t * Peano.t
+  begin
+    rule Mk (s, Snoc (n, D.Mk 0), S p) -> Mk (s, n, p)
+    rule Mk (Neg, Empty, e) -> Mk (Pos, empty, e)
+    rule Mk (s, Empty, _e) -> Mk (s, empty, Zero)
+  end;;
+
+let bprint ob (Mk (s, m, e)) =
+  Printf.bprintf ob "%a%a.2^%a"
+    Sign.bprintf s Decimal.bprintf m Peano.bprintf e
+;;
+
+let prod (Mk (s1, m1, e1)) (Mk (s2, m2, e2)) =
+  mk (Sign.prod s1 s2, Decimal.prod m1 m2, Peano.add e1 e2)
+;;
+
+let d0 = D.mk 0;;
+let d1 = D.mk 1;;
+
+let rec two_power = function (* non-negative argument *)
+  | 0 -> snoc (empty, d1) 
+  | n -> snoc (two_power (n-1), d0)
+;;
+
+(*let add (Mk (s1, m1, e1)) (Mk (s2, m2, e2)) =
+  match Peano.compare_minus e1 e2 with
+    | Eq ->
+	match Decimal.compare m1 m2 with
+	  | 0 ->
+    | Gt d -> (* x >= 0 & e1 = e2 + d *)
+	let m2' = Decimal.prod (two_power d)
+;;*)

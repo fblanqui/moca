@@ -1,0 +1,112 @@
+
+constr-decl ::= constr-name [annotation]
+| constr-name of typexpr [annotation]
+
+annotation ::= begin {relation}+ end
+
+side ::= left | right
+
+invopp ::= inverse | opposite
+
+relation ::= commutative
+| associative
+| involutive
+| idempotent [side]
+| unary idempotent 
+| neutral [side] ( constr-name )
+| nilpotent [side] ( constr-name )
+| unary nilpotent ( constr-name )
+| invopp [side] ( constr-name [, constr-name] )
+| inverse neutral ( constr-name [, constr-name] )
+| distributive [side] ( constr-name )
+| unary distributive ( constr-name [, constr-name] )
+| distributive invopp [side] ( constr-name )
+| absorbent [side] ( constr-name )
+| absorbing [side] ( constr-name )
+| rule pattern -> pattern
+
+
+If C is commutative, then C (x, y) = C (y, x) and, for every value matching
+C (x, y), we have Pervasives.compare x y < 0.
+
+If C is associative, then C (C (x, y), z) = C (x, C (y, z)) and no value matches
+C (C (x, y), z).
+
+If C is involutive, then C (C (x)) = x and no value matches C (C (x)).
+
+idempotent is the conjunction of idempotent left and idempotent right.
+
+If C is idempotent left,  then C (x, C (x, y)) = C (x, y) and no value matches
+C (x, C (x, y)).
+
+If C is idempotent right, then C (C (x, y), y) = C (x, y) and no value matches
+C (C (x, y), y).
+
+neutral (D) is the conjunction of neutral left (D) and neutral right
+(D).
+
+If C is neutral left (D), then C (D, x) = x and no value matches C (D, x).
+
+If C is neutral right (D), then C (x, D) = x and no value matches C (x, D).
+
+If C is unary nilpotent (A), then C (C (x)) = A and no value matches C (C (x)).
+
+If C is nilpotent (A), then C(x, x) = A and no value matches C(x, x).
+
+inverse (I, E) is the conjunction of inverse left (I, E) and inverse
+right (I, E).
+
+If C is inverse left (I, E), then C (I (x), x) = E and no value matches
+C (I (x), x).
+
+If C is inverse right (I, E), then C (x, I (x)) = E and no value matches
+C (x, I (x)).
+
+If C is neutral [side] (E), then inverse [side'] (I) is
+equivalent to inverse [side'] (I, E).
+
+If I is inverse neutral (E), then I (E) = E and no value matches I (E).
+
+If I is inverse neutral (E, A), then I (E) = A and no value matches I (E).
+
+distributive (D) is the conjunction of distributive left (D) and
+distributive right (D).
+
+If C is distributive left (D), then C (D (x, y), z) = D (C (x, z), C (y, z)) and
+no value matches C (D (x, y), z).
+
+If C is distributive right (D), then C (z, D (x, y)) = D (C (z, x), C (z, y)) and
+no value matches C (z, D (x, y)).
+
+If I is unary distributive (C, D), then I (C (x, y)) = D (I (y), I (x)) and no
+value matches I (C (x, y)).
+
+unary distributive (C) is equivalent to unary distributive (C, C).
+
+distributive inverse (I) is the conjunction of distributive inverse
+left (I) and distributive inverse right (I).
+
+If C is distributive inverse left (I), then C (I (x), y) = I (C (x, y)) and no
+value matches C (I (x), y).
+
+If C is distributive inverse right (I), then C (x, I (y)) = I (C (x, y)) and
+no value matches C (x, I (y)).
+
+absorbent (A) is the conjunction of absorbent left (A) and absorbent
+right (A).
+
+If C is absorbent left (A), then C (A, x) = A and no value matches C (A, x).
+
+If C is absorbent right (A), then C (x, A) = A and no value matches
+C (x, A).
+
+absorbing (D) is the conjunction of absorbing left (D) and absorbing
+right (D).
+
+If C is absorbing left (D), then C (D (x, y), y) = y and no value matches
+C (D (x, y), y).
+
+If C is absorbing right (D), then C (x, D (x, y)) = x and no value matches
+C (x, D (x, y)).
+
+If C has rule l -> r, then C (l) = r and no value matches C (l).

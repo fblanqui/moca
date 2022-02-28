@@ -1,0 +1,60 @@
+\chapter{Conclusion}
+
+This report concludes what has been for an exceptionally fun year
+working on \moca. I hope to be able to contribute in the future as
+well as I still can right now. 
+
+This report does not list all the bug-fixes I did during this year but
+only the major features I worked on, which were
+documentation/specification, listary generators and finding better
+examples for \moca. This is also because I fixed a lot of bugs I
+introduced myself.
+
+I would like to warmly thank both Frédéric and Pierre for giving the
+chance to work with them. I learned a lot from both of you. It was a
+pleasure to work in our small but very lighthearted and merry project
+mostly with Laura, Cody and my thesis co-advisor Damien.
+
+
+\section{Upcoming features}
+\label{sec:upcoming}
+
+Work is still being done for the coming {\sf 0.6} version. This
+release will include the updated listary code generation of
+\mysec{sec:list_current} as well as the ususal bug fixes.
+
+In the distant to not-so-distant future, we hope to implement some (or
+even all!) of the  following features, in no particular order:
+\begin{itemize}
+\item Memoization for shared data types. This might also influence
+  how listary generators are treated: it must be made as easy as
+  possible to memoize the collection of small specialized functions of
+  \mysec{sec:arch}.
+\item AC-Completion (emulation)
+\item Relational types for abstract data types
+\item Modular automated proofs for generated code 
+\item Better automated generation of {\sf .ml} and {\sf .mli} from
+  {\sf .mlm} file with keywords for the functions one would like to be
+  visible from the interface file.
+\item Exhaustivity of pattern-matching with relational data types is
+  not the same as in \ocaml as some patterns cannot be obtained by
+  construction: check for false alarms of non-exhaustivity with
+  respect to \mlm specification.
+\item Relational data types for \focal.
+\end{itemize}
+
+\section{And now ?}
+\label{sec:conc}
+
+Here we are at the end of this tutorial. Hopefully you can now develop
+your own programs using \moca and \ocaml.
+
+We have not talked about some of the optional flags that can be
+activated on the command-line. They are described in the man page. Try
+them !
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

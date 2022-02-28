@@ -1,0 +1,1417 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--====================================================================-->
+<!--                                                                    -->
+<!--                             Moca                                   -->
+<!--                                                                    -->
+<!--                   Pierre Weis, INRIA Rocquencourt                  -->
+<!--                                                                    -->
+<!--  Copyright 2005-2012,                                              -->
+<!--  Institut National de Recherche en Informatique et en Automatique. -->
+<!--  All rights reserved.                                              -->
+<!--  This file is distributed under the terms of the Q Public License. -->
+<!--                                                                    -->
+<!--====================================================================-->
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" >
+
+<head>
+<meta name="GENERATOR" content="Htmlc 2.4" />
+<meta http-equiv="Content-Type" content="text/html;
+                                         charset=ISO-8859-1" />
+
+<title>
+
+Moca
+</title>
+<style type="text/css">
+body {
+    background-color : white;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 10pt;
+    width: 85%;
+}
+
+a:visited {color : #416DFF; text-decoration : none; }
+a:link {color : #416DFF; text-decoration : none;}
+a:hover {color : Red; text-decoration : none; background-color: #5FFF88}
+a:active {color : Red; text-decoration : underline; }
+
+.keywordsign { color : #C04600 }
+.superscript { font-size : 4 }
+.subscript { font-size : 4 }
+.comment { color : Green }
+.constructor { color : Blue }
+.type { color : #5C6585 }
+.string { color : Maroon }
+.warning { color : Red ; font-weight : bold }
+
+.param_info { margin-top: 4px; margin-left : 3em; margin-right : 3em }
+.code { color : #465F91 ; }
+.typetable { border-style : hidden }
+.indextable { border-style : hidden }
+.paramstable { border-style : hidden ; padding: 5pt 5pt}
+
+
+div.sig_block {margin-left: 2em}
+
+*:target { background: yellow; }
+
+h1 {
+  font-size: 28px;
+  font-style: bold;
+  padding-bottom: 10px;
+  margin-bottom: 15px; }
+
+h2 {
+  font-size: 24px;
+  font-style: bold;
+  padding-bottom: 10px;
+  border-bottom-style: solid;
+  border-width : 2px;
+}
+
+h3 {
+  font-size: 20px;
+  font-style: oblique;
+  margin-bottom: 8px;
+}
+
+h3.relation {
+    font-size: 16px;
+    font-style: oblique;
+    margin-bottom: 8px;
+    background-color: #eeeeee;
+}
+
+h4 {
+  font-size: 16px;
+  font-style: oblique;
+  padding-top: 0 px;
+  margin-bottom: 6px;
+}
+
+h5 {
+  font-size: 14px;
+  font-style: oblique;
+  padding-top: 0 px;
+  margin-bottom: 6px; }
+
+h6 {
+  font-size: 12px;
+  font-style: oblique;
+  padding-top: 0 px;
+  margin-bottom: 6px; }
+
+span.keyword {
+    font-weight : bold ;
+    color : red;
+    margin-top: 10pt;
+}
+
+div.moca-type {
+    margin: 5pt;
+    background: #cccccc;
+}
+
+div.navbar {
+    background : whitesmoke;
+    position:fixed;
+    top:5%;
+    right:5%;
+}
+
+div.vspacer {
+    margin: 10pt;
+}
+
+div.moca-gen {
+    margin-top: 10pt;
+}
+
+div.moca-index {
+    clear:both;
+    margin-top: 2%;
+    width: 100%;
+}
+div.moca-tr {
+    background: #eeeeee;
+    clear: none;
+}
+
+div.clear {
+    clear: both;
+}
+
+a.menu_item {
+    float: left;
+    margin: 1%;
+    background: whitesmoke;
+    font-style : bold;
+    font-size: 18px;
+}
+
+div.moca-doc {
+    margin-top: 5pt;
+    margin-left: 5%;
+    padding: 10pt 10pt 10pt 10pt;
+    border: dotted;
+    border-width: thin;
+    border-color: red;
+    background: whitesmoke;
+    font-size: smaller;
+    clear: both;
+    display: block;
+}
+
+div.moca-td {
+    float: left;
+    background: red;
+}
+
+code {
+    font-family: monospace;
+}
+div.moca-pre {
+    margin-top: 1%;
+    font-family: monospace;
+}
+
+a.showhide {
+    float: right;
+}
+
+body {
+    font-family: serif;
+}
+
+h1#title {text-align : center;}
+
+h2#logo {text-align : center;}
+h2#subtitle {
+    text-align : center;
+    border-bottom-style: none;
+}
+
+dl {
+    font-family: serif;
+    padding-left:3%;
+}
+
+div.bnf {
+    background-color: #eeeeee;
+    margin:0 30% 0 10%;
+}
+
+table.bnf {
+    font-family : sans-serif;
+    font-style : normal;
+    color : black ;
+}
+
+
+td.left {
+    text-align : right;
+    color: maroon;
+}
+
+td.middle {
+    text-align : right;
+    color : black;
+    font-style : normal;
+}
+
+td.right {
+    text-align : left;
+}
+
+font.bnf{
+    color :black;
+}
+
+font.keyword{
+    color :#348017;
+    background-color: #eeeeee;
+    font-family : sans-serif;
+    font-style : italic;
+}
+
+font.nter{
+    color : maroon;
+    font-family : sans-serif;
+    font-style : normal;
+}
+
+pre {
+    background-color: #eeeeee;
+    margin:0 30% 0 10%;
+}
+</style>
+</head>
+
+<body>
+
+
+
+
+<!-- $id: mocac.fr.html,v 1.21 2007/11/29 09:01:28 bonichon exp $ -->
+
+
+<h1 id="title"><img src="imgs/JoeCaml.png" alt="Masquotte de Caml" />
+  Moca: un générateur de modules pour les types à relations
+</h1>
+
+
+<h2 id="subtitle">Version 0.7.0</h2>
+
+
+<!--=======================================================================-->
+
+<h2>Où trouver le logiciel ?</h2>
+
+<p><a
+      href="archive/moca-0.7.0.tgz">
+Les sources de <strong>moca</strong> sont ici</a>.
+</p>
+
+<p>La documentation des sources se
+  trouve <a href="ocamldoc/index.html">ici</a>.
+</p>
+<!--=======================================================================-->
+
+<h2>Comment l'installer ?</h2>
+
+<p>Voir le fichier install dans le répertoire source.
+<br/>
+Pour Windows : voir le fichier install.win dans le répertoire source.
+</p>
+
+<!--=======================================================================-->
+
+<h2>De quoi s'agit-il ?</h2>
+
+<p><strong>Moca</strong> est un générateur de modules pour <EM>les types de
+données relationnels</EM>.
+</p>
+
+<p>Un <em>type de données relationnel</em> est un type de données concret
+dont les valeurs vérifient des relations qui sont déclarées lors de la
+définition du type.
+</p>
+
+<p>Pour chaque définition de type relationnel, <strong>moca</strong> compile
+un ensemble de fonctions de construction qui implémente les relations
+déclarées en ne construisant que les valeurs vérifiant ces relations.
+</p>
+
+<p><strong>Moca</strong> permet ainsi la définition et le traitement
+automatique d'invariants complexes des structures de données.
+</p>
+
+<P>De surcroît, <strong>moca</strong> est capable de générer des fonctions de
+constructions qui produisent des valeurs maximalement partagées.
+</P>
+
+<h2>Les relations de Moca</h2>
+
+<p><strong>Moca</strong> admet deux espèces de relations:</p>
+
+<ul>
+  <li>les relations algébriques (comme l'associativité ou la commutativité d'un
+  constructeur binaire),
+  </li>
+  <li>les règles de réécriture générales qui transforment un filtre composé de
+  constructeurs et de variables en une expression définie par le programmeur.
+  </li>
+</ul>
+
+<p>Les relations algébriques sont primitives en <strong>moca</strong> et leur
+traitement est donc correct (sauf erreur à signaler d'urgence). Au contraire,
+les règles de réécriture générales sont sous la responsabilité pleine et
+entière du programmeur; en conséquence les propriétés attendues des règles
+doivent être soigneusement étudiées (ou mieux prouvées) avant la compilation
+(en particulier la terminaison, la complétude et la confluence du système de
+réécriture engendré).
+</p>
+
+
+<p>Les invariants algébriques sont spécifiés à l'aide de mot-clés
+dénotant des théories équationnelles comme la commutativité et
+l'associativité. Les fonctions de construction générées par
+<strong>moca</strong> permettent alors de représenter chaque classe
+d'équivalence par une unique valeur, son <em>représentant canonique</em>.
+</p>
+
+<!--=======================================================================-->
+
+<h2>Principe</h2>
+
+<p>Le compilateur <strong>mocac</strong> lit un fichier
+source <code>.mlm</code> (ou <code>.mlms</code>) et produit un module
+objective caml (fichier d'interface + fichier d'implementation).
+
+<br/>Un fichier <code>.mlm(s)</code> est semblable à un fichier
+d'interface <code>.mli</code> habituel: il doit définir un type
+(privé), avec la possibilité supplémentaire de déclarer les relations
+algébriques qui sont associées aux constructeurs.
+
+<br/><strong>Mocac</strong> génère alors les fonctions de constructions pour les
+constructeurs, de telle sorte que les relations sont effectivement vérifiées
+pour toutes les valeurs du type défini.
+</p>
+
+<p>Les définitions de type de <strong>moca</strong> ont exactement la même
+syntaxe que celles d'objective caml en dehors des annotations supplémentaires
+pour déclarer les relations algébriques associées aux constructeurs définis dans le
+type. Ces annotations apparaissent entre les mots clés <code>begin</code>
+et <code>end</code> dans le code de la définition de type.
+</p>
+
+<p>Pour obtenir un partage maximal des données construites par les fonctions de
+construction, il suffit d'utiliser l'option spéciale <code>--sharing</code> du
+compilateur <strong>mocac</strong>.
+<br/>Cette option est automatiquement utilisé lorsqu'un fichier <code>.mlms</code> est donné en argument.
+</p>
+
+<!--=======================================================================-->
+
+<h2>Comment s'en servir ?</h2>
+
+<p>Il suffit d'écrire la définition d'un type à relations dans un fichier
+source avec l'extension <code>.mlm</code> (ou l'extension <code>.mlms</code>
+si vous désirez obtenir le partage maximal des valeurs construites).
+<br/>
+Appelez ensuite <strong>mocac</strong> avec pour argument votre fichier
+source pour créer un module qui implémente le type à relations.
+<br/>
+Sous windows : appeler <strong>sh mocac</strong> avec pour argument votre
+fichier <code>.mlm(s)</code>.
+</p>
+
+<h2>Exemples</h2>
+
+<p>Voici une définition pour un type de données qui représente les valeurs d'un
+groupe additif. Le groupe comporte une opération binaire <code>Add</code>, un
+élément neutre <code>Zero</code>, un opérateur unaire pour l'opposé
+<code>Opp</code>, et un générateur <code>One</code>:
+</p>
+
+<pre>
+type t = private
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+     begin
+       associative
+       commutative
+       neutral (Zero)
+       opposite (Opp)
+     end
+;;
+
+</pre>
+
+<p>Les propriétés algébriques des opérateurs du groupe sont ici toutes
+portées par l'opération binaire <code>Add</code>. Les mots clés
+<code>associative</code>, <code>commutative</code>, <code>neutral</code>
+et <code>opposite</code> sont spécifiques à <strong>moca</strong> et
+confèrent les propriétés habituelles correspondantes au
+constructeur <code>Add</code> (plus exactement <em>aux valeurs construites
+avec la fonction de construction de</em> <code>Add</code>).
+</p>
+
+<p>Si l'on suppose que le code précédent se trouve dans le
+fichier <code>group.mlm</code>, alors la commande
+</p>
+
+<pre>
+$ mocac group.mlm
+</pre>
+
+<p>
+génère le module <code>Group</code> sous la forme des deux
+fichiers <code>group.mli</code> et <code>group.ml</code>.
+</p>
+
+<p>Le fichier d'interface du module <code>Group</code>,
+<code>group.mli</code>, déclare le type privé <code>t</code> qui est le
+support des valeurs du groupe et déclare la signature de toutes les fonctions
+de construction associées aux constructeurs de <code>t</code>:
+</p>
+
+<pre>
+type t = private
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+   (* begin
+        associative
+        commutative
+        neutral (Zero)
+        inverse (Opp)
+      end *)
+;;
+val zero : t
+;;
+
+val one : t
+;;
+
+val opp : t -&gt; t
+;;
+
+val add : t * t -&gt; t
+;;
+
+val eq_t : t -&gt; t -&gt; bool
+;;
+
+
+</pre>
+
+<p>Le fichier d'implémentation du
+module <code>Group</code>, <code>group.ml</code>, définit le type
+<code>t</code> et les fonctions de construction correspondantes. Son contenu
+est équivalent à:
+</p>
+
+<pre>
+type t =
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+   (* begin
+        associative
+        commutative
+        neutral (Zero)
+        inverse (Opp)
+      end *)
+;;
+let rec compare_add moca_x moca_y =
+  match (moca_x, moca_y) with
+  | (Opp moca_x, Opp moca_y) -&gt; compare_add moca_x moca_y
+  | (Opp moca_x, moca_y) -&gt; compare_add moca_x moca_y
+  | (moca_x, Opp moca_y) -&gt; compare_add moca_x moca_y
+  | (moca_x, moca_y) -&gt; Pervasives.compare moca_x moca_y
+
+and add moca_z =
+  match moca_z with
+  | (moca_x, Zero) -&gt; moca_x
+  | (Zero, moca_x) -&gt; moca_x
+  | (moca_x, Opp moca_y) when Pervasives.compare moca_x moca_y = 0 -&gt; zero
+  | (Opp moca_x, moca_y) when Pervasives.compare moca_x moca_y = 0 -&gt; zero
+  | (moca_x, Add ((Opp moca_y), moca_z))
+      when
+      Pervasives.compare moca_x moca_y = 0 -&gt;
+    moca_z
+  | (Opp moca_x, Add (moca_y, moca_z))
+      when
+      Pervasives.compare moca_x moca_y = 0 -&gt;
+    moca_z
+  | (Add (moca_x, moca_y), moca_z) -&gt; add (moca_x, (add (moca_y, moca_z)))
+  | (moca_x, Add (moca_y, moca_z)) -&gt;
+    if compare_add moca_x moca_y &gt; 0
+    then add (moca_y, (add (moca_x, moca_z)))
+    else Add (moca_x, (Add (moca_y, moca_z)))
+  | (moca_x, moca_y) when compare_add moca_x moca_y &gt; 0 -&gt;
+    add (moca_y, moca_x)
+  | (moca_x, moca_y) -&gt; Add (moca_x, moca_y)
+
+and zero = Zero
+
+and one = One
+
+and opp moca_x =
+  match moca_x with
+  | Opp moca_x -&gt; moca_x
+  | Add (moca_x1, moca_x2) -&gt; add ((opp moca_x2), (opp moca_x1))
+  | Zero -&gt; zero
+  | _ -&gt; Opp moca_x
+;;
+
+external eq_t : t -&gt; t -&gt; bool = "%equal"
+;;
+
+
+</pre>
+
+<p>Les valeurs du type <code>t</code> sont maintenant toutes correctement
+construites par les fonctions de construction, donc normalisées selon les
+règles des groupes (autrement dit, il n'existe pas de valeur du
+type <code>t</code> qui ne soit pas normalisée). Par exemple:
+</p>
+
+<pre>
+# add (one, add (zero, opp one));;
+- : t = Zero
+</pre>
+
+<p>Le répertoire <code>examples</code> de la distribution contient de nombreux
+autres exemples de structures de données traitées par <strong>moca</strong>.
+</p>
+
+<!--=======================================================================-->
+
+<h2>Syntaxe</h2>
+
+<p><strong>Moca</strong> étend la syntaxe des définitions de type de caml de la
+manière suivante:</p>
+
+<div class="bnf">
+<table class="bnf">
+
+<tr>
+  <td class="left">constr-decl</td>
+  <td class="middle">::=</td>
+  <td class="right">
+    <font class="nter"> constr-name
+      <font class="bnf">[</font>
+      annotation
+      <font class="bnf">]</font>
+    </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="nter"> constr-name
+      <font class="keyword">of</font>
+      typeexpr
+      <font class="bnf">[</font>
+      annotation
+      <font class="bnf">]</font>
+    </font>
+  </td>
+</tr>
+
+</table>
+
+<table class="bnf">
+  <tr>
+    <td class="left">annotation</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">begin
+        <font class="bnf">{</font>
+        <font class="nter">relation</font>
+        <font class="bnf">|</font>
+        <font class="nter">completion_hint</font>
+        <font class="bnf">}<sup>+</sup></font>
+       end
+      </font>
+  </td>
+  </tr>
+</table>
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">side</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">left</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+      <font class="keyword">right
+      </font>
+    </td>
+    </tr>
+</table>
+
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">invopp</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">inverse</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+      <font class="keyword">opposite
+      </font>
+    </td>
+    </tr>
+</table>
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">rpo_status</td>
+    <td class="middle">::=</td>
+    <td class="right">
+      <font class="keyword">lexicographic</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+      <font class="keyword">multiset
+      </font>
+    </td>
+    </tr>
+</table>
+
+
+<table class="bnf">
+  <tr>
+    <td class="left">completion_hint</td>
+    <td class="middle">::=</td>
+    <td class="right">
+       <font class="keyword">
+    completion precedence
+    </font>
+    <font class="nter">int</font>
+    </td>
+    </tr>
+   <tr>
+    <td class="left"></td>
+    <td class="middle">|</td>
+    <td class="right">
+          <font class="keyword">
+            completion status
+    </font>
+    <font class="nter">rpo_status</font>
+
+    </td>
+    </tr>
+</table>
+
+
+
+<table class="bnf">
+<tr>
+  <td class="left">relation</td>
+  <td class="middle">::=</td>
+  <td class="right">
+    <font class="keyword"> commutative
+      <font class="bnf">[</font>
+      (
+      <font class="nter"> comp </font>
+      )
+     <font class="bnf">]</font>
+    </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword"> associative </font>
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">involutive </font>
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">idempotent </font>
+    [<font class="nter">side</font>]
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">nilpotent </font>
+    [<font class="nter">side</font>]
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">neutral </font>
+    [<font class="nter">side</font>]
+    <font class="keyword">(
+    <font class="nter">constr-name</font> )
+    </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">absorbent </font>
+    [<font class="nter">side</font>]
+    <font class="keyword"> (
+      <font class="nter">constr-name</font>
+      )</font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">absorbing </font>
+    [<font class="nter">side</font>]
+    <font class="keyword">(
+      <font class="nter">constr-name</font>
+      )</font>
+  </td>
+</tr>
+
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword"> distributive </font>
+    [<font class="nter">invopp</font>]
+    [<font class="nter">side</font>]
+    <font class="keyword">( </font>
+      <font class="nter">constr-name</font>
+    [<font class="keyword">,</font><font class="nter">constr-name</font>]
+    <font class="keyword">  ) </font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">
+      rule
+    </font>
+    <font class="nter">pattern</font>
+    <font class="keyword">-></font>
+    <font class="nter">expression</font>
+  </td>
+</tr>
+
+<tr>
+  <td class="left"></td>
+  <td class="middle">|</td>
+  <td class="right">
+    <font class="keyword">
+      completion
+    </font>
+    <font class="nter">completion_hint</font>
+  </td>
+</tr>
+</table>
+
+
+</div>
+
+<!--=======================================================================-->
+
+<h2>Sémantique</h2>
+
+<p>Nous donnons la théorie équationnelle qui correspond à chaque mot-clé et
+les propriétés des représentants des classes d'équivalence générés
+par <strong>moca</strong>.
+Les spécifications détaillées de chacun des constructeurs algébriques sont
+  disponible dans la <a href="./ocamldoc/Parsetree.html#2_Specificationsofalgebraicrelationsforgenerators">documentation des sources</a>.
+</p>
+
+<p>
+Dans toute la suite, on suppose qu'on définit le type à relations
+<code>t</code> et que <code>C</code> est l'un des constructeurs
+de <code>t</code> dont la fonction de construction associée
+est <code>c</code>. Plus généralement, les identificateurs
+<code>D</code>, <code>E</code> et <code>A</code>, lorsqu'ils apparaissent
+dans les définitions, sont des constructeurs du type <code>t</code> dont les
+fonctions de construction respectives sont <code>d</code>, <code>e</code>
+et <code>a</code>.
+</p>
+
+<h3 class="relation">Commutative</h3>
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">commutative</font> <code>(compare)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<br><code>c (x, y) = c (y, x)</code>
+</dd>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<br />si <code>C (x, y)</code> appartient au type <code>t</code>
+alors <code>compare x y &lt; 0</code>.
+
+<br/>Note: <code>compare</code> est le nom d'une fonction de comparaison
+donnée par l'utilisateur dans la définition du type <code>t</code>, au sein
+d'une définition de valeur (une définition Caml comprise entre les mots clés
+<code>begin</code> et <code>end</code>).  La fonction <code>compare</code>
+doit être un ordre total pour les termes du type <code>t</code>. Si elle
+n'est pas définie avec le type à relation, la fonction <code>compare</code>
+vaut <code>Pervasives.compare</code>.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">commutative</font>,
+alors
+</dt>
+
+<dd><code>C</code> est en fait déclaré
+<font class="keyword">commutative </font><code>(Pervasives.compare)</code>.
+</dd>
+</dl>
+
+<h3 class="relation">Associative</h3>
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">associative</font>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<br><code>c (c (x, y), z) = c (x, c (y, z))</code>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<code>C (C (x, y), z)</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (C (x, y), z)</code>.)
+</dd>
+</dl>
+
+<h3 class="relation">Involutive</h3>
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">involutive</font>,
+alors
+</dt>
+
+<dd>pour tout <code>x</code> du type <code>t</code>
+<br><code>c (c (x)) = x</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (C (x))</code> n'est pas élément du type <code>t</code>.
+<br>(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (C (x))</code>.)
+</dd>
+</dl>
+
+<h3 class="relation">Idempotent</h3>
+<dl>
+  <dt>Si le constructeur <code>C</code> est déclaré
+    <font class="keyword">idempotent</font>,
+    alors
+  </dt>
+
+  <dd><code>C</code> est déclaré à la fois
+    <font class="keyword">idempotent left</font>
+    et
+    <font class="keyword">idempotent right</font>
+    .
+  </dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">idempotent left</font>, alors</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<br /><code>c (x, c (x, y)) = c (x, y)</code>
+</dd>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<code>C (x, C (x, y))</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (x, C (x, y))</code>.)
+</dd>
+
+
+<dt>Si le constructeur <code>C</code> est déclaré
+  <font class="keyword">idempotent right</font>, alors
+</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<br /><code>c (c (x, y), y) = c (x, y)</code>
+</dd>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<code>C (C (x, y), y)</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (C (x, y), y))</code>.)
+</dd>
+
+</dl>
+
+<h3 class="relation">Neutral</h3>
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">neutral</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd><code>C</code> est déclaré à la fois
+<code>neutral left (D)</code>
+et
+<code>neutral right (D)</code>.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">neutral left</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<br /><code>c (d, x) = x</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (D, x)</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (D, x)</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">neutral right</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<br /><code>c (x, d) = x</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (x, D)</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (x, D)</code>.)
+</dd>
+
+</dl>
+
+<h3 class="relation">Nilpotent</h3>
+<dl>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">nilpotent</font> <code>(A)</code>,
+alors
+</dt>
+
+<dd><code>C</code> est déclaré à la fois
+<font class="keyword">nilpotent left</font> <code>(A)</code>
+et
+<font class="keyword">nilpotent right</font> <code>(A)</code>.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">nilpotent left</font><code>(A)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<br /><code>c (x, c (x, y)) = a</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (x, C (x, y)</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (x, C (x, y))</code>.)
+</dd>
+
+</dl>
+
+<h3 class="relation">Inverse</h3>
+<dl>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">inverse</font> <code>(I, E)</code>,
+alors
+</dt>
+
+<dd><code>C</code> est déclaré à la fois
+<font class="keyword">inverse left</font> <code>(I, E)</code>
+et
+<font class="keyword">inverse right</font> <code>(I, E)</code>.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">inverse left</font> <code>(I, E)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<br />
+<code>c (i (x), x) = e</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (I (x), x)</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (I (x), x)</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">inverse right</font> <code>(I, E)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>c (x, i (x)) = e</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (x, I (x))</code> n'est pas élément du type <code>t</code>.
+<br />(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (x, I (x))</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">neutral</font> <code>[side] (E)</code>,
+alors
+</dt>
+
+<dd>la déclaration
+<font class="keyword">inverse</font> <code>[side'] (I)</code> est équivalente
+à
+<font class="keyword">inverse</font> <code>[side'] (I, E)</code>.
+</dd>
+</dl>
+
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<code><font class="keyword">inverse</font> [side](i, e)</code>
+et
+<code><font class="keyword">absorbent</font>[side'](A)</code>,
+alors
+</dt>
+
+<dd>la fonction de construction associée à <code>C</code>
+lève l'exception <code>Failure "Division by Absorbent"</code> quand un
+des arguments est <code>A</code>.</dd>
+
+</dl>
+
+
+<h3 class="relation">Distributive</h3>
+<dl>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">distributive</font> <code>(D, E)</code>,
+alors
+</dt>
+
+<dd>le constructeur <code>C</code> est déclaré à la fois
+<font class="keyword">distributive left</font> <code>(D, E)</code>,
+<font class="keyword">distributive right</font> <code>(D, E)</code>.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">distributive</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd>le constructeur <code>C</code> est déclaré
+<font class="keyword">distributive</font> <code>(D, D)</code>.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">distributive left</font> <code>(D, E)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<br> <code>c (d (x, y), z) = e (c (x, z), c (y, z))</code>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<code>C (D (x, y), z)</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (D (x, y), z)</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">distributive right</font> <code>(D, E)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<code>c (z, d (x, y)) = e (c (z, x), c (z, y))</code>
+</dd>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<code>C (z, D (x, y))</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (z, D (x, y))</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">distributive inverse left</font> <code>(D, E)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<code>c (d (x, y), z) = e (c (y, z), c (x, z))</code>
+</dd>
+
+<dd>pour tout <code>x, y, z</code> du type <code>t</code>,
+<code>C (D (x, y), z)</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (D (x, y), z)</code>.)
+</dd>
+
+</dl>
+
+<h3 class="relation">Absorbent</h3>
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbent</font> <code>(A)</code>,
+alors
+</dt>
+
+<dd>le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbent left</font> <code>(A)</code>
+et
+<font class="keyword">absorbent right</font> <code>(A)</code>
+.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbent left</font> <code>(A)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>c (a, x) = a</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (A, x)</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (A, x)</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbent right</font> <code>(A)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>c (x, a) = a</code>
+</dd>
+
+<dd>pour tout <code>x</code> du type <code>t</code>,
+<code>C (x, A)</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (x, A)</code>.)
+</dd>
+
+</dl>
+
+<h3 class="relation">Absorbing</h3>
+<dl>
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbing</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd><code>C</code> est déclaré
+<font class="keyword">absorbing left</font> <code>(D)</code>,
+et
+<font class="keyword">absorbing right</font> <code>(D)</code>
+.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbing left</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<code>c (d (x, y), y) = y</code>
+</dd>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<code>C (D (x, y), y)</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (D (x, y), y)</code>.)
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">absorbing right</font> <code>(D)</code>,
+alors
+</dt>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<code>c (x, d (x, y)) = x</code>
+</dd>
+
+<dd>pour tout <code>x, y</code> du type <code>t</code>,
+<code>C (x, D (x, y))</code> n'est pas élément du type <code>t</code>.
+<br />
+(Autrement dit: aucune valeur du type <code>t</code> n'est filtrée par le
+filtre <code>C (x, D (x, y))</code>.)
+</dd>
+
+</dl>
+
+<h3 class="relation">Rule</h3>
+<dl>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">rule</font> <code>l -&gt; r</code>,
+alors
+</dt>
+
+<dd>pour toute valeur <code>x</code> du type <code>t</code> qui est filtrée
+par le filtre <code>l</code> (i.e. il existe une
+substitution <code>sigma</code> des variables libres de <code>l</code> telle
+que <code>sigma (l) = x</code>), on a
+<br />
+<code>c (x) = r</code> où les variables liées dans <code>l</code>
+qui apparaissent dans <code>r</code> sont substituées aux sous-termes
+correspondants de <code>x</code> (i.e. <code>c (x) = sigma (r)</code>).
+</dd>
+
+<dd>pour toute valeur <code>x</code> du type <code>t</code> qui est filtrée
+par le filtre <code>l</code>, <code>C (x)</code> n'est pas élément
+de <code>t</code>.
+</dd>
+
+<dd>
+Cette annotation définit une <EM>règle de l'utilisateur</EM>. Elle est
+fournie pour les utilisateurs experts seulement quand les annotations
+prédéfinies sont insuffisantes.
+
+<ul>
+
+<li>Dans le code généré, les constructeurs du
+type <code>t</code> apparaissant dans l'expression <code>r</code> sont
+remplacés par des appels aux fonctions de construction correspondantes.
+</li>
+
+<li>Les simplifications induites par les règles de l'utilisateur sont
+appliquées en priorité et autant que possible.
+</li>
+
+<li>En présence d'une telle annotation, il est impossible de garantir la
+correction du code généré dans le cas général (ni même sa convergence).
+</li>
+
+</ul>
+
+</dd>
+
+</dl>
+
+<h3 class="relation">Aide à la complétion</h3>
+
+<p> Lors de l'utilisation de la complétion (expérimentale)
+dans <strong>Moca</strong>, certains paramètres peuvent être spécifiés
+dans le code source par les mots-clés suivants:
+</p>
+
+<dl>
+<dt> Si le constructeur <code>C</code> est déclaré
+<font class="keyword">completion status</font> <code>s</code>,
+alors
+</dt>
+
+<dd>le générateur <code>C</code> aura le statut <code>s</code>, c'est-à-dire
+lexicographique (pour le statut <font class="keyword">lexicographic</font>)
+ou multi-ensemble (pour le statut <font class="keyword">multiset</font>),
+pour l'ordre RPO (ordre récursif des chemins ou <EM>Recursive Path
+Ordering</EM>) pendant la complétion.
+</dd>
+
+<dt>Si le constructeur <code>C</code> est déclaré
+<font class="keyword">completion precedence</font> <code>i</code>,
+alors
+</dt>
+
+<dd><code>C</code> sera représenté par l'entier <code>i</code> dans l'ordre
+sur les entiers qui induira l'ordre de précédence sur les symboles pendant la
+complétion.
+</dd>
+
+</dl>
+
+<!--=======================================================================-->
+
+<!--=======================================================================-->
+
+<h2>Bibliographie</h2>
+
+<p>
+<a href="http://hal.inria.fr/inria-00095110">On the implementation of
+construction functions for non-free concrete data types</a>,
+F. Blanqui, T. Hardin and P. Weis, ESOP'07.
+<br/>
+Télécharger: <a href="./papers/esop07/main.ps">[ps]</a>,
+  <a href="./papers/esop07/main.pdf">[pdf]</a>,
+    <a href="./papers/esop07/main.dvi">[dvi]</a>.
+</p>
+
+<p>
+Cliquez <a href="./talks/fra.htm">ici</a> pour voir les transparents des
+présentations sur <strong>Moca</strong>.
+</p>
+
+<!--=======================================================================-->
+
+<h2>Contact</h2>
+
+<p>La première version de <strong>Moca</strong> a été développée dans le cadre de
+l'<em>arc</em> <strong>quotient</strong> (pour plus d'information,
+  voir <a href="http://quotient.loria.fr/">le site de l'ARC</a>).
+<p><strong>Moca</strong> est actuellement développé par
+Fr&eacute;d&eacute;ric Blanqui, Richard Bonichon, and Pierre Weis.
+</p>
+
+<p>Si vous voulez contacter les implémenteurs, écrivez à
+<a href="http://bat8.inria.fr/~weis/">Pierre Weis</a>
+ou <a href="http://www.loria.fr/~blanqui/">Frédéric
+Blanqui</a>, ou Richard Bonichon (Richard dot Bonichon at gmail.com).
+</p>
+
+<p>Fichier créé le 11 avril 2005.</p>
+
+<h2 id="logo"><img src="imgs/inria.png" alt="logo inria" /></h2>
+
+
+<hr/>
+<p>
+<em>Dernière modification le </em>
+lundi 4 juin 2012.
+<br/>
+<a href="copyright.fr.htm">Copyright</a>
+&#169; 2005 - 2012 INRIA, tous droits réservés.
+</p>
+
+
+</body>
+</html>
+

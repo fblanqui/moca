@@ -1,0 +1,98 @@
+\section{Introduction}
+
+Many algorithms use data types with some additional invariants. Every
+function creating a new value from old ones must be defined so that
+the newly created value satisfy the invariants whenever the old ones
+so do.
+
+One way to easily maintain invariants is to use abstract data types
+(ADT): the implementation of an ADT is hidden and construction and
+observation functions are provided. A value of an ADT can only be
+obtained by recursively using the construction functions. Hence, an
+invariant can be ensured by using appropriate construction
+functions. Unfortunately, abstract data types preclude pattern
+matching, a very useful feature of modern programming languages
+\cite{ocaml3.09,haskell03,moreau03cc,tom2.3}. There have been various
+attempts to combine both features in some way.
+
+In \cite{wadler87popl}, P. Wadler proposed the mechanisms of {\em
+views}. A view on an ADT $\alpha$ is given by providing a concrete
+data type (CDT) $\gamma$ and two functions $in:\alpha\a\g$ and
+$out:\g\a\alpha$ such that $in\circ out=id_\g$ and $out\circ
+in=id_\alpha$. Then, a function on $\alpha$ can be defined by matching
+on $\g$ (by implicitly using $in$) and the values of type $\g$
+obtained by matching can be injected back into $\alpha$ (by implicitly
+using $out$). However, by leaving the applications of $in$ and $out$
+implicit, we can easily get inconsistencies whenever $in$ and $out$
+are not inverses of each other. Since it may be difficult to satisfy
+this condition (consider for instance the translations between
+cartesian and polar coordinates), these views have never been
+implemented. Following the suggestion of W. Burton and R. Cameron to
+use the $in$ function only \cite{burton93jfp}, some propositions have
+been made for various programming languages but none has been
+implemented yet \cite{burton96,okasaki98ml}.
+
+In \cite{burton93jfp}, W. Burton and R. Cameron proposed another very
+interesting idea which seems to have attracted very little
+attention. An ADT must provide construction and observation
+functions. When an ADT is implemented by a CDT, they propose to also
+export the constructors of the CDT but only for using them as patterns
+in pattern matching clauses. Hence, the constructors of the underlying
+CDT can be used for pattern matching but not for building values: only
+the construction functions can be used for that purpose. Therefore,
+one can both ensure some invariants and offer pattern matching. These
+types have been introduced in \ocaml\ by the third author
+\cite{weis03} under the name of {\em concrete data type with private
+constructors}, or {\em private data type} (PDT) for short.\vsp[2mm]
+
+Now, many invariants on concrete data types can be related to some
+equational theory. Take for instance the type of $list$ with the
+constructors $[]$ and $::$. Given some elements $v_1..v_n$, the sorted
+list which elements are $v_1..v_n$ is a particular representative of
+the equivalence class of $v_1$::..::$v_n$::$[]$ modulo the equation
+$x$::$y$::$l$=$y$::$x$::$l$. Requiring that, in addition, the list
+does not contain the same element twice is a particular representative
+modulo the equation $x$::$x$::$l$=$x$::$l$.
+
+Consider now the type of join lists with the constructors $empty$,
+$singleton$ and $append$, for which concatenation is of constant
+complexity. Sorting corresponds to associativity and commutativity of
+$append$. Requiring that no argument of $append$ is $empty$
+corresponds to neutrality of $empty$ wrt $append$. We have a structure
+of commutative monoid.
+
+More generally, given some equational theory on a concrete data type,
+one may wonder whether there exists a representative for each
+equivalence class and, if so, whether a representative of $C(t_1\ldots
+t_n)$ can be efficiently computed knowing that $t_1\ldots t_n$ are
+themselves representatives.
+
+In \cite{thompson86lfp,thompson90scp}, S. Thompson describes a
+mechanism introduced in the Miranda functional programming language
+for implementing such non-free concrete data types without precluding
+pattern matching. The idea is to provide conditional rewrite rules,
+called {\em laws}, that are implicitly applied as long as possible on
+every newly created value. This can also be achieved by using a PDT
+which construction functions (primed constructors in
+\cite{thompson86lfp}) apply as long as possible each of the laws.
+Then, S. Thompson studies how to prove the correctness of functions
+defined by pattern matching on such {\em lawful types}. However, few
+hints are given on how to check whether the laws indeed implement the
+invariants one has in mind. For this reason and because reasoning on
+lawful types is difficult, the law mechanism was removed from
+Miranda.\vsp[2mm]
+
+In this paper, we propose to specify the invariants by unoriented
+equations (instead of rules). We will call such a type a {\em
+relational data type} (RDT). Sections \ref{sec-pdt} and \ref{sec-rdt}
+introduce private and relational data types. Then, we study when an
+RDT can be implemented by a PDT, that is, when there exist
+construction functions computing some representative for each
+equivalence class. Section \ref{sec-ex} provides some general
+existence theorem based on rewriting theory. But rewriting may be
+inefficient. Section \ref{sec-genr} provides, for some common
+equational theories, construction functions more efficient than the
+ones based on rewriting. Section \ref{sec-moca} presents \moca, an
+extension of \ocaml\ with relational data types whose construction
+functions are automatically generated. Finally, Section
+\ref{sec-futur} discusses some possible extensions.

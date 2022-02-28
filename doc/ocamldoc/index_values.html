@@ -1,0 +1,2525 @@
+<html>
+<head>
+<script src="jquery.js"></script>
+<script src="improve.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Parsetree" rel="Chapter" href="Parsetree.html">
+<link title="Asttypes" rel="Chapter" href="Asttypes.html">
+<link title="Misc" rel="Chapter" href="Misc.html">
+<link title="Tbl" rel="Chapter" href="Tbl.html">
+<link title="Config" rel="Chapter" href="Config.html">
+<link title="Clflags" rel="Chapter" href="Clflags.html">
+<link title="Terminfo" rel="Chapter" href="Terminfo.html">
+<link title="Ccomp" rel="Chapter" href="Ccomp.html">
+<link title="Warnings" rel="Chapter" href="Warnings.html">
+<link title="Consistbl" rel="Chapter" href="Consistbl.html">
+<link title="Linenum" rel="Chapter" href="Linenum.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Longident" rel="Chapter" href="Longident.html">
+<link title="Syntaxerr" rel="Chapter" href="Syntaxerr.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Lexer" rel="Chapter" href="Lexer.html">
+<link title="Parse" rel="Chapter" href="Parse.html">
+<link title="Printast" rel="Chapter" href="Printast.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="File" rel="Chapter" href="File.html">
+<link title="Useful" rel="Chapter" href="Useful.html">
+<link title="Debug" rel="Chapter" href="Debug.html">
+<link title="Mylist" rel="Chapter" href="Mylist.html">
+<link title="Myset" rel="Chapter" href="Myset.html">
+<link title="Relation" rel="Chapter" href="Relation.html">
+<link title="Otype" rel="Chapter" href="Otype.html">
+<link title="Pr_ocaml" rel="Chapter" href="Pr_ocaml.html">
+<link title="Code" rel="Chapter" href="Code.html">
+<link title="Pr_code" rel="Chapter" href="Pr_code.html">
+<link title="Check" rel="Chapter" href="Check.html">
+<link title="Var" rel="Chapter" href="Var.html">
+<link title="Symb" rel="Chapter" href="Symb.html">
+<link title="Term" rel="Chapter" href="Term.html">
+<link title="Term_utils" rel="Chapter" href="Term_utils.html">
+<link title="Subterm" rel="Chapter" href="Subterm.html">
+<link title="Order" rel="Chapter" href="Order.html">
+<link title="Prec" rel="Chapter" href="Prec.html">
+<link title="Subs" rel="Chapter" href="Subs.html">
+<link title="Match" rel="Chapter" href="Match.html">
+<link title="Rename" rel="Chapter" href="Rename.html">
+<link title="Unif" rel="Chapter" href="Unif.html">
+<link title="Rule" rel="Chapter" href="Rule.html">
+<link title="Equation" rel="Chapter" href="Equation.html">
+<link title="Cparser" rel="Chapter" href="Cparser.html">
+<link title="Clexer" rel="Chapter" href="Clexer.html">
+<link title="Cp" rel="Chapter" href="Cp.html">
+<link title="Norm" rel="Chapter" href="Norm.html">
+<link title="Norm_ml" rel="Chapter" href="Norm_ml.html">
+<link title="Comp" rel="Chapter" href="Comp.html">
+<link title="Axiom" rel="Chapter" href="Axiom.html">
+<link title="Genr_pattern" rel="Chapter" href="Genr_pattern.html">
+<link title="Genr_base" rel="Chapter" href="Genr_base.html">
+<link title="Genr_memo" rel="Chapter" href="Genr_memo.html">
+<link title="Genr_sharing" rel="Chapter" href="Genr_sharing.html">
+<link title="Genr_expression" rel="Chapter" href="Genr_expression.html">
+<link title="Eqnrel" rel="Chapter" href="Eqnrel.html">
+<link title="Complete" rel="Chapter" href="Complete.html">
+<link title="Genr_nary" rel="Chapter" href="Genr_nary.html">
+<link title="Genr_listary" rel="Chapter" href="Genr_listary.html">
+<link title="Genr_binary" rel="Chapter" href="Genr_binary.html">
+<link title="Genr_unary" rel="Chapter" href="Genr_unary.html">
+<link title="Genr_nullary" rel="Chapter" href="Genr_nullary.html">
+<link title="Genr" rel="Chapter" href="Genr.html">
+<link title="Genr_mli" rel="Chapter" href="Genr_mli.html">
+<link title="Listutils" rel="Chapter" href="Listutils.html">
+<link title="Randomutils" rel="Chapter" href="Randomutils.html">
+<link title="Tgenr_base" rel="Chapter" href="Tgenr_base.html">
+<link title="Genr_values" rel="Chapter" href="Genr_values.html">
+<link title="Typed_vars" rel="Chapter" href="Typed_vars.html">
+<link title="Genr_listary_equations" rel="Chapter" href="Genr_listary_equations.html">
+<link title="Genr_substitutions" rel="Chapter" href="Genr_substitutions.html">
+<link title="Genr_equalities" rel="Chapter" href="Genr_equalities.html">
+<link title="Genr_testing" rel="Chapter" href="Genr_testing.html">
+<link title="Main" rel="Chapter" href="Main.html"><title>Index of values</title>
+</head>
+<body>
+<center><h1>Index of values</h1></center>
+<table>
+<tr><td align="left"><br>A</td></tr>
+<tr><td><a href="Axiom.html#VALabs">abs</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALabsorbent">absorbent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALabsorbing">absorbing</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALadd">add</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALadd">add</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Add a new binding: replace the previous one if any
+</div>
+</td></tr>
+<tr><td><a href="Tbl.html#VALadd">add</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cp.html#VALadd_cps">add_cps</a> [<a href="Cp.html">Cp</a>]</td>
+<td><div class="info">
+Critical pairs of a set of rules
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALadd_dir_to_search_path">add_dir_to_search_path</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="Prec.html#VALadd_eq">add_eq</a> [<a href="Prec.html">Prec</a>]</td>
+<td></td></tr>
+<tr><td><a href="Prec.html#VALadd_gt">add_gt</a> [<a href="Prec.html">Prec</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_sharing.html#VALadd_info_arg_to_type_declaration">add_info_arg_to_type_declaration</a> [<a href="Genr_sharing.html">Genr_sharing</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALadd_local_module">add_local_module</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Prec.html#VALadd_lt">add_lt</a> [<a href="Prec.html">Prec</a>]</td>
+<td><div class="info">
+Add a new constraint.
+</div>
+</td></tr>
+<tr><td><a href="Equation.html#VALadd_non_trivial">add_non_trivial</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALadd_non_trivial_pair">add_non_trivial_pair</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALadd_rules">add_rules</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALadd_type_decls">add_type_decls</a> [<a href="Check.html">Check</a>]</td>
+<td><div class="info">
+Enters a list of type definitions in the table.
+</div>
+</td></tr>
+<tr><td><a href="Genr_pattern.html#VALadd_underscores">add_underscores</a> [<a href="Genr_pattern.html">Genr_pattern</a>]</td>
+<td></td></tr>
+<tr><td><a href="Complete.html#VALadhoc_completion">adhoc_completion</a> [<a href="Complete.html">Complete</a>]</td>
+<td><div class="info">
+Some relations on a generator imply relations on other
+  generators, that the user cannot or does not need to
+  provide.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALalign">align</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">align n a</code> rounds <code class="code">n</code> upwards to a multiple of <code class="code">a</code>
+           (a power of 2).
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALannotations">annotations</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALapp">app</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALapp0">app0</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALapp1">app1</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALapp2">app2</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALappend">append</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALapplicative_functors">applicative_functors</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALapply">apply</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Apply a substitution to a term
+</div>
+</td></tr>
+<tr><td><a href="Code.html#VALapply">apply</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALapply1">apply1</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALapply2">apply2</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALapply3">apply3</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+Apply an ident to its argument(s).
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALarchitecture">architecture</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Name of processor type for the native-code compiler
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALargspec">argspec</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALargument_of_type_list">argument_of_type_list</a> [<a href="Otype.html">Otype</a>]</td>
+<td><div class="info">
+Returns the type argument of the Caml compiler list type
+    functional type constructor.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALarity_of_cdef">arity_of_cdef</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALarity_of_generator">arity_of_generator</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALarity_of_info">arity_of_info</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALarrow_type">arrow_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALasm">asm</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The assembler (and flags) to use for assembling
+           ocamlopt-generated code.
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALass">ass</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALassociative">associative</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALast_impl_magic_number">ast_impl_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for file holding an implementation syntax tree
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALast_intf_magic_number">ast_intf_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for file holding an interface syntax tree
+</div>
+</td></tr>
+<tr><td align="left"><br>B</td></tr>
+<tr><td><a href="Terminfo.html#VALbackup">backup</a> [<a href="Terminfo.html">Terminfo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Useful.html#VALbool_of_opt">bool_of_opt</a> [<a href="Useful.html">Useful</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALbool_type">bool_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALbytecomp_c_compiler">bytecomp_c_compiler</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The C compiler to use for compiling C files
+           with the bytecode compiler
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALbytecomp_c_libraries">bytecomp_c_libraries</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The C libraries to link with custom runtimes
+</div>
+</td></tr>
+<tr><td align="left"><br>C</td></tr>
+<tr><td><a href="Clflags.html#VALc_compiler">c_compiler</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ccomp.html#VALcall_linker">call_linker</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALcardinal">cardinal</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="File.html#VALcareful_close_out">careful_close_out</a> [<a href="File.html">File</a>]</td>
+<td><div class="info">
+An alias for <code class="code">close_out</code> that performs correctly on <code class="code">stdout</code>.
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALcareful_open_out">careful_open_out</a> [<a href="File.html">File</a>]</td>
+<td><div class="info">
+An alias for <code class="code">open_out</code> that performs correctly on <code class="code">stdout</code>.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcc_profile">cc_profile</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The command line option to the C compiler to enable profiling.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALccobjs">ccobjs</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALccomp_type">ccomp_type</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The "kind" of the C compiler: one of
+               "cc" (for Unix-style C compilers)
+               "msvc" (Microsoft Visual C++)
+               "mrc" (Macintosh MPW)
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALccopts">ccopts</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="File.html#VALchange_extension">change_extension</a> [<a href="File.html">File</a>]</td>
+<td><div class="info">
+Computes the name of a file when its extension is modified.
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALchange_mlm_extension">change_mlm_extension</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALcheck">check</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td><div class="info">
+<code class="code">check tbl name crc source</code>
+           checks consistency of (<code class="code">name</code>, <code class="code">crc</code>) with infos previously
+           stored in <code class="code">tbl</code>.
+</div>
+</td></tr>
+<tr><td><a href="Subs.html#VALcheck_add">check_add</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Add to s the mapping (x,t) if mem s x = false or find s x = t.
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALcheck_and_genr_ml">check_and_genr_ml</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALcheck_and_genr_mli">check_and_genr_mli</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Warnings.html#VALcheck_fatal">check_fatal</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALcheck_noadd">check_noadd</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td><div class="info">
+Same as <code class="code">check</code>, but raise <code class="code"><span class="constructor">Not_available</span></code> if no CRC was previously
+           associated with <code class="code">name</code>.
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALcheck_signature_item">check_signature_item</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALcheck_structure_item">check_structure_item</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALchoose">choose</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Randomutils.html#VALchoose_many">choose_many</a> [<a href="Randomutils.html">Randomutils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALchop_extension_if_any">chop_extension_if_any</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Like Filename.chop_extension but returns the initial file
+           name if it has no extension
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALchop_extensions">chop_extensions</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Return the given file name without its extensions.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALclassic">classic</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALclauses_both_as_left">clauses_both_as_left</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALclauses_left_or_right">clauses_left_or_right</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALclauses_of_side">clauses_of_side</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALclear">clear</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Symb.html#VALclear_symbols">clear_symbols</a> [<a href="Symb.html">Symb</a>]</td>
+<td><div class="info">
+Clear the table of known symbols
+</div>
+</td></tr>
+<tr><td><a href="Var.html#VALclear_vars">clear_vars</a> [<a href="Var.html">Var</a>]</td>
+<td><div class="info">
+Remove all string-variable bindings
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcma_magic_number">cma_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for archive files
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcmi_magic_number">cmi_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for compiled interface files
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcmo_magic_number">cmo_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for object bytecode files
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcmx_magic_number">cmx_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for compilation unit descriptions
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcmxa_magic_number">cmxa_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for libraries of compilation unit descriptions
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALcmxs_magic_number">cmxs_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for dynamically-loadable plugins
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALcom">com</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Listutils.html#VALcombine_all">combine_all</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">combine ll</code> Returns the list of all the lists that can be built by
+    taking one element in each list of the list of lists <code class="code">ll</code>.
+</div>
+</td></tr>
+<tr><td><a href="Ccomp.html#VALcommand">command</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALcomment_relations_in_type_declaration">comment_relations_in_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALcommutative">commutative</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALcomp">comp</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Composition of 2 substitutions:
+    apply (comp s1 s2) t = apply s1 (apply s2 t)
+</div>
+</td></tr>
+<tr><td><a href="Order.html#VALcomp">comp</a> [<a href="Order.html">Order</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALcomp_res">comp_res</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Restricted composition: comp_res s1 s2 = restrict (domain s2) (comp s1 s2)
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALcompare">compare</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.Str.html#VALcompare">compare</a> [<a href="Main.Str.html">Main.Str</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALcompare">compare</a> [<a href="Equation.html">Equation</a>]</td>
+<td><div class="info">
+Equality up to renaming of variables
+</div>
+</td></tr>
+<tr><td><a href="Rule.html#VALcompare">compare</a> [<a href="Rule.html">Rule</a>]</td>
+<td><div class="info">
+Comparison and equality up to lhs-variables renaming
+</div>
+</td></tr>
+<tr><td><a href="Rename.html#VALcompare">compare</a> [<a href="Rename.html">Rename</a>]</td>
+<td></td></tr>
+<tr><td><a href="Prec.html#VALcompare">compare</a> [<a href="Prec.html">Prec</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALcompare">compare</a> [<a href="Term.html">Term</a>]</td>
+<td><div class="info">
+Comparison of terms modulo variable renaming
+</div>
+</td></tr>
+<tr><td><a href="Useful.ORD_PRT.html#VALcompare">compare</a> [<a href="Useful.ORD_PRT.html">Useful.ORD_PRT</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALcompare_core_type">compare_core_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td><div class="info">
+Comparison on core types (ignore locations).
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALcompare_function">compare_function</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Comparison function ident from its generator
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALcompare_generator">compare_generator</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALcompare_relation">compare_relation</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Comparison function on relations based on precedence.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALcompare_side">compare_side</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALcomparison_function">comparison_function</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+A constant representing the name of the comparison function corresponding
+    to the indicated identifier.
+</div>
+</td></tr>
+<tr><td><a href="Ccomp.html#VALcompile_file">compile_file</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALcompile_only">compile_only</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Comp.html#VALcomplete">complete</a> [<a href="Comp.html">Comp</a>]</td>
+<td><div class="info">
+Full completion.
+</div>
+</td></tr>
+<tr><td><a href="Comp.html#VALcomplete_n">complete_n</a> [<a href="Comp.html">Comp</a>]</td>
+<td><div class="info">
+Kimited completion.
+</div>
+</td></tr>
+<tr><td><a href="Eqnrel.html#VALcompletion">completion</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALcons">cons</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALconstant_type">constant_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALconstr_type">constr_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction">construction</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+The generic (and most general) way to apply a construction function for a
+  generator.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction0">construction0</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction1">construction1</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction2">construction2</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+The application of the construction function for a zeroary, unary or
+  binary generator.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction_function">construction_function</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Construction function ident from its generator.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction_function_ident">construction_function_ident</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Construction function ident from its generator ident.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction_function_memo_table_ident">construction_function_memo_table_ident</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Construction function memo table ident from its generator.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALconstruction_function_name">construction_function_name</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Construction function name from its generator (string) name.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALcopy_file">copy_file</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">copy_file ic oc</code> reads the contents of file <code class="code">ic</code> and copies
+           them to <code class="code">oc</code>.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALcopy_file_chunk">copy_file_chunk</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">copy_file_chunk ic oc n</code> reads <code class="code">n</code> bytes from <code class="code">ic</code> and copies
+           them to <code class="code">oc</code>.
+</div>
+</td></tr>
+<tr><td><a href="Cp.html#VALcps">cps</a> [<a href="Cp.html">Cp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALcreate">create</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ccomp.html#VALcreate_archive">create_archive</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALcreate_hashtable">create_hashtable</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Create a hashtable of the given size and fills it with the
+           given bindings.
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALcreate_lexbuf_from_file">create_lexbuf_from_file</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALcurr">curr</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+Get the location of the current token from the <code class="code">lexbuf</code>.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALcustom_runtime">custom_runtime</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>D</td></tr>
+<tr><td><a href="Clflags.html#VALdebug">debug</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALdefault_executable_name">default_executable_name</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Name of executable produced by linking if none is given with -o,
+           e.g.
+</div>
+</td></tr>
+<tr><td><a href="Warnings.html#VALdefaults_w">defaults_w</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Warnings.html#VALdefaults_warn_error">defaults_warn_error</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALdiese_line">diese_line</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Get the line and file where the located element appears
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALdiff">diff</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALdis">dis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALdistributive">distributive</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALdivision_by_absorbent">division_by_absorbent</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdlcode">dlcode</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdllibs">dllibs</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdllpaths">dllpaths</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALdomain">domain</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Domain of a substitution
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALdont_write_files">dont_write_files</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_cmm">dump_cmm</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_combine">dump_combine</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_instr">dump_instr</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_interf">dump_interf</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_lambda">dump_lambda</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_linear">dump_linear</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_live">dump_live</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_parsetree">dump_parsetree</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_prefer">dump_prefer</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_rawlambda">dump_rawlambda</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_regalloc">dump_regalloc</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_reload">dump_reload</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_scheduling">dump_scheduling</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_selection">dump_selection</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_spill">dump_spill</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALdump_split">dump_split</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>E</td></tr>
+<tr><td><a href="Location.html#VALecho_eof">echo_eof</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALelements">elements</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALempty">empty</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALempty">empty</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Identity: substitution with no binding
+</div>
+</td></tr>
+<tr><td><a href="Prec.html#VALempty">empty</a> [<a href="Prec.html">Prec</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tbl.html#VALempty">empty</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALeq">eq</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Rule.html#VALeq">eq</a> [<a href="Rule.html">Rule</a>]</td>
+<td></td></tr>
+<tr><td><a href="Rename.html#VALeq">eq</a> [<a href="Rename.html">Rename</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALeq">eq</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALeq_function">eq_function</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Returns the function that generates the code to call the proper equality
+    function to its two code arguments.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALeq_generator">eq_generator</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Compare generators.
+</div>
+</td></tr>
+<tr><td><a href="Rename.html#VALeq_opt">eq_opt</a> [<a href="Rename.html">Rename</a>]</td>
+<td><div class="info">
+Equality up to variable renaming.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALeq_side">eq_side</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALeq_type">eq_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td><div class="info">
+Syntactic equality ignoring locations
+</div>
+</td></tr>
+<tr><td><a href="Eqnrel.html#VALeqns_of_rel">eqns_of_rel</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Eqnrel.html#VALeqnset_of_rels">eqnset_of_rels</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALeqnset_of_theory">eqnset_of_theory</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALequal">equal</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cparser.html#VALequation">equation</a> [<a href="Cparser.html">Cparser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cparser.html#VALequations">equations</a> [<a href="Cparser.html">Cparser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALexec_magic_number">exec_magic_number</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Magic number for bytecode executable files
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALexists">exists</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subterm.html#VALexists">exists</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+Test whether there exits a subterm satisfying some predicate
+</div>
+</td></tr>
+<tr><td><a href="Subterm.html#VALexistsi">existsi</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALexpand_directory">expand_directory</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">expand_directory alt file</code> eventually expands a <code class="code">+</code> at the
+           beginning of file into <code class="code">alt</code> (an alternate root directory)
+</div>
+</td></tr>
+<tr><td><a href="Ccomp.html#VALexpand_libname">expand_libname</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALext_asm">ext_asm</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Extension for assembler files, e.g.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALext_dll">ext_dll</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Extension for dynamically-loaded libraries, e.g.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALext_lib">ext_lib</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Extension for library files, e.g.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALext_obj">ext_obj</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Extension for object files, e.g.
+</div>
+</td></tr>
+<tr><td><a href="Rename.html#VALextend_away">extend_away</a> [<a href="Rename.html">Rename</a>]</td>
+<td><div class="info">
+Extend a renaming
+</div>
+</td></tr>
+<tr><td><a href="Consistbl.html#VALextract">extract</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td><div class="info">
+Return all bindings (<code class="code">name</code>, <code class="code">crc</code>) contained in the given
+         table.
+</div>
+</td></tr>
+<tr><td align="left"><br>F</td></tr>
+<tr><td><a href="Code.html#VALfailure_division_by_absorbent">failure_division_by_absorbent</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALfailwith_division_by_absorbent">failwith_division_by_absorbent</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALfast">fast</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALfatal_error">fatal_error</a> [<a href="Misc.html">Misc</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALfilter">filter</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALfilter">filter</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td><div class="info">
+<code class="code">filter pred tbl</code> removes from <code class="code">tbl</code> table all (name, CRC) pairs
+         such that <code class="code">pred name</code> is <code class="code"><span class="keyword">false</span></code>.
+</div>
+</td></tr>
+<tr><td><a href="Subs.html#VALfind">find</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Raise Not_found if var is not bound
+</div>
+</td></tr>
+<tr><td><a href="Subterm.html#VALfind">find</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+Find a subterm satisfying some predicate.
+</div>
+</td></tr>
+<tr><td><a href="Myset.S.html#VALfind">find</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+Provide an element satisfying p.
+</div>
+</td></tr>
+<tr><td><a href="Tbl.html#VALfind">find</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALfind_generator_ident_info">find_generator_ident_info</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALfind_generator_info">find_generator_info</a> [<a href="Check.html">Check</a>]</td>
+<td><div class="info">
+Various access/test functions that may raise Unknown_generator.
+</div>
+</td></tr>
+<tr><td><a href="Check.html#VALfind_generator_name_info">find_generator_name_info</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALfind_in_path">find_in_path</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Search a file in a list of directories.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALfind_in_path_uncap">find_in_path_uncap</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Same, but search also for uncapitalized name, i.e.
+</div>
+</td></tr>
+<tr><td><a href="Subterm.html#VALfind_opt">find_opt</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+Find Some subterm satisfying some predicate or None
+</div>
+</td></tr>
+<tr><td><a href="Myset.S.html#VALfind_opt">find_opt</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+Provide Some element satisfying p or None
+</div>
+</td></tr>
+<tr><td><a href="Subterm.html#VALfind_opti">find_opti</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALfind_relation">find_relation</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALfind_type_ident_declaration">find_type_ident_declaration</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALfind_type_name_declaration">find_type_name_declaration</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subterm.html#VALfindi">findi</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td></td></tr>
+<tr><td><a href="Listutils.html#VALflat_map">flat_map</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">flat_map f l</code> maps the function <code class="code">f</code> on the list <code class="code">l</code>, and flatten the
+    list of results.
+</div>
+</td></tr>
+<tr><td><a href="Longident.html#VALflatten">flatten</a> [<a href="Longident.html">Longident</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALfold">fold</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subterm.html#VALfold">fold</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+Fold among subterms
+</div>
+</td></tr>
+<tr><td><a href="Tbl.html#VALfold">fold</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subterm.html#VALfoldi">foldi</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+Functions taking into account the position
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALfor_all">for_all</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALfor_all2">for_all2</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Same as <code class="code"><span class="constructor">List</span>.for_all</code> but for a binary predicate.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALfor_package">for_package</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Linenum.html#VALfor_position">for_position</a> [<a href="Linenum.html">Linenum</a>]</td>
+<td><div class="info">
+<code class="code"><span class="constructor">Linenum</span>.for_position file loc</code> returns a triple describing
+    the location <code class="code">loc</code> in the file named <code class="code">file</code>.
+</div>
+</td></tr>
+<tr><td><a href="Comp.html#VALfprintf">fprintf</a> [<a href="Comp.html">Comp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALfprintf">fprintf</a> [<a href="Equation.html">Equation</a>]</td>
+<td><div class="info">
+Print an equation into a formatter
+</div>
+</td></tr>
+<tr><td><a href="Rule.html#VALfprintf">fprintf</a> [<a href="Rule.html">Rule</a>]</td>
+<td><div class="info">
+Print an equation
+</div>
+</td></tr>
+<tr><td><a href="Subs.html#VALfprintf">fprintf</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Print a substitution into a formatter.
+</div>
+</td></tr>
+<tr><td><a href="Term.html#VALfprintf">fprintf</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Myset.S.html#VALfprintf">fprintf</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+Print a set into a buffer
+</div>
+</td></tr>
+<tr><td><a href="Useful.ORD_PRT.html#VALfprintf">fprintf</a> [<a href="Useful.ORD_PRT.html">Useful.ORD_PRT</a>]</td>
+<td></td></tr>
+<tr><td><a href="Mylist.html#VALfprintf_list">fprintf_list</a> [<a href="Mylist.html">Mylist</a>]</td>
+<td><div class="info">
+Print a list
+</div>
+</td></tr>
+<tr><td><a href="Var.html#VALfresh_var">fresh_var</a> [<a href="Var.html">Var</a>]</td>
+<td><div class="info">
+Return a fresh variable not bound to a string by var_of_string.
+</div>
+</td></tr>
+<tr><td><a href="Listutils.html#VALfrom_to">from_to</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">from_to b e succ</code> Creates a list starting from element <code class="code">b</code> until
+    element <code class="code">e</code> is reached, applying function <code class="code">succ</code> in turn to get the next
+    element of the list.
+</div>
+</td></tr>
+<tr><td align="left"><br>G</td></tr>
+<tr><td><a href="Order.html#VALge">ge</a> [<a href="Order.html">Order</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALgenerator">generator</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Apply the generator term constructor for the generator: in case of sharing,
+    we properly call the sharing version of the generator.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALgenerator0">generator0</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALgenerator1">generator1</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALgenerator2">generator2</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Apply the generator term constructor for the generator: special cases for
+  zeroary, unary, and binary generators.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALgenerator_of_cdef">generator_of_cdef</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALgenr">genr</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALgenr_args">genr_args</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+<code class="code">genr_args root n</code> returns the list of patterns <code class="code">root1; ...; rootn</code>.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_chars">genr_chars</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above for characters.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALgenr_comparisons">genr_comparisons</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Generation of a triple of comparison functions for a given commutative
+    operator.
+</div>
+</td></tr>
+<tr><td><a href="Genr_values.html#VALgenr_core_values">genr_core_values</a> [<a href="Genr_values.html">Genr_values</a>]</td>
+<td><div class="info">
+Generates a list of up to n values of the specified core type,
+    whose tree has a maximum depth (number of nested constructors)
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALgenr_eq">genr_eq</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Generate an equality predicate primitive for the type name given:
+    for type <code class="code">t</code>, we generate the primitive <code class="code">eq_t</code>, bound to <code class="code"><span class="string">"%equal"</span></code> if the
+    values of the type are not maximally shared, or bound to <code class="code"><span class="string">"%eq"</span></code>
+    otherwise.
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALgenr_file">genr_file</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALgenr_file_ml">genr_file_ml</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALgenr_file_mli">genr_file_mli</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_floats">genr_floats</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above for floats.
+</div>
+</td></tr>
+<tr><td><a href="Genr_nullary.html#VALgenr_function">genr_function</a> [<a href="Genr_nullary.html">Genr_nullary</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_unary.html#VALgenr_function">genr_function</a> [<a href="Genr_unary.html">Genr_unary</a>]</td>
+<td><div class="info">
+<code class="code">genr_function g</code> generates a unary function that
+    normalizes terms that are built with <code class="code">g</code> as their head constructor.
+</div>
+</td></tr>
+<tr><td><a href="Genr_binary.html#VALgenr_function">genr_function</a> [<a href="Genr_binary.html">Genr_binary</a>]</td>
+<td><div class="info">
+<code class="code">genr_function g</code> generates a binary function (here binary
+    means that the function has a pair as unique argument) that normalizes
+    terms that are built with <code class="code">g</code> as their head constructor.
+</div>
+</td></tr>
+<tr><td><a href="Genr_listary.html#VALgenr_function">genr_function</a> [<a href="Genr_listary.html">Genr_listary</a>]</td>
+<td><div class="info">
+From a listary generator definition, generate a list of definitions
+    that implements its construction function.
+</div>
+</td></tr>
+<tr><td><a href="Genr_nary.html#VALgenr_function">genr_function</a> [<a href="Genr_nary.html">Genr_nary</a>]</td>
+<td><div class="info">
+We treat the case of n-ary generators.
+</div>
+</td></tr>
+<tr><td><a href="Genr.html#VALgenr_functions">genr_functions</a> [<a href="Genr.html">Genr</a>]</td>
+<td><div class="info">
+The global generation procedure: it generates the whole set of construction
+  function definitions from a given type definition.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_int32s">genr_int32s</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above for <code class="code">int32</code>.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_int64s">genr_int64s</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above for <code class="code">int64</code>.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_ints">genr_ints</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates the <code class="code">max_length</code> specified number of distinct integer expressions.
+</div>
+</td></tr>
+<tr><td><a href="Genr_memo.html#VALgenr_memo_functions">genr_memo_functions</a> [<a href="Genr_memo.html">Genr_memo</a>]</td>
+<td><div class="info">
+Memoize construction functions of a given constructor <code class="code">cdef</code>
+    among all generated functions for this very constructor.
+</div>
+</td></tr>
+<tr><td><a href="Genr_mli.html#VALgenr_mli">genr_mli</a> [<a href="Genr_mli.html">Genr_mli</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_nativeints">genr_nativeints</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above for <code class="code">nativeint</code>.
+</div>
+</td></tr>
+<tr><td><a href="Code.html#VALgenr_numbered_args">genr_numbered_args</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+<code class="code">genr_numbered_args root n</code> returns <code class="code">1, root1; ...; n, rootn</code>.
+</div>
+</td></tr>
+<tr><td><a href="Genr_mli.html#VALgenr_private_type_declarations">genr_private_type_declarations</a> [<a href="Genr_mli.html">Genr_mli</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALgenr_projection">genr_projection</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Generate a projection primitive for the (abbreviation) type name given.
+</div>
+</td></tr>
+<tr><td><a href="Genr_mli.html#VALgenr_public_type_declarations">genr_public_type_declarations</a> [<a href="Genr_mli.html">Genr_mli</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_expression.html#VALgenr_rule">genr_rule</a> [<a href="Genr_expression.html">Genr_expression</a>]</td>
+<td><div class="info">
+Generation of a pattern maching clause for a user's defined rewrite rule
+    <code class="code"><span class="constructor">Rule</span> (p, e)</code>, meaning that pattern <code class="code">p</code> should be rewritten
+    as expression <code class="code">e</code>.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALgenr_rule_pattern">genr_rule_pattern</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Pattern construction for generators and functions.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_strings">genr_strings</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above for strings.
+</div>
+</td></tr>
+<tr><td><a href="Genr_substitutions.html#VALgenr_substs">genr_substs</a> [<a href="Genr_substitutions.html">Genr_substitutions</a>]</td>
+<td><div class="info">
+Generates a list of n substitutions, i.e.
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALgenr_test">genr_test</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALgenr_test_file">genr_test_file</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_testing.html#VALgenr_test_preamble">genr_test_preamble</a> [<a href="Genr_testing.html">Genr_testing</a>]</td>
+<td><div class="info">
+Generate hte AST preamble for the test file of a module.
+</div>
+</td></tr>
+<tr><td><a href="Genr_testing.html#VALgenr_type_test">genr_type_test</a> [<a href="Genr_testing.html">Genr_testing</a>]</td>
+<td><div class="info">
+The global test generation function: it generates the whole
+  set of test expressions for a module name and a type definition.
+</div>
+</td></tr>
+<tr><td><a href="Code.html#VALgenr_underscores">genr_underscores</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+<code class="code">genr_underscores n</code> returns a list of <code class="code">n</code> <code class="code">_</code> patterns.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALgenr_units">genr_units</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates at most the specified number of distinct unit expressions, i.e.,
+    zero or one.
+</div>
+</td></tr>
+<tr><td><a href="Genr_values.html#VALgenr_values">genr_values</a> [<a href="Genr_values.html">Genr_values</a>]</td>
+<td><div class="info">
+Generates a list of up to n values of the specified type declaration
+</div>
+</td></tr>
+<tr><td><a href="Genr_equalities.html#VALgenr_values_and_equalities">genr_values_and_equalities</a> [<a href="Genr_equalities.html">Genr_equalities</a>]</td>
+<td><div class="info">
+Given
+  a number <code class="code">n</code> of equalities to generate,
+  a function generating values of a given type, and
+  a constructor definition,
+  <code class="code">genr_values_and_equalities</code> generates the code to test the validity of
+  the equalities that must hold, according to the relations specified for the
+  constructor.
+</div>
+</td></tr>
+<tr><td><a href="Check.html#VALget_arity_of_generator">get_arity_of_generator</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALget_comments">get_comments</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Do we output normalization traces ?
+</div>
+</td></tr>
+<tr><td><a href="Debug.html#VALget_debug">get_debug</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALget_dline_trace">get_dline_trace</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Do we add diese line directives to <code class="code">.ml</code> files ?
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALget_genr_implementation">get_genr_implementation</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_genr_interface">get_genr_interface</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_genr_test">get_genr_test</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_input_file_name">get_input_file_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Eqnrel.html#VALget_kb">get_kb</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Eqnrel.html#VALget_kb_limit">get_kb_limit</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_code.html#VALget_line_count">get_line_count</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_memo.html#VALget_memo_table_size">get_memo_table_size</a> [<a href="Genr_memo.html">Genr_memo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_memo.html#VALget_memoize_target">get_memoize_target</a> [<a href="Genr_memo.html">Genr_memo</a>]</td>
+<td><div class="info">
+Do we generate maximum sharing ?
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALget_num_tests">get_num_tests</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_output_module_implementation_name">get_output_module_implementation_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_output_module_interface_name">get_output_module_interface_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_output_module_name">get_output_module_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALget_pos_info">get_pos_info</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALget_relation_list">get_relation_list</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Access function on lists of relations.
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALget_search_path">get_search_path</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_seed">get_seed</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALget_sharable_target">get_sharable_target</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Do we generate maximum sharing ?
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALget_structure_items_of_type_declaration">get_structure_items_of_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALget_testing_file_name">get_testing_file_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALget_user_rel_order">get_user_rel_order</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Do we use the user order for code generation ?
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALget_val_depth">get_val_depth</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Configuration.html#VALget_verbose">get_verbose</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALgprofile">gprofile</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>H</td></tr>
+<tr><td><a href="Relation.html#VALhas_absorbent">has_absorbent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_absorbing">has_absorbing</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_associative">has_associative</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_commutative">has_commutative</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALhas_commutativity">has_commutativity</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_idempotent">has_idempotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_idempotent_and_nilpotent">has_idempotent_and_nilpotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_neutral">has_neutral</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALhas_nilpotent">has_nilpotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALhas_relations">has_relations</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALhas_relations_cdef">has_relations_cdef</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALhas_relations_cdefs">has_relations_cdefs</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Warnings.html#VALhelp_warnings">help_warnings</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALhighlight_locations">highlight_locations</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>I</td></tr>
+<tr><td><a href="Term_utils.html#VALiapp">iapp</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALiapp0">iapp0</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALiapp1">iapp1</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALiapp2">iapp2</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALidem">idem</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALidempotent">idempotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALimap_of_direction">imap_of_direction</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Returns the qualified identificateur of the mapping function of the
+  predefined <code class="code"><span class="constructor">List</span></code> module that is suitable for the
+  <code class="code">distributivity_direction</code> argument.
+</div>
+</td></tr>
+<tr><td><a href="Printast.html#VALimplementation">implementation</a> [<a href="Printast.html">Printast</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parse.html#VALimplementation">implementation</a> [<a href="Parse.html">Parse</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parser.html#VALimplementation">implementation</a> [<a href="Parser.html">Parser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Lexer.html#VALin_comment">in_comment</a> [<a href="Lexer.html">Lexer</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALin_file">in_file</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+Return an empty ghost range located in a given file.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALinclude_dirs">include_dirs</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_code.html#VALincr_line_count">incr_line_count</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALinfix_apply">infix_apply</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+Apply an infix ident to its arguments.
+</div>
+</td></tr>
+<tr><td><a href="Code.html#VALinfix_name">infix_name</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+Apply a given infix name to its arguments.
+</div>
+</td></tr>
+<tr><td><a href="Location.html#VALinit">init</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+Set the file name and line number of the <code class="code">lexbuf</code> to be the start
+    of the named file.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALinit_file">init_file</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALinjection_type">injection_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALinline_threshold">inline_threshold</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALinput_lexbuf">input_lexbuf</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALinput_name">input_name</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Match.html#VALinsert_gt">insert_gt</a> [<a href="Match.html">Match</a>]</td>
+<td><div class="info">
+Insertion ordering: t &gt; u if t contains an instance of u
+</div>
+</td></tr>
+<tr><td><a href="Order.html#VALint_of_ord">int_of_ord</a> [<a href="Order.html">Order</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALinter">inter</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Printast.html#VALinterface">interface</a> [<a href="Printast.html">Printast</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parse.html#VALinterface">interface</a> [<a href="Parse.html">Parse</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parser.html#VALinterface">interface</a> [<a href="Parser.html">Parser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALinterface_suffix">interface_suffix</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Suffix for interface file names
+</div>
+</td></tr>
+<tr><td><a href="Randomutils.html#VALints">ints</a> [<a href="Randomutils.html">Randomutils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALinv">inv</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALinvdis">invdis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALinverse">inverse</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Inverse a substitution mapping variables to variables.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALinverse">inverse</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALinvneu">invneu</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALinvol">invol</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_absorbing">is_absorbing</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Warnings.html#VALis_active">is_active</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_associative">is_associative</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_commutative">is_commutative</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALis_commutativity">is_commutativity</a> [<a href="Equation.html">Equation</a>]</td>
+<td><div class="info">
+Test if an equation is the commutativity equation
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALis_construction_function">is_construction_function</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_distributive">is_distributive</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALis_empty">is_empty</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALis_empty">is_empty</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Test if a substitution is the identity
+</div>
+</td></tr>
+<tr><td><a href="Warnings.html#VALis_error">is_error</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_generator_ident">is_generator_ident</a> [<a href="Check.html">Check</a>]</td>
+<td><div class="info">
+Access to generators.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALis_idempotent">is_idempotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALis_infix">is_infix</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALis_infix_longident">is_infix_longident</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_inverse">is_inverse</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_involutive">is_involutive</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALis_known_and_listary">is_known_and_listary</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALis_known_and_listary_name">is_known_and_listary_name</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Same as above, indicating the generator name instead of the generator
+</div>
+</td></tr>
+<tr><td><a href="Term.html#VALis_linear">is_linear</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_listary_generator">is_listary_generator</a> [<a href="Check.html">Check</a>]</td>
+<td><div class="info">
+Various access/test functions.
+</div>
+</td></tr>
+<tr><td><a href="Check.html#VALis_listary_info">is_listary_info</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_local_generator">is_local_generator</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_local_info">is_local_info</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALis_local_module">is_local_module</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_neutral">is_neutral</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_neutral_generator">is_neutral_generator</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_nilpotent">is_nilpotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Norm.html#VALis_norm">is_norm</a> [<a href="Norm.html">Norm</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALis_not_rewrite">is_not_rewrite</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_private_generator">is_private_generator</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_private_info">is_private_info</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALis_private_type_declaration">is_private_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALis_private_variant_type_declaration">is_private_variant_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Norm.html#VALis_red">is_red</a> [<a href="Norm.html">Norm</a>]</td>
+<td><div class="info">
+Test reducibility
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALis_rewrite">is_rewrite</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_truly_unary_generator">is_truly_unary_generator</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALis_type_ident">is_type_ident</a> [<a href="Check.html">Check</a>]</td>
+<td><div class="info">
+Access to types.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALis_type_list">is_type_list</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALis_variant_type_declaration">is_variant_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALiter">iter</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tbl.html#VALiter">iter</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Listutils.html#VALith_group">ith_group</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+Separates the list in consecutive groups of the specified size,
+    then returns the i_th of such groups starting from 0.
+</div>
+</td></tr>
+<tr><td align="left"><br>K</td></tr>
+<tr><td><a href="Clflags.html#VALkeep_asm_file">keep_asm_file</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALkeep_startup_file">keep_startup_file</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>L</td></tr>
+<tr><td><a href="Axiom.html#VALlabs">labs</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Longident.html#VALlast">last</a> [<a href="Longident.html">Longident</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALlazy_opt">lazy_opt</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALlazy_tag">lazy_tag</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Normally the same as Obj.lazy_tag.
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALldis">ldis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Order.html#VALle">le</a> [<a href="Order.html">Order</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALlet0">let0</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALlet1">let1</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Order.html#VALlex">lex</a> [<a href="Order.html">Order</a>]</td>
+<td><div class="info">
+Lexicographic extension of an ordering
+</div>
+</td></tr>
+<tr><td><a href="Term.html#VALlinearize">linearize</a> [<a href="Term.html">Term</a>]</td>
+<td><div class="info">
+Linearize a term
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALlink_everything">link_everything</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALlinv">linv</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALlinvdis">linvdis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALlist_remove">list_remove</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">list_remove x l</code> returns a copy of <code class="code">l</code> with the first
+           element equal to <code class="code">x</code> removed.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALlist_type">list_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALlist_vars">list_vars</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALlist_vars_of_terms">list_vars_of_terms</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALlneu">lneu</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALload_path">load_path</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Directories in the search path for .cmi and .cmo files
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALlog2">log2</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">log2 n</code> returns <code class="code">s</code> such that <code class="code">n = 1 <span class="keyword">lsl</span> s</code>
+           if <code class="code">n</code> is a power of 2
+</div>
+</td></tr>
+<tr><td><a href="Genr_expression.html#VALlower_case">lower_case</a> [<a href="Genr_expression.html">Genr_expression</a>]</td>
+<td><div class="info">
+Replaces constructor calls by construction function calls in an
+    expression.
+</div>
+</td></tr>
+<tr><td align="left"><br>M</td></tr>
+<tr><td><a href="Main.html#VALmain">main</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALmake_Constant">make_Constant</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+Generate a constant expression from the given <code class="code">string</code>.
+</div>
+</td></tr>
+<tr><td><a href="Code.html#VALmake_Var">make_Var</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+Generate a variable expression from the name of the given ident.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALmake_archive">make_archive</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALmake_package">make_package</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALmake_public_type_declaration">make_public_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALmake_runtime">make_runtime</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALmap">map</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Map a function on bindings
+</div>
+</td></tr>
+<tr><td><a href="Myset.S.html#VALmap">map</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+map on sets
+</div>
+</td></tr>
+<tr><td><a href="Tbl.html#VALmap">map</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALmap_end">map_end</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">map_end f l t</code> is <code class="code">map f l @ t</code>, Just more efficient.
+</div>
+</td></tr>
+<tr><td><a href="Myset.S.html#VALmap_filter">map_filter</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+Set of elements y such that f x = Some y for some x in xs.
+</div>
+</td></tr>
+<tr><td><a href="Listutils.html#VALmap_from_to">map_from_to</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">map_from_to f b e succ</code> Maps a function <code class="code">f</code> to a list of elements
+    starting from element <code class="code">b</code> until element <code class="code">e</code> is reached, applying
+    function <code class="code">succ</code> in turn to get the next element of the list.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALmap_left_right">map_left_right</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Like <code class="code"><span class="constructor">List</span>.map</code>, with guaranteed left-to-right evaluation order
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALmap_of_direction">map_of_direction</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Returns the <code class="code">map</code> like function from the predefined <code class="code"><span class="constructor">List</span></code> module that is
+  suitable for the <code class="code">distributivity_direction</code> argument.
+</div>
+</td></tr>
+<tr><td><a href="Match.html#VALmatches">matches</a> [<a href="Match.html">Match</a>]</td>
+<td></td></tr>
+<tr><td><a href="Match.html#VALmatches_opt">matches_opt</a> [<a href="Match.html">Match</a>]</td>
+<td></td></tr>
+<tr><td><a href="Match.html#VALmatching_subs">matching_subs</a> [<a href="Match.html">Match</a>]</td>
+<td><div class="info">
+Return matching substitution or raise Failure
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALmax_elt">max_elt</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALmax_tag">max_tag</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Biggest tag that can be stored in the header of a regular block.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALmax_young_wosize">max_young_wosize</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Maximal size of arrays that are directly allocated in the
+           minor heap
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALmay">may</a> [<a href="Misc.html">Misc</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALmay_map">may_map</a> [<a href="Misc.html">Misc</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALmem">mem</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALmem">mem</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Test if there is a binding
+</div>
+</td></tr>
+<tr><td><a href="Tbl.html#VALmem">mem</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Unif.html#VALmgu">mgu</a> [<a href="Unif.html">Unif</a>]</td>
+<td><div class="info">
+Computes the MGU of two terms.
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALmin_elt">min_elt</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALmk">mk</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Rule.html#VALmk">mk</a> [<a href="Rule.html">Rule</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALmk_apply">mk_apply</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_char">mk_char</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing a character.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_construction">mk_construction</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates an expression in <code class="code"><span class="constructor">Code</span>.exp</code> representing a generator with the
+    specified name and arguments.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_equality">mk_equality</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates an expression representing the application of the equality operator
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALmk_exp">mk_exp</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_float">mk_float</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing a float.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_generator">mk_generator</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a generator with the given name and location
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALmk_ident">mk_ident</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_int">mk_int</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing an integer.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_int32">mk_int32</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing an int32.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_int64">mk_int64</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing an int 64.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_list">mk_list</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing a list with the specified expressions.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_nativeint">mk_nativeint</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing an native integer.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_non_listary_construction">mk_non_listary_construction</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates an expression in Code.exp representing a generator with the
+    specified name and arguments.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALmk_pat">mk_pat</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALmk_rel">mk_rel</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALmk_sharing_function_ident">mk_sharing_function_ident</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Name of the sharing generation functions for a given generator name.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_string">mk_string</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing a string.
+</div>
+</td></tr>
+<tr><td><a href="Tgenr_base.html#VALmk_tuple">mk_tuple</a> [<a href="Tgenr_base.html">Tgenr_base</a>]</td>
+<td><div class="info">
+Creates a value representing a tuple with the specified expressions.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALmk_type">mk_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALmk_when">mk_when</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALmkdll">mkdll</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The linker command line to build dynamic libraries.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALmkexe">mkexe</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The linker command line to build executables.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALmkmaindll">mkmaindll</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The linker command line to build main programs as dlls.
+</div>
+</td></tr>
+<tr><td><a href="Configuration.html#VALmoca_full_version">moca_full_version</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Configuration.html#VALmoca_minor_version_number">moca_minor_version_number</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Configuration.html#VALmoca_version_number">moca_version_number</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALmodel">model</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Name of processor submodel for the native-code compiler
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALmodule_of_mli_file">module_of_mli_file</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>N</td></tr>
+<tr><td><a href="Otype.html#VALname_of_generator">name_of_generator</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALname_of_longident">name_of_longident</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALnative_c_compiler">native_c_compiler</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The C compiler to use for compiling C files
+           with the native-code compiler
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALnative_c_libraries">native_c_libraries</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The C libraries to link with native-code programs
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALnative_code">native_code</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALnative_pack_linker">native_pack_linker</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The linker to use for packaging (ocamlopt -pack) and for partial links
+           (ocamlopt -output-obj).
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALneu">neu</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALneutral">neutral</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Returns the first neutral element (Left, Right, or Both)
+    for the generator.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALneutral_both">neutral_both</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Returns the neutral element (simultaneously Left and Right, or Both)
+    for the generator.
+</div>
+</td></tr>
+<tr><td><a href="Check.html#VALneutral_element_of_generator">neutral_element_of_generator</a> [<a href="Check.html">Check</a>]</td>
+<td><div class="info">
+Gives the neutral element of <code class="code">g</code> or else raise No_neutral_element
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALneutral_left">neutral_left</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Returns a left neutral element for the generator if any.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALneutral_right">neutral_right</a> [<a href="Relation.html">Relation</a>]</td>
+<td><div class="info">
+Returns a right neutral element for the generator if any.
+</div>
+</td></tr>
+<tr><td><a href="Clexer.html#VALnext_token">next_token</a> [<a href="Clexer.html">Clexer</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALnil">nil</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+These functions generate code values.
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALnil">nil</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALnilpotent">nilpotent</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALno_auto_link">no_auto_link</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALno_overflow_add">no_overflow_add</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">no_overflow_add n1 n2</code> returns <code class="code"><span class="keyword">true</span></code> if the computation of
+           <code class="code">n1 + n2</code> does not overflow.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALno_overflow_lsl">no_overflow_lsl</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">no_overflow_add n</code> returns <code class="code"><span class="keyword">true</span></code> if the computation of
+           <code class="code">n <span class="keyword">lsl</span> 1</code> does not overflow.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALno_overflow_sub">no_overflow_sub</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">no_overflow_add n1 n2</code> returns <code class="code"><span class="keyword">true</span></code> if the computation of
+           <code class="code">n1 - n2</code> does not overflow.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALno_std_include">no_std_include</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALnoassert">noassert</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALnone">none</a> [<a href="Location.html">Location</a>]</td>
+<td><div class="info">
+An arbitrary value of type <code class="code">t</code>; describes an empty ghost range.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALnopervasives">nopervasives</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALnoprompt">noprompt</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Norm_ml.html#VALnorm">norm</a> [<a href="Norm_ml.html">Norm_ml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Norm.html#VALnorm">norm</a> [<a href="Norm.html">Norm</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALnorm">norm</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Debug.html#VALnot_yet_implemented">not_yet_implemented</a> [<a href="Debug.html">Debug</a>]</td>
+<td><div class="info">
+Raises failure with "not yet implemented" and the string argument.
+</div>
+</td></tr>
+<tr><td align="left"><br>O</td></tr>
+<tr><td><a href="Clflags.html#VALobjfiles">objfiles</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALoccurs">occurs</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Myset.S.html#VALof_list">of_list</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+Build a set from a list of elements
+</div>
+</td></tr>
+<tr><td><a href="Myset.S.html#VALof_list_map">of_list_map</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td></td></tr>
+<tr><td><a href="Order.html#VALopp">opp</a> [<a href="Order.html">Order</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALopposite">opposite</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALopt">opt</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Functions to generate clauses on demand.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALoptimize_for_speed">optimize_for_speed</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALopts">opts</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALorder_relations">order_relations</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALorder_rels">order_rels</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Debug.html#VALoutput">output</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALoutput_c_object">output_c_object</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALoutput_name">output_name</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Debug.html#VALoutput_sep">output_sep</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>P</td></tr>
+<tr><td><a href="Code.html#VALpair">pair</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Longident.html#VALparse">parse</a> [<a href="Longident.html">Longident</a>]</td>
+<td></td></tr>
+<tr><td><a href="File.html#VALparse_ml_file">parse_ml_file</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="File.html#VALparse_mli_file">parse_mli_file</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="Warnings.html#VALparse_options">parse_options</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALpartition">partition</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALpartition">partition</a> [<a href="Equation.html">Equation</a>]</td>
+<td><div class="info">
+Partition a set of equations into those whose lhs is greater,
+    smaller or something else
+</div>
+</td></tr>
+<tr><td><a href="Order.html#VALpartition">partition</a> [<a href="Order.html">Order</a>]</td>
+<td><div class="info">
+Partition a list of pairs into those whose lhs is greater, equal, etc.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALpattern">pattern</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALpattern0">pattern0</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALpattern1">pattern1</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALpattern2">pattern2</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Similar to generator application for the pattern case.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALpattern_info">pattern_info</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Similar to generator application for the pattern case.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALpervasives_comparisons">pervasives_comparisons</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Triple representing OCaml's Pervasives.compare functions
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALpoly_type">poly_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Mylist.html#VALposition">position</a> [<a href="Mylist.html">Mylist</a>]</td>
+<td><div class="info">
+Position of an element
+</div>
+</td></tr>
+<tr><td><a href="Pr_code.html#VALpr_clause">pr_clause</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td><div class="info">
+Prints a clause in a matching construct.
+</div>
+</td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_constant">pr_constant</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_core_type">pr_core_type</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_code.html#VALpr_expression">pr_expression</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td><div class="info">
+Prints an expression in the indicated formatter.
+</div>
+</td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_expression">pr_expression</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_ident_in_infix_position">pr_ident_in_infix_position</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_ident_in_prefix_position">pr_ident_in_prefix_position</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_ident_name_in_prefix_position">pr_ident_name_in_prefix_position</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_params">pr_params</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_pattern">pr_pattern</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_relation">pr_relation</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_sep_vals">pr_sep_vals</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_sep_vals_fmt">pr_sep_vals_fmt</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_code.html#VALpr_structure">pr_structure</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td><div class="info">
+Prints a code structure in the indicated formatter.
+</div>
+</td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_structure_item_desc">pr_structure_item_desc</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_structure_sep">pr_structure_sep</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_suffix_vals_fmt">pr_suffix_vals_fmt</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Symb.html#VALpr_symbol">pr_symbol</a> [<a href="Symb.html">Symb</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALpr_term">pr_term</a> [<a href="Term.html">Term</a>]</td>
+<td><div class="info">
+Pretty print.
+</div>
+</td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_type">pr_type</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_type_definitions">pr_type_definitions</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_value_description">pr_value_description</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Var.html#VALpr_var">pr_var</a> [<a href="Var.html">Var</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_verbatim_structure_item">pr_verbatim_structure_item</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALpr_verbatim_structure_items">pr_verbatim_structure_items</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Prec.html#VALprec_of_list">prec_of_list</a> [<a href="Prec.html">Prec</a>]</td>
+<td><div class="info">
+<code class="code">f1; ..; fn</code> gives f1 &lt; ..
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALprecedence">precedence</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALprefix_construction_function">prefix_construction_function</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Name of the generation functions for a given prefix name
+   and a given generator:
+   <code class="code">prefix_generator_function p g</code> is the ident "prefix_name",
+   where "prefix" is the contents of <code class="code">p</code>,
+   and "name" is the uncapitalized version of <code class="code">g</code>.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALprefix_construction_function2">prefix_construction_function2</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Name of the generation functions for a given prefix name
+   and the combination of two generators:
+   <code class="code">prefix_generator_function2 p g1 g2</code> is the ident "prefix_name1_name2",
+   where "prefix" is the contents of <code class="code">p</code>,
+   and "name1", "name2" are the uncapitalized versions of <code class="code">g1</code>, <code class="code">g2</code>.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALprefix_ident">prefix_ident</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Adds a prefix to an identifier.
+</div>
+</td></tr>
+<tr><td><a href="Code.html#VALprefix_longident">prefix_longident</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+To add a prefix string to a qualified (long) identifier.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALpreprocessor">preprocessor</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALprerr_warning">prerr_warning</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALprincipal">principal</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Debug.html#VALprint">print</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALprint">print</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Warnings.html#VALprint">print</a> [<a href="Warnings.html">Warnings</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tbl.html#VALprint">print</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALprint_config">print_config</a> [<a href="Config.html">Config</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALprint_error">print_error</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALprint_error_cur_file">print_error_cur_file</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_memo.html#VALprint_memo_hash_table_module">print_memo_hash_table_module</a> [<a href="Genr_memo.html">Genr_memo</a>]</td>
+<td><div class="info">
+Output module declarations and helpers for memoized functions
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALprint_moca_full_version">print_moca_full_version</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALprint_moca_short_version">print_moca_short_version</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALprint_moca_version">print_moca_version</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_sharing.html#VALprint_sharing">print_sharing</a> [<a href="Genr_sharing.html">Genr_sharing</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_sharing.html#VALprint_sharing_ml_preamble">print_sharing_ml_preamble</a> [<a href="Genr_sharing.html">Genr_sharing</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_sharing.html#VALprint_sharing_mli_preamble">print_sharing_mli_preamble</a> [<a href="Genr_sharing.html">Genr_sharing</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_sharing.html#VALprint_type_private_structure_items">print_type_private_structure_items</a> [<a href="Genr_sharing.html">Genr_sharing</a>]</td>
+<td><div class="info">
+Prints the structure items defined in the private type definition.
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALprint_types">print_types</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALprint_usage">print_usage</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALprint_warning">print_warning</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALprojection_type">projection_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>Q</td></tr>
+<tr><td><a href="Otype.html#VALqualified_name_of_generator">qualified_name_of_generator</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALqualified_name_of_longident">qualified_name_of_longident</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ccomp.html#VALquote_files">quote_files</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ccomp.html#VALquote_optfile">quote_optfile</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>R</td></tr>
+<tr><td><a href="Axiom.html#VALrabs">rabs</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Check.html#VALraise_error">raise_error</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALraise_error">raise_error</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALranlib">ranlib</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Command to randomize a library, or "" if not needed
+</div>
+</td></tr>
+<tr><td><a href="Var.html#VALraw_string_of_var">raw_string_of_var</a> [<a href="Var.html">Var</a>]</td>
+<td><div class="info">
+Convert n&gt;=0 into xn and n&lt;0 into yn
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALrdis">rdis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALrecursive_types">recursive_types</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Norm.html#VALred_opt">red_opt</a> [<a href="Norm.html">Norm</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALrelations_of_cdef">relations_of_cdef</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALremove">remove</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Tbl.html#VALremove">remove</a> [<a href="Tbl.html">Tbl</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALremove_commutativity">remove_commutativity</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALremove_file">remove_file</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Delete the given file if it exists.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALremove_rules">remove_rules</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALremove_rules_in_type_declaration">remove_rules_in_type_declaration</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_pattern.html#VALremove_topconstr">remove_topconstr</a> [<a href="Genr_pattern.html">Genr_pattern</a>]</td>
+<td></td></tr>
+<tr><td><a href="Equation.html#VALremove_trivial">remove_trivial</a> [<a href="Equation.html">Equation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Rename.html#VALrename">rename</a> [<a href="Rename.html">Rename</a>]</td>
+<td><div class="info">
+Apply a renaming to a term
+</div>
+</td></tr>
+<tr><td><a href="Term.html#VALrename">rename</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Rename.html#VALrenaming_away">renaming_away</a> [<a href="Rename.html">Rename</a>]</td>
+<td><div class="info">
+Renaming away from a term
+</div>
+</td></tr>
+<tr><td><a href="Rename.html#VALrenaming_aways">renaming_aways</a> [<a href="Rename.html">Rename</a>]</td>
+<td></td></tr>
+<tr><td><a href="Listutils.html#VALrepeat">repeat</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">repeat n x</code> Creates a list with <code class="code">n</code> element <code class="code">x</code>.
+</div>
+</td></tr>
+<tr><td><a href="Subterm.html#VALreplace">replace</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+<code class="code">replace t p u</code> replaces the subterm of t at position p by u
+</div>
+</td></tr>
+<tr><td><a href="Mylist.html#VALreplace">replace</a> [<a href="Mylist.html">Mylist</a>]</td>
+<td><div class="info">
+Replace the i-th element of a list
+</div>
+</td></tr>
+<tr><td><a href="Mylist.html#VALreplace_map">replace_map</a> [<a href="Mylist.html">Mylist</a>]</td>
+<td><div class="info">
+Replace the i-th element x by f(x)
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALreplicate_list">replicate_list</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">replicate_list elem n</code> is the list with <code class="code">n</code> elements
+           all identical to <code class="code">elem</code>.
+</div>
+</td></tr>
+<tr><td><a href="Check.html#VALreport_error">report_error</a> [<a href="Check.html">Check</a>]</td>
+<td></td></tr>
+<tr><td><a href="Lexer.html#VALreport_error">report_error</a> [<a href="Lexer.html">Lexer</a>]</td>
+<td></td></tr>
+<tr><td><a href="Syntaxerr.html#VALreport_error">report_error</a> [<a href="Syntaxerr.html">Syntaxerr</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALreset">reset</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_code.html#VALreset_line_count">reset_line_count</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Subs.html#VALrestrict">restrict</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+Restriction of a susbtitution to some domain
+</div>
+</td></tr>
+<tr><td><a href="Terminfo.html#VALresume">resume</a> [<a href="Terminfo.html">Terminfo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALrev_split_words">rev_split_words</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">rev_split_words s</code> splits <code class="code">s</code> in blank-separated words, and return
+           the list of words in reverse order.
+</div>
+</td></tr>
+<tr><td><a href="Relation.html#VALrewrite">rewrite</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Location.html#VALrhs_loc">rhs_loc</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALrinv">rinv</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALrinvdis">rinvdis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALrneu">rneu</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Order.html#VALrpo">rpo</a> [<a href="Order.html">Order</a>]</td>
+<td><div class="info">
+Recursive Path Ordering
+</div>
+</td></tr>
+<tr><td><a href="Order.html#VALrpo_fail">rpo_fail</a> [<a href="Order.html">Order</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cparser.html#VALrule">rule</a> [<a href="Cparser.html">Cparser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cparser.html#VALrules">rules</a> [<a href="Cparser.html">Cparser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Ccomp.html#VALrun_command">run_command</a> [<a href="Ccomp.html">Ccomp</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>S</td></tr>
+<tr><td><a href="Misc.html#VALsamelist">samelist</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Like <code class="code"><span class="constructor">List</span>.for_all2</code> but returns <code class="code"><span class="keyword">false</span></code> if the two
+           lists have different length.
+</div>
+</td></tr>
+<tr><td><a href="File.html#VALsearch_ml_file_for_module">search_ml_file_for_module</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="File.html#VALsearch_mli_file_for_module">search_mli_file_for_module</a> [<a href="File.html">File</a>]</td>
+<td></td></tr>
+<tr><td><a href="Misc.html#VALsearch_substring">search_substring</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+<code class="code">search_substring pat str start</code> returns the position of the first
+           occurrence of string <code class="code">pat</code> in string <code class="code">str</code>.
+</div>
+</td></tr>
+<tr><td><a href="Debug.html#VALsep">sep</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALsequence">sequence</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALset">set</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td><div class="info">
+<code class="code">set tbl name crc source</code> forcefully associates <code class="code">name</code> with
+         <code class="code">crc</code> in <code class="code">tbl</code>, even if <code class="code">name</code> already had a different CRC
+         associated with <code class="code">name</code> in <code class="code">tbl</code>.
+</div>
+</td></tr>
+<tr><td><a href="Genr_base.html#VALset_comments">set_comments</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Debug.html#VALset_debug">set_debug</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALset_dline_trace">set_dline_trace</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_genr_implementation">set_genr_implementation</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_genr_interface">set_genr_interface</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_genr_test">set_genr_test</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_implementation_from_file_name">set_implementation_from_file_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_input_file_name">set_input_file_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Eqnrel.html#VALset_kb">set_kb</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Eqnrel.html#VALset_kb_limit">set_kb_limit</a> [<a href="Eqnrel.html">Eqnrel</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_memo.html#VALset_memo_table_size">set_memo_table_size</a> [<a href="Genr_memo.html">Genr_memo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_memo.html#VALset_memoize_target">set_memoize_target</a> [<a href="Genr_memo.html">Genr_memo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_num_tests">set_num_tests</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_output_file_name">set_output_file_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_code.html#VALset_output_filename">set_output_filename</a> [<a href="Pr_code.html">Pr_code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_output_module_implementation_name">set_output_module_implementation_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_output_module_interface_name">set_output_module_interface_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_output_module_name">set_output_module_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_seed">set_seed</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALset_sharable_target">set_sharable_target</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Maximum sharing handling.
+</div>
+</td></tr>
+<tr><td><a href="Main.html#VALset_testing_file_name">set_testing_file_name</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALset_user_rel_order">set_user_rel_order</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALset_val_depth">set_val_depth</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Configuration.html#VALset_verbose">set_verbose</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Terminfo.html#VALsetup">setup</a> [<a href="Terminfo.html">Terminfo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALshared">shared</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALsingleton">singleton</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALsingleton">singleton</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td></td></tr>
+<tr><td><a href="Lexer.html#VALskip_sharp_bang">skip_sharp_bang</a> [<a href="Lexer.html">Lexer</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALsort_relations">sort_relations</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Relation.html#VALsort_rels">sort_rels</a> [<a href="Relation.html">Relation</a>]</td>
+<td></td></tr>
+<tr><td><a href="Consistbl.html#VALsource">source</a> [<a href="Consistbl.html">Consistbl</a>]</td>
+<td><div class="info">
+<code class="code">source tbl name</code> returns the file name associated with <code class="code">name</code>
+         if the latter has an associated CRC in <code class="code">tbl</code>.
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALsplit">split</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Mylist.html#VALsplit">split</a> [<a href="Mylist.html">Mylist</a>]</td>
+<td><div class="info">
+Given a list <code class="code">l</code> and a number <code class="code">i</code> such that <code class="code">0 &lt;= i &lt; <span class="constructor">List</span>.length l</code>,
+    returns the triple <code class="code">l1, x, l2</code>
+    such that <code class="code">x = <span class="constructor">List</span>.nth l i</code> and <code class="code">l = <span class="constructor">List</span>.rev l1 @ x :: l2</code>
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALsplit_last">split_last</a> [<a href="Misc.html">Misc</a>]</td>
+<td><div class="info">
+Return the last element and the other elements of the given list.
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALstack_threshold">stack_threshold</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Size in words of safe area at bottom of VM stack,
+           see byterun/config.h
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALstandard_library">standard_library</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The directory containing the standard libraries
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALstandard_runtime">standard_runtime</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The full path to the standard bytecode interpreter ocamlrun
+</div>
+</td></tr>
+<tr><td><a href="Terminfo.html#VALstandout">standout</a> [<a href="Terminfo.html">Terminfo</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALstd_include_dir">std_include_dir</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALstd_include_flag">std_include_flag</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Comp.html#VALstep">step</a> [<a href="Comp.html">Comp</a>]</td>
+<td><div class="info">
+Completion step
+</div>
+</td></tr>
+<tr><td><a href="Clflags.html#VALstrict_sequence">strict_sequence</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Pr_ocaml.html#VALstring_of_constant">string_of_constant</a> [<a href="Pr_ocaml.html">Pr_ocaml</a>]</td>
+<td></td></tr>
+<tr><td><a href="Symb.html#VALstring_of_symbol">string_of_symbol</a> [<a href="Symb.html">Symb</a>]</td>
+<td><div class="info">
+Return the string represented by some symbol
+</div>
+</td></tr>
+<tr><td><a href="Var.html#VALstring_of_var">string_of_var</a> [<a href="Var.html">Var</a>]</td>
+<td><div class="info">
+Inverse of var_of_string.
+</div>
+</td></tr>
+<tr><td><a href="Subs.html#VALsubs">subs</a> [<a href="Subs.html">Subs</a>]</td>
+<td><div class="info">
+One-variable substitution
+</div>
+</td></tr>
+<tr><td><a href="Main.StrSet.html#VALsubset">subset</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALsubst">subst</a> [<a href="Otype.html">Otype</a>]</td>
+<td><div class="info">
+Given an association mapping variable names to core types,
+    applies it to the given core type list as a substitution
+</div>
+</td></tr>
+<tr><td><a href="Subterm.html#VALsubterm_pos">subterm_pos</a> [<a href="Subterm.html">Subterm</a>]</td>
+<td><div class="info">
+Subterm at position p
+</div>
+</td></tr>
+<tr><td><a href="Location.html#VALsymbol_gloc">symbol_gloc</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Symb.html#VALsymbol_of_string">symbol_of_string</a> [<a href="Symb.html">Symb</a>]</td>
+<td><div class="info">
+Check if a string is represented by a known symbol,
+    associate it with a new symbol otherwise
+</div>
+</td></tr>
+<tr><td><a href="Location.html#VALsymbol_rloc">symbol_rloc</a> [<a href="Location.html">Location</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALsymbols">symbols</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Rule.html#VALsymbols_of_rule">symbols_of_rule</a> [<a href="Rule.html">Rule</a>]</td>
+<td><div class="info">
+Symbols of a set of rules
+</div>
+</td></tr>
+<tr><td><a href="Rule.html#VALsymbols_of_rules">symbols_of_rules</a> [<a href="Rule.html">Rule</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALsymbols_of_terms">symbols_of_terms</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALsystem">system</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Name of operating system for the native-code compiler
+</div>
+</td></tr>
+<tr><td><a href="Config.html#VALsysthread_supported">systhread_supported</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+Whether the system thread library is implemented
+</div>
+</td></tr>
+<tr><td align="left"><br>T</td></tr>
+<tr><td><a href="Code.html#VALt">t</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Listutils.html#VALtake">take</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">take n l</code> Takes the first <code class="code">n</code> elements of list <code class="code">l</code>,
+    or the whole list <code class="code">l</code>, if <code class="code">l</code> has less than <code class="code">n</code>n elements.
+</div>
+</td></tr>
+<tr><td><a href="Cparser.html#VALterm">term</a> [<a href="Cparser.html">Cparser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_listary_equations.html#VALtesting_equations_of_rels">testing_equations_of_rels</a> [<a href="Genr_listary_equations.html">Genr_listary_equations</a>]</td>
+<td></td></tr>
+<tr><td><a href="Lexer.html#VALtoken">token</a> [<a href="Lexer.html">Lexer</a>]</td>
+<td></td></tr>
+<tr><td><a href="Printast.html#VALtop_phrase">top_phrase</a> [<a href="Printast.html">Printast</a>]</td>
+<td></td></tr>
+<tr><td><a href="Cparser.html#VALtop_term">top_term</a> [<a href="Cparser.html">Cparser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALtopletrec">topletrec</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+To define a toplevel let rec definition in a module implementation.
+</div>
+</td></tr>
+<tr><td><a href="Parse.html#VALtoplevel_phrase">toplevel_phrase</a> [<a href="Parse.html">Parse</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parser.html#VALtoplevel_phrase">toplevel_phrase</a> [<a href="Parser.html">Parser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Debug.html#VALtrace">trace</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Genr_base.html#VALtrace_clause">trace_clause</a> [<a href="Genr_base.html">Genr_base</a>]</td>
+<td><div class="info">
+Returns the code outputing the diese_line directives
+    # <code class="code">int</code> <code class="code">string</code>
+</div>
+</td></tr>
+<tr><td><a href="Listutils.html#VALtranspose">transpose</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">transpose ll</code> Transposes a list of lists.
+</div>
+</td></tr>
+<tr><td><a href="Misc.html#VALtry_finally">try_finally</a> [<a href="Misc.html">Misc</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALtuple_type">tuple_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Otype.html#VALtype_of_eq">type_of_eq</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Typed_vars.html#VALtyped_vars_eqn">typed_vars_eqn</a> [<a href="Typed_vars.html">Typed_vars</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>U</td></tr>
+<tr><td><a href="Code.html#VALu">u</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALudis">udis</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Axiom.html#VALuidem">uidem</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALumsg">umsg</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALunderscore">underscore</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALunderscored_clause">underscored_clause</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALunderscored_ocaml_pattern">underscored_ocaml_pattern</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALunderscored_pattern">underscored_pattern</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Unif.html#VALunif">unif</a> [<a href="Unif.html">Unif</a>]</td>
+<td><div class="info">
+Return mgu or raise Failure
+</div>
+</td></tr>
+<tr><td><a href="Axiom.html#VALunil">unil</a> [<a href="Axiom.html">Axiom</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.StrSet.html#VALunion">union</a> [<a href="Main.StrSet.html">Main.StrSet</a>]</td>
+<td></td></tr>
+<tr><td><a href="Myset.S.html#VALunion_map">union_map</a> [<a href="Myset.S.html">Myset.S</a>]</td>
+<td><div class="info">
+Union of the sets obtained by mapping f on some list
+</div>
+</td></tr>
+<tr><td><a href="Listutils.html#VALunique">unique</a> [<a href="Listutils.html">Listutils</a>]</td>
+<td><div class="info">
+<code class="code">unique p l</code> Removes duplicates from a list, provided a binary predicate
+    <code class="code">p</code>.
+</div>
+</td></tr>
+<tr><td><a href="Debug.html#VALuntrace">untrace</a> [<a href="Debug.html">Debug</a>]</td>
+<td></td></tr>
+<tr><td><a href="Main.html#VALusage">usage</a> [<a href="Main.html">Main</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parse.html#VALuse_file">use_file</a> [<a href="Parse.html">Parse</a>]</td>
+<td></td></tr>
+<tr><td><a href="Parser.html#VALuse_file">use_file</a> [<a href="Parser.html">Parser</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALuse_prims">use_prims</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALuse_runtime">use_runtime</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALuse_threads">use_threads</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALuse_vmthreads">use_vmthreads</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>V</td></tr>
+<tr><td><a href="Var.html#VALvar_of_string">var_of_string</a> [<a href="Var.html">Var</a>]</td>
+<td><div class="info">
+Return a fresh variable if called with a string for the first time.
+</div>
+</td></tr>
+<tr><td><a href="Otype.html#VALvar_type">var_type</a> [<a href="Otype.html">Otype</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term_utils.html#VALvars">vars</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALvars">vars</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Term.html#VALvars_of_terms">vars_of_terms</a> [<a href="Term.html">Term</a>]</td>
+<td></td></tr>
+<tr><td><a href="Clflags.html#VALverbose">verbose</a> [<a href="Clflags.html">Clflags</a>]</td>
+<td></td></tr>
+<tr><td><a href="Configuration.html#VALverbose_print">verbose_print</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Configuration.html#VALverbose_printf">verbose_printf</a> [<a href="Configuration.html">Configuration</a>]</td>
+<td></td></tr>
+<tr><td><a href="Config.html#VALversion">version</a> [<a href="Config.html">Config</a>]</td>
+<td><div class="info">
+The current version number of the system
+</div>
+</td></tr>
+<tr><td align="left"><br>W</td></tr>
+<tr><td><a href="Term_utils.html#VALw">w</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>X</td></tr>
+<tr><td><a href="Term_utils.html#VALx">x</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALx">x</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALxs">xs</a> [<a href="Code.html">Code</a>]</td>
+<td><div class="info">
+When binding a list of arguments.
+</div>
+</td></tr>
+<tr><td align="left"><br>Y</td></tr>
+<tr><td><a href="Term_utils.html#VALy">y</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALy">y</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+<tr><td align="left"><br>Z</td></tr>
+<tr><td><a href="Term_utils.html#VALz">z</a> [<a href="Term_utils.html">Term_utils</a>]</td>
+<td></td></tr>
+<tr><td><a href="Code.html#VALz">z</a> [<a href="Code.html">Code</a>]</td>
+<td></td></tr>
+</table><br>
+</body>
+</html>

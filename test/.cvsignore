@@ -1,0 +1,40 @@
+*.bin
+*.byt
+*.cm*
+*_sharing.*
+.depend*
+a.out
+additive_monoid*.mli additive_monoid*.ml
+arith*.mli arith*.ml
+biocham*.mli biocham*.ml
+bool*.mli bool*.ml
+commutative_ring*.mli commutative_ring*.ml
+field*.mli field*.ml
+formal_sum*.mli formal_sum*.ml
+group*.mli group*.ml
+lam*.mli lam*.ml
+length*.mli length*.ml
+monoid*.mli *monoid*.ml
+morebool*.mli morebool*.ml
+mset*.mli mset*.ml
+multiset*.mli multiset*.ml
+nilpotence*.mli nilpotence*.ml
+non_commutative_list*.ml non_commutative_list*.mli
+non_empty_oset*.mli non_empty_oset*.ml
+oset*.mli oset*.ml
+peano*.mli peano*.ml
+ring*.mli ring*.ml
+rset*.mli rset*.ml
+semi-group*.mli semi-group*.ml
+semi-group-right*.mli semi-group-right*.ml
+semi_group*.mli semi_group*.ml
+sequence*.mli sequence*.ml
+set*.mli set*.ml
+ski*.mli ski*.ml
+structure*.mli structure*.ml
+term*.mli term*.ml
+variable*.mli variable*.ml
+vector*.mli vector*.ml
+xor*.mli xor*.ml
+non_linear.mli non_linear.ml
+group_bad_prec.mli group_bad_prec.ml

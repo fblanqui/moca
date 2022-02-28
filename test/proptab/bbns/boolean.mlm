@@ -1,0 +1,36 @@
+type boolean = private
+  | Btrue | Bfalse
+   
+  | Batom of string
+ 
+  | Bnot of boolean
+     begin 
+         involutive 
+         distributive (Band, Bor) 
+         distributive (Bor, Band)
+         (* must be added ! *)
+         rule Bnot Btrue -> Bfalse
+     end 
+
+  | Band of boolean * boolean
+        begin
+           associative 
+           idempotent 
+           commutative 
+           distributive (Bor) 
+        end
+
+
+  | Bor of boolean * boolean
+        begin
+          associative  
+           commutative 
+          idempotent
+               end
+
+   | Bimplies of boolean * boolean 
+         begin 
+           
+           rule Bimplies (x, y) -> Bor (Bnot x, y) 
+         end
+;;

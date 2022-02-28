@@ -1,0 +1,68 @@
+\begin{frame}
+\frametitle{Le but}
+\framesubtitle{Mais qu'est-ce que tu entends par génération automatique?}
+
+\begin{block}{Nouvelle option pour mocac}
+\begin{tabular}{l c l}
+\texttt{mocac -test exemple.mlm} & $\rightarrow$ &
+     \texttt{exemple.mli}\\
+  && \texttt{exemple.ml}\\
+  && \alert{\texttt{exemple\_test.ml}}
+\end{tabular}
+\end{block}
+
+\begin{block}{Entrée}
+\begin{itemize}
+  \item Ensemble de déclarations de types
+    \begin{itemize}
+    \item Juste les types \emph{variants} privés
+    \item Définitions des constructeurs, leur type, leurs relations
+    \end{itemize}
+  \item Nom du module, options, etc.
+\end{itemize}
+\end{block}
+
+\begin{block}{Sortie}
+Code de test, à exécuter avec le module \texttt{Gentest} de Moca
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exemple}
+\framesubtitle{sequence.mlm}
+\begin{verbatim}
+(* The type of polymorphic sequences of elements.
+   Repetition is allowed. Order is relevant. *)
+
+type 'a t = private
+   | Empty
+   | Element of 'a
+   | Concat of 'a t * 'a t
+   begin
+    associative
+    neutral (Empty)
+   end
+;;
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Exemple}
+\framesubtitle{sequence\_test.ml}
+\begin{verbatim}
+open Sequence;;
+open Gentest;;
+
+testing "Sequence (automatic)";;
+
+testi 0 (let x = element 21 in
+         concat (x, empty) = x)
+...
+testi 5
+(let x = element 5 in
+ let y = concat (element 60, element 47) in
+ let z = empty in
+ concat (concat (x, y), z) =
+                  concat (x, concat (y, z)))
+\end{verbatim}
+\end{frame}

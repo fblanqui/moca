@@ -1,0 +1,170 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Parsetree" rel="Chapter" href="Parsetree.html">
+<link title="Asttypes" rel="Chapter" href="Asttypes.html">
+<link title="Misc" rel="Chapter" href="Misc.html">
+<link title="Tbl" rel="Chapter" href="Tbl.html">
+<link title="Config" rel="Chapter" href="Config.html">
+<link title="Clflags" rel="Chapter" href="Clflags.html">
+<link title="Terminfo" rel="Chapter" href="Terminfo.html">
+<link title="Ccomp" rel="Chapter" href="Ccomp.html">
+<link title="Warnings" rel="Chapter" href="Warnings.html">
+<link title="Consistbl" rel="Chapter" href="Consistbl.html">
+<link title="Linenum" rel="Chapter" href="Linenum.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Longident" rel="Chapter" href="Longident.html">
+<link title="Syntaxerr" rel="Chapter" href="Syntaxerr.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Lexer" rel="Chapter" href="Lexer.html">
+<link title="Parse" rel="Chapter" href="Parse.html">
+<link title="Printast" rel="Chapter" href="Printast.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="File" rel="Chapter" href="File.html">
+<link title="Useful" rel="Chapter" href="Useful.html">
+<link title="Debug" rel="Chapter" href="Debug.html">
+<link title="Mylist" rel="Chapter" href="Mylist.html">
+<link title="Myset" rel="Chapter" href="Myset.html">
+<link title="Relation" rel="Chapter" href="Relation.html">
+<link title="Otype" rel="Chapter" href="Otype.html">
+<link title="Pr_ocaml" rel="Chapter" href="Pr_ocaml.html">
+<link title="Code" rel="Chapter" href="Code.html">
+<link title="Pr_code" rel="Chapter" href="Pr_code.html">
+<link title="Check" rel="Chapter" href="Check.html">
+<link title="Var" rel="Chapter" href="Var.html">
+<link title="Symb" rel="Chapter" href="Symb.html">
+<link title="Term" rel="Chapter" href="Term.html">
+<link title="Term_utils" rel="Chapter" href="Term_utils.html">
+<link title="Subterm" rel="Chapter" href="Subterm.html">
+<link title="Order" rel="Chapter" href="Order.html">
+<link title="Prec" rel="Chapter" href="Prec.html">
+<link title="Subs" rel="Chapter" href="Subs.html">
+<link title="Match" rel="Chapter" href="Match.html">
+<link title="Rename" rel="Chapter" href="Rename.html">
+<link title="Unif" rel="Chapter" href="Unif.html">
+<link title="Rule" rel="Chapter" href="Rule.html">
+<link title="Equation" rel="Chapter" href="Equation.html">
+<link title="Cparser" rel="Chapter" href="Cparser.html">
+<link title="Clexer" rel="Chapter" href="Clexer.html">
+<link title="Cp" rel="Chapter" href="Cp.html">
+<link title="Norm" rel="Chapter" href="Norm.html">
+<link title="Norm_ml" rel="Chapter" href="Norm_ml.html">
+<link title="Comp" rel="Chapter" href="Comp.html">
+<link title="Axiom" rel="Chapter" href="Axiom.html">
+<link title="Genr_pattern" rel="Chapter" href="Genr_pattern.html">
+<link title="Genr_base" rel="Chapter" href="Genr_base.html">
+<link title="Genr_memo" rel="Chapter" href="Genr_memo.html">
+<link title="Genr_sharing" rel="Chapter" href="Genr_sharing.html">
+<link title="Genr_expression" rel="Chapter" href="Genr_expression.html">
+<link title="Eqnrel" rel="Chapter" href="Eqnrel.html">
+<link title="Complete" rel="Chapter" href="Complete.html">
+<link title="Genr_nary" rel="Chapter" href="Genr_nary.html">
+<link title="Genr_listary" rel="Chapter" href="Genr_listary.html">
+<link title="Genr_binary" rel="Chapter" href="Genr_binary.html">
+<link title="Genr_unary" rel="Chapter" href="Genr_unary.html">
+<link title="Genr_nullary" rel="Chapter" href="Genr_nullary.html">
+<link title="Genr" rel="Chapter" href="Genr.html">
+<link title="Genr_mli" rel="Chapter" href="Genr_mli.html">
+<link title="Listutils" rel="Chapter" href="Listutils.html">
+<link title="Randomutils" rel="Chapter" href="Randomutils.html">
+<link title="Tgenr_base" rel="Chapter" href="Tgenr_base.html">
+<link title="Genr_values" rel="Chapter" href="Genr_values.html">
+<link title="Typed_vars" rel="Chapter" href="Typed_vars.html">
+<link title="Genr_listary_equations" rel="Chapter" href="Genr_listary_equations.html">
+<link title="Genr_substitutions" rel="Chapter" href="Genr_substitutions.html">
+<link title="Genr_equalities" rel="Chapter" href="Genr_equalities.html">
+<link title="Genr_testing" rel="Chapter" href="Genr_testing.html">
+<link title="Main" rel="Chapter" href="Main.html"><title>Genr_base</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;generated_function&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Construction</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;*&nbsp;<span class="constructor">Code</span>.pattern&nbsp;list&nbsp;*&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Comparison</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Code</span>.lident&nbsp;*&nbsp;<span class="constructor">Code</span>.pattern&nbsp;list&nbsp;*&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Construction_helper</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Code</span>.lident&nbsp;*&nbsp;<span class="constructor">Code</span>.pattern&nbsp;list&nbsp;*&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">|</span>&nbsp;<span class="constructor">Construction_record</span>&nbsp;<span class="keyword">of</span>&nbsp;<span class="constructor">Code</span>.lident&nbsp;*&nbsp;<span class="constructor">Code</span>.pattern&nbsp;list&nbsp;*&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;generated_functions&nbsp;=&nbsp;<span class="constructor">Genr_base</span>.generated_function&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;is_construction_function&nbsp;:&nbsp;<span class="constructor">Genr_base</span>.generated_function&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;binary_fun_exp&nbsp;=&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">type</span>&nbsp;comparisons&nbsp;=<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Genr_base</span>.binary_fun_exp&nbsp;*&nbsp;<span class="constructor">Genr_base</span>.binary_fun_exp&nbsp;*<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Genr_base</span>.binary_fun_exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;comparison_function&nbsp;:&nbsp;<span class="constructor">Longident</span>.t&nbsp;option&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;genr_comparisons&nbsp;:&nbsp;<span class="constructor">Code</span>.lident&nbsp;option&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Genr_base</span>.comparisons<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pervasives_comparisons&nbsp;:&nbsp;<span class="constructor">Genr_base</span>.comparisons<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;eq_function&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Genr_base</span>.binary_fun_exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_user_rel_order&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_user_rel_order&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;order_rels&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Parsetree</span>.relation&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.relation&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.relation&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;order_relations&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(<span class="constructor">Parsetree</span>.relation&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.relations&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.relations<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_sharable_target&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_sharable_target&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare_function&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction_function_name&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction_function_ident&nbsp;:&nbsp;<span class="constructor">Code</span>.uident&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction_function&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction_function_memo_table_ident&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;prefix_ident&nbsp;:&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;prefix_construction_function&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;prefix_construction_function2&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mk_sharing_function_ident&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.lident<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction0&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction1&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;construction2&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;generator&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;generator0&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;generator1&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;generator2&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;nil&nbsp;:&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;singleton&nbsp;:&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;cons&nbsp;:&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;append&nbsp;:&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.exp<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;genr_rule_pattern&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.pattern&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Parsetree</span>.pattern<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pattern_info&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pattern&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pattern0&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pattern1&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;pattern2&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.generator&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.pattern<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;genr_eq&nbsp;:&nbsp;string&nbsp;*&nbsp;<span class="constructor">Parsetree</span>.type_declaration&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.structure_item<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;genr_projection&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;*&nbsp;<span class="constructor">Parsetree</span>.type_declaration&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.core_type&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.structure_item<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;clauses_of_side&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.relation_side&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;clauses_left_or_right&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.relation_side&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;clauses_both_as_left&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.relation_side&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;opt&nbsp;:&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;lazy_opt&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;opts&nbsp;:&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clauses<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;map_of_direction&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Parsetree</span>.distributivity_direction&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;(<span class="keywordsign">'</span>a&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>b)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>a&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="keywordsign">'</span>b&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;imap_of_direction&nbsp;:&nbsp;<span class="constructor">Parsetree</span>.distributivity_direction&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Longident</span>.t<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;diese_line&nbsp;:&nbsp;<span class="constructor">Location</span>.t&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;*&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_dline_trace&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_dline_trace&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;set_comments&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_comments&nbsp;:&nbsp;unit&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;trace_clause&nbsp;:&nbsp;int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Code</span>.clause<br>
+<span class="keyword">end</span></code></body></html>

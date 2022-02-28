@@ -1,0 +1,102 @@
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2012,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+# $Id: Config.mk.in,v 1.27 2012-06-04 13:01:21 weis Exp $
+
+# This Makefile is a generic configuration Makefile for Caml applications.
+# This Makefile is independent of the software to be built and
+# defines basic Unix commands and tools for Caml compilation.
+
+# This Makefile should be included at the beginning of the Makefile that handles
+# a set of Caml files (to build a library or an application).
+# Simply write at the beginning of your Makefile:
+# include path_to_Config.mk/Config.mk
+
+# Where are the source files of the project on the development machine ?
+# This directory is set up using the configure script.
+SRCROOTDIR=$
+
+# Basic auxiliary commands
+CPCONFIG=-pRf
+CP=cp $(CPCONFIG)
+CVS=cvs
+RM=rm -rf
+MV=mv -f
+TOUCH=touch
+CHMOD=chmod -R ug+w
+SHELL=/bin/sh
+MKDIR=mkdir -p
+RMDIR=rm -rf
+LN=ln -sf
+CHGRP=chgrp -fR
+TARC=tar -cvzf
+
+# The Caml compilers default configurations.
+CAMLINCLUDES=
+CAMLBYTINCLUDES=$(CAMLINCLUDES)
+CAMLBININCLUDES=$(CAMLINCLUDES)
+CAMLBYTCONFIG=-w A -warn-error A-6 -g -annot $(CAMLBYTINCLUDES)
+CAMLBINCONFIG=-w A -warn-error A-6 $(CAMLBININCLUDES)\
+ -unsafe -noassert -inline 10000 -annot
+CAMLBYTLIBRCONFIG=$(CAMLBYTINCLUDES) -a
+CAMLBINLIBRCONFIG=$(CAMLBININCLUDES) -a
+CAMLYACCONFIG=-v
+CAMLLEXCONFIG=
+
+# The Caml compilers and auxilliaries commands.
+CAMLBYT=ocamlc $(CAMLBYTCONFIG)
+CAMLBIN=ocamlopt $(CAMLBINCONFIG)
+CAMLYAC=ocamlyacc $(CAMLYACCONFIG)
+CAMLLEX=ocamllex $(CAMLLEXCONFIG)
+CAMLBYTLIBR=ocamlc $(CAMLBYTLIBRCONFIG)
+CAMLBINLIBR=ocamlopt $(CAMLBINLIBRCONFIG)
+
+# Tools: dependancies generation.
+CAMLDEP=ocamldep -slash $(CAMLCINCLUDES)
+
+# Tools: the moca program generator
+MOCACCONFIG=
+MOCAC=mocac $(MOCACCONFIG)
+
+# Tools: defining some macros for linking.
+WITHBYTUNIX=unix.cma -cclib -lunix
+WITHBYTSTR=str.cma -cclib -lstr
+
+WITHBINUNIX=$(WITHBYTUNIX:.cma=.cmxa)
+WITHBINSTR=$(WITHBYTSTR:.cma=.cmxa)
+
+# Tools: documentation generation.
+CAMLDOC=ocamldoc
+CAMLDOCDIR=$(SRCROOTDIR)/doc_src/ocamldoc
+CAMLDOCHTMLFLAGS=-html -d $(CAMLDOCDIR) -v -colorize-code
+CAMLDOCLATEXFLAGS=-latex -d doc -v
+
+# Tools: Htmlc file generator.
+# Configuration of Htmlc to generate Web pages:
+# where are include files
+HTMLCCONFINCLUDES=-I $(SRCROOTDIR)/doc_src/Includes
+# where is the configuration file for Htmlc.
+HTMLCCONFENV=-env $(SRCROOTDIR)/doc_src/config.ml
+
+HTMLCCONFCONFIG=-lang en $(HTMLCCONFENV)
+
+# Additional flags to set in Makefiles
+HTMLCFLAGS=
+HTMLCCONFFLAGS=
+
+# Basic compilation tools
+HTMLCCONF=$(HTMLCCONFCONFIG) $(HTMLCCONFINCLUDES) $(HTMLCCONFFLAGS)
+
+HTMLC=htmlc $(HTMLCCONF) $(HTMLCFLAGS)

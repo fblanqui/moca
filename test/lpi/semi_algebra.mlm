@@ -1,0 +1,93 @@
+type 'a sequent_set = private
+   | Trivial
+   | Closed
+
+     begin
+
+       let equal = 0;;
+       let smaller = -1;;
+       let greater = 1;;
+
+       let rec compare_sequent_set s1 s2 =
+         match s1, s2 with
+
+         | Closed, Closed -> equal
+         | Closed, _ -> smaller
+         | _, Closed -> greater
+
+         | Trivial, Trivial -> equal
+         | Trivial, _ -> greater
+         | _, Trivial -> smaller
+
+         | Positive a, Positive b -> Pervasives.compare a b
+         | Positive a, Negative b ->
+           (* Positive x < Negative x *)
+           let c = Pervasives.compare a b in
+           if c = equal then smaller else c
+         (* (1) *)
+         | Positive _, _ -> smaller
+
+         | Negative a, Negative b -> Pervasives.compare a b
+         | Negative a, Positive b ->
+           let c = Pervasives.compare a b in
+           (* Negative x > Positive x *)
+           if c = equal then greater else c
+         (* (2) *)
+         | Negative _, _ -> smaller
+
+         | Graft (s3, s4), Graft (s5, s6) ->
+           let c = compare_sequent_set s3 s5 in
+           if c = equal then compare_sequent_set s4 s6 else c
+         | Graft (_, _), Union (_, _) -> smaller
+         (* (3) *)
+         | Graft (_, _), _ -> greater
+
+         | Union (s3, s4), Union (s5, s6) ->
+           let c = compare_sequent_set s3 s5 in
+           if c = equal then compare_sequent_set s4 s6 else c
+         | Union (_, _), Graft (_, _) -> greater
+         (* Alternative / less wrong (?) ie. unclashing with (1) and (2)
+            Why would one want pos x < union(x, y) AND union (x, y) < pos x ?
+            
+            Also it seems very different from (3) for no reason (there might be
+            one, though ...
+
+            The incriminated line was:
+            | Union (_, _), _ -> smaller
+         *)
+         | Union _, Positive _ -> greater
+         | Union _, Negative _ -> greater;;
+
+
+     end
+
+   | Positive of 'a
+   | Negative of 'a
+   | Graft of 'a sequent_set * 'a sequent_set
+
+     begin
+
+         associative
+         commutative (compare_sequent_set) 
+         neutral (Trivial)
+         absorbent (Closed)
+         distributive (Union)
+
+         rule Graft (Positive p, Negative q) when p = q -> Closed
+         rule Graft (Negative p, Positive q) when p = q -> Closed
+         rule Graft (Positive p, Graft (Negative q, _)) when p = q -> Closed
+         rule Graft (Negative p, Graft (Positive q, _)) when p = q -> Closed
+
+     end
+
+   | Union of 'a sequent_set * 'a sequent_set
+
+     begin
+
+       associative
+       commutative (compare_sequent_set)
+       neutral (Closed)
+       absorbent (Trivial)
+
+     end
+;;

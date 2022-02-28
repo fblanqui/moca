@@ -1,0 +1,236 @@
+\newslide{The new Moca release}
+
+\advitransition{slide}
+
+The {\em 0.6} release of the Moca compiler was delivered on February the
+$13^{th}$ of 2008.
+
+The main new feature is the {\em automatic test generation} for mocac
+generated files. This has been done by Laura Lowenthal during her internship
+at Loria (extremely successful internship achievement).
+
+\newslide{The new Moca release}
+
+\advitransition{slide}
+
+In addition, we did:
+
+\begin{citemize}
+  \item Numerous bug fixes (in particular thanks to Laura' automatic tests).
+  \item Completion has been enhanced.
+  \item Distributivity has been widely generalized.
+  \item Vary-ary generation completely revisited.
+  \item Some bug additions (for instance {\tt Division\_by\_absorbent} removal).
+\end{citemize}
+
+\newslide{Embedded user's Caml code}
+
+\advitransition{slide}
+
+An important new feature is the possibility for the user to define
+arbitrary Caml code within the definition of the relational type. This was
+mandatory to define a specific comparison function when the regular Caml
+polymorphic {\tt Pervasives.compare} is not semantically sound for the
+relation type. The user's code is output as is, {\em after} the definition of the
+relational type, but {\em before} the beginning of the definition of the
+construction functions.
+
+As usual, the documentation has been improved, in particular by the addition
+of the ESOP article, the JFLA talk, and various other talks given about moca.
+
+\newslide{The next Moca release(s)}
+
+\advitransition{slide}
+
+We will split the future development of {\em Moca} into two parts:
+
+\begin{citemize}
+  \item the implementation part,
+  \item the research part.
+\end{citemize}
+
+The implementation part is shorter term and more practical. It is also well understood.
+
+The research part is long term and may be impractical and/or unclear, half
+backed, or not understood at all.
+
+\newslide{The implementation part plan}
+
+\advitransition{slide}
+
+We split the implementation plan into:
+
+\begin{citemize}
+  \item revisit the algebraic keywords specification,
+  \item enhance the internal test bed,
+  \item enhance the automatic test generation procedure,
+  \item write the manual for Moca.
+\end{citemize}
+
+\newslide{Implementation: specification}
+
+\advitransition{slide}
+
+For each algebraic keyword, we must precisely define its behaviors for each
+of its variations. In particular, concerning arity of generators, we must fix
+the vocabulary:
+
+\begin{citemize}
+  \item constant generator (or constary ?),
+  \item unary generator,
+  \item binary generator (two arguments),
+  \item listary generator (a.k.a. vary-ary or vary-adic),
+  \item multary generator (a.k.s. multi-ary i.e. any arity).
+\end{citemize}
+
+\newslide{Implementation: vocabulary}
+
+\advitransition{slide}
+
+By definition:
+\begin{citemize}
+  \item a {\em constary} generator has {\em no argument},
+  \item a {\em unary} generator (has {\em one} argument which is {\em not a list}),
+  \item a {\em binary} generator (has {\em two} arguments),
+  \item a {\em listary} generator (has {\em one} argument which is {\em a list}),
+  \item a {\em multary} generator (has any number of arguments).
+\end{citemize}
+
+\newslide{Implementation: specification}
+
+\advitransition{slide}
+
+For each keyword and each arity, give:
+
+\begin{citemize}
+  \item applicability to each arity, applicability w.r.t implied or required property,
+  \item the rule(s) generated (match clause),
+  \item the priority w.r.t. other rules (?),
+  \item the ``no values of the relational type matches'' statement,
+  \item specify the {\tt Left}, {\tt Right}, and {\tt Both} behavior.
+\end{citemize}
+
+No macro expansion in the parser.mly syntax !
+
+\newslide{Implementation: the test directory}
+
+\advitransition{slide}
+
+\begin{citemize}
+  \item in each case of the keyword specifications, add a test bed to check
+  the behavior of the compiler w.r.t. the specification,
+  \item enhance the internal test bed to check as much as possible
+  the combination of algebraic rules,
+  \item complete the set of test files to handle the usual mathematical
+  structures (fields, vectorial spaces, etc.) and in particular usual
+  generators/relations presentations of groups (as found in Coxeter and alii),
+  \item enhance the automatic test generation procedure to handle polymorphic
+  relational type and all the examples given in the test directory,
+  \item move some test files to the examples for the moca's users.
+\end{citemize}
+
+\newslide{The research part}
+
+\advitransition{slide}
+
+We will split the future research development of {\em Moca} into:
+
+\begin{citemize}
+  \item the Test,
+  \item the Completion,
+  \item the Focalize Library,
+  \item the Proofs,
+  \item Moca for Focalize,
+  \item Moca for the Caml programmer,
+\end{citemize}
+
+\newslide{Research: the Test generation}
+\advitransition{wipe}
+
+Try to understand the generality of the test generation procedure:
+\begin{citemize}
+\item how to generalize the procedure to user's defined equations (relations) ?
+\item how to generalize the procedure to the full Caml language ?
+\end{citemize}
+
+
+\newslide{Research: Completion algorithm}
+\advitransition{wipe}
+
+\begin{citemize}
+\item Generalize usage of automatic completion,
+\item AC completion ?
+\item How to generate complex rules via completion ?
+      e.g. {\tt Absorbent} + {\tt Inverse} induce {\tt
+      Division\_by\_absorbent};
+      the generation function for {\tt Inverse} needs rule
+      {\tt A -> failwith "Division by absorbent"},
+      {\em UNLESS} $ A = E $ holds.
+\end{citemize}
+
+\newslide{Research: the Focalize library}
+\advitransition{wipe}
+
+\begin{citemize}
+ \item Take the Focalize library and ``implement'' it using Moca's algebraic
+    rules.
+ \item Implement the associated algorithm of the Focalize library ?
+\end{citemize}
+
+\newslide{Research: Proofs}
+\advitransition{wipe}
+
+Write proofs, proofs, and proofs!!!
+
+\begin{citemize}
+ \item write by hand a proof of a simple example of moca generated code,
+ \item understand how to generalize the preceding proof to generate a proof
+ with the generated code (file {\tt file\_coq.v} ?)
+\end{citemize}
+
+Gather and carefully state the generic properties and proofs of the Moca
+generated code, to be able to go on next point.
+
+\newslide{Research: Moca for Focalize}
+\advitransition{wipe}
+
+Interface Moca to Focalize:
+
+\begin{citemize}
+ \item add a {\tt private} type facility to Focalize data type definitions,
+ \item interface Moca to Focalize to allow relational data type definitions
+ in Focalize,
+ \item add the relevant lemmas and properties for the construction functions
+ to the Focalize code (free proofs to generate for Zenon and Coq).
+\end{citemize}
+
+\newslide{Research: Moca for Caml}
+\advitransition{wipe}
+
+Use Moca to generate {\tt .mli} files that we do not want to write.
+
+\begin{citemize}
+  \item from a {\tt .mlm} file with additional annotations:
+     \begin{citemize}
+        \item {\tt export} clauses to export relevant identifiers,
+        \item {\tt abstract} annotations for abstract data types,
+        \item {\tt test} annotations to specify test equations or
+        dis-equations ,
+     \end{citemize}
+  \item Other generations (similar to {\tt -test}) ?
+     \begin{citemize}
+        \item {\tt set} clause to generate set universes,
+        \item {\tt data base} annotation to generate data bases,
+        \item {\tt make\_string} annotation to generate a {\tt make\_string} (or
+     printing function),
+     \end{citemize}
+\end{citemize}
+
+\newslide{Development guidelines}
+
+Program with in mind ``No confusion can ever arise'':
+
+\begin{citemize}
+ \item except for the value of some quantities, unknown at compile time,
+ \item since it would be caught by the Caml compiler (exhaustive and fragile matches).
+\end{citemize}

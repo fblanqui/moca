@@ -1,0 +1,6 @@
+Type:
+        ./configure
+        make
+
+Then run:
+     ./ski2lam (or ski2lam.byt)

@@ -1,0 +1,6 @@
+.depend
+bdd.ml
+bdd.mli
+*.byt
+*.bin
+queens

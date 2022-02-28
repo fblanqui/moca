@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "MLIFILES=" *.mli > Makefile.config
+
+ocamldep *.mli > .depend

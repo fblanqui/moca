@@ -1,0 +1,112 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: monoid_modules_functors.mlm,v 1.1 2007-04-27 09:40:55 guiraudy Exp $ *)
+
+(* CamlModule types for monoids, left, right and bimodules over monoids.
+ * Corresponding free CamlFunctors.
+ * Moca does not work (yet!) with CamlModules and CamlFunctors
+ *)
+
+(* Monoid *)
+module type Monoid : sig
+    type t 
+    val unit : t
+    val mult : t -> t -> t
+end
+
+(* Free monoid *)
+module FreeMonoid (Base: sig type t end) = struct
+    type t = 
+       private
+        | Gen of Base.t
+        | Unit
+        | Mult of t * t
+            begin 
+              associative 
+                neutral left (Unit)
+                neutral right (Unit)
+            end
+end
+
+(* Left module *)
+module type LeftModule : sig
+   module Mon : Monoid
+    type t
+    val lact : Mon.t -> t -> t
+end
+
+(* Free left module *)
+module FreeLeftModule (Mon : Monoid) (Base: sig type t end) = struct
+    module Mon = Mon
+    type t =
+       private
+         | Gen of Base.t
+         | LAct of Mon.t * t
+             begin
+               neutral left (Mon.Unit)
+                 rule LAct ( m, LAct (n, x) ) -> LAct ( Mon.mult (m, n), x )
+             end
+end 
+
+(* Right module *)
+module type RightModule : sig
+   module Mon : Monoid
+    type t
+    val ract : t -> Mon.t -> t
+end
+
+(* Free right module *)
+module FreeRightModule (Mon : Monoid) (Base: sig type t end) = struct
+    module Mon = Mon
+    type t =
+       private
+         | Gen of Base.t
+         | RAct of t * Mon.t
+             begin
+               neutral right (Mon.Unit)
+                 rule RAct ( RAct (x, m), n ) -> RAct ( x, Mon.mult (m, n) )
+             end
+end 
+
+(* Bimodule *)
+module type Bimodule : sig
+   module LMon : Monoid
+   module RMon : Monoid
+    type t
+    val lact : LMon.t -> t -> t
+    val ract : t -> RMon.t -> t
+end
+
+(* Free bimodule *)
+module FreeLeftModule (LMon : Monoid) (RMon : Monoid) (Base: sig type t end) = struct
+    module LMon = LMon
+    module RMon = RMon
+    type t =
+       private
+         | Gen of Base.t
+         | LAct of LMon.t * t
+             begin
+               neutral left (LMon.Unit)
+                 rule LAct ( m, LAct (n, x) ) -> LAct ( LMon.mult (m, n), x )
+             end
+         | RAct of t * RMon.t
+             begin
+               neutral right (RMon.Unit)
+                 rule RAct ( RAct (x, m), n ) -> RAct ( x, RMon.mult (m, n) )
+                   rule RAct ( LAct (m, x), n ) -> LAct ( m, RAct (x, n) )
+             end
+end 
+

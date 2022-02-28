@@ -1,0 +1,8 @@
+.depend
+.depend-rebuild
+runtest.byt
+intdigit.ml intdigit.mli
+natdigit.ml natdigit.mli
+diadic.ml diadic.mli
+cantor.ml cantor.mli
+tcantor tnatdigit

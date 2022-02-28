@@ -1,0 +1,449 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH MOCAC 1 "$the_short_local_date"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+.B mocac
+\-\- a generator of construction functions for Caml relational types
+.UR http://moca.inria.fr/
+(http://moca.inria.fr/).
+
+.SH VERSION
+Mocac version $mocac_version
+.SH SYNOPSIS
+.B mocac
+.RI [ options ]\ [ source\ file ]
+.SH DESCRIPTION
+The
+.B mocac
+compiler is a Caml source file generator. It parses a special ".mlm"
+or ".mlms" file and produces a regular Caml module (interface + implementation).
+The ".mlm(s)" file is similar to a Caml ".mli" file: it must define a
+(private) type with possibly the addition of special annotations to
+specify the relations that the constructors must verify.
+.B mocac
+then generates construction functions for the constructors, such that
+all the specified relations hold for the values of the type defined.
+.P
+In addition to declarative algebraic properties specification,
+.B mocac
+offers the generation of construction functions that ensure maximal
+sharing of values, by giving a ".mlms" input file or by using the
+.I \-\-sharing
+switch.
+.P
+Last but not least, the construction functions may be made memo, if option
+.I \-\-memo
+is set  (see
+.B OPTIONS
+below).
+
+.SH CURRENTLY SUPPORTED FEATURES:
+\- Associative, commutative binary relations.
+
+\- Inverse relations.
+
+\- Absorbent, absorbing, or neutral elements.
+
+\- Idempotent, nilpotent, distributive, involutive unary and binary
+relations.
+
+\- General rewrite rules.
+
+\- Maximal sharing of values built.
+
+\- Memoization of construction functions.
+
+\- Listary relations (variable arity).
+
+\- User-defined comparison function for commutative relations.
+
+.SH EXPERIMENTAL FEATURES:
+
+\- Completion of theories
+
+\- Automatic term generation for testing purposes
+
+.SH SYNTAX ADDITIONS TO TYPE DEFINITIONS
+
+To specify  relations on constructors,
+.B mocac
+adds some extra syntax rules to the  grammar of type definitions.
+
+
+.TS
+tab(@);
+l c l.
+constr-decl @::=@ constr-name [ annotation ]
+@|@ constr-name of typexpr [ annotation ]
+
+annotation @::=@ begin
+           @   @ { relation | completion_hint }+
+           @   @ end
+
+relation @::=@
+@|@ commutative [(compare)]
+@|@ associative
+@|@ involutive
+@|@ idempotent [side]
+@|@ neutral [side] (constr-name)
+@|@ nilpotent (constr-name)
+@|@ invopp [side] (constr-name [, constr-name])
+@|@ distributive [invopp] [side]
+@ @ (constr-name [, constr_name])
+@|@ absorbent [side] (constr-name)
+@|@ absorbing [side] (constr-name)
+@|@ rule pattern\ ->\ expression
+
+side @::=@\ left\ |\ right
+
+invopp @::=@\ inverse\ |\ opposite
+
+rpo_status @::=@\ lexicographic\ |\ multiset
+
+completion_hint @::=@
+@|@ completion precedence int
+@|@ completion status rpo_status
+
+.TE
+
+.P
+The
+.I compare
+construction refers to the name of a user-defined comparison function.
+This comparison function can be defined in any of the constructors of the
+variant type (but must be defined in one).
+
+.P
+Additional completion hints can be given to define a precedence over the
+generators when using lpo, mpo or rpo. A status -- lexicographic or multiset --
+can also be given when using rpo.
+
+.SH MEANING OF ALGEBRAIC PROPERTIES OF CONSTRUCTORS
+
+The declaration of a constructor
+.B C
+may be annotated by one or more algebraic properties among the one below.
+
+.P
+The basic properties are as follows:
+.TS
+tab (@);
+l l.
+.IR commutative\ [(compare)]
+@ C (x, y) = C (y, x)
+@ If a value matches C (x, y), we have compare x y < 0,
+@ where compare is Pervasives.compare
+@ or the comparison function specified.
+.IR associative
+@ C (C (x, y), z) = C (x, C (y, z))
+@ No value matches C (C (x, y), z).
+.IR involutive
+@ C (C (x)) = x
+@ No value matches C (C (x)).
+.TE
+
+.P
+The neutral, nilpotent and idempotent properties are as follows:
+.TS
+tab (@);
+l l.
+.IR neutral\ (D)
+@ neutral\ left\ (D) and neutral\ right\ (D).
+.IR neutral\ left\ (D)
+@ C (D, x) = x
+@ No value matches C (D, x).
+.IR neutral\ right\ (D)
+@ C (x, D) = x
+@ No value matches C (x, D).
+.IR nilpotent\ (A)
+@ nilpotent\ left\ (A) and nilpotent\ right\ (A).
+.IR nilpotent\ left\ (A)
+@ C (x, C (x, y)) = A
+@ No value matches C (x, C (x, y)).
+.IR nilpotent\ right\ (A)
+@ C (C (x, y), y) = A
+@ No value matches C (C (x, y), y).
+.IR idempotent
+@ idempotent\ left and idempotent\ right.
+.IR idempotent\ left
+@ C (x, C (x, y)) = C (x, y)
+@ No value matches C (x, C (x, y)).
+.IR idempotent\ right
+@ C (C (x, y), y) = C (x, y)
+@ No value matches C (C (x, y), y).
+.TE
+
+.P
+The inverse and opposite properties are as follows:
+.TS
+tab (@);
+l l.
+.IR inverse\ (I,\ E)
+@ inverse\ left\ (I,\ E) and inverse\ right\ (I,\ E).
+.IR inverse\ left\ (I,\ E)
+@ C (I (x),\ x) = E
+@ No value matches C (I (x), x).
+.IR inverse\ right\ (I,\ E)
+@ C (x,\ I (x)) = E
+@ No value matches C (x, I (x)).
+.IR Note:\ If\ C\ is\ neutral\ [side]\ (E),\ then
+@ inverse [side'] (I) is equivalent to inverse [side'] (I, E).
+.TE
+
+.P
+The distributivity properties are as follows:
+.TS
+tab (@);
+l l.
+.IR distributive\ (D,\ E)
+@ distributive\ left\ (D,\ E) and distributive\ right\ (D,\ E).
+.IR distributive\ (D)
+@ distributive\ (D,\ D)
+.IR distributive\ left\ (D,\ E)
+@ C (D (x1,\ ...,\ xn),\ z) = E (C (x1,\ z),\ ...,\ C (xn,\ z))
+@ No value matches C (D (x1,\ ...,\ xn), z).
+.IR distributive\ right\ (D,\ E)
+@ C (z,\ D (x1,\ ...,\ xn)) = E (C (z,\ x1),\ ...,\ C (z,\ xn))
+@ No value matches C (z, D (x1, ..., xn)).
+.IR distributive\ inverse\ left\ (D,\ E)
+@ C (D (x1,\ ...,\ xn),\ z) = E (C (xn,\ z),\ ...,\ C (x1,\ z))
+@ No value matches C (D (x1,\ ...,\ xn), z).
+.TE
+
+.P
+The absorbing and absorbent properties are as follows:
+.TS
+tab (@);
+l l.
+.IR absorbent\ (A)
+@ absorbent left\ (A) and absorbent right (A) (A, x) = A.
+.IR absorbent\ left\ (A)
+@ C (A, x) = A
+@ No value matches C (A, x).
+.IR absorbent\ right\ (A)
+@ C (x, A) = A
+@ No value matches C (x, A).
+.IR absorbing\ (D)
+@ absorbing left (D) and absorbing right (D).
+.IR absorbing\ left\ (D)
+@ C (D (x, y), y) = y
+@ No value matches C (D (x, y), y).
+.IR absorbing\ right\ (D)
+@ C (x, D (x, y)) = x
+@ No value matches C (x, D (x, y)).
+.TE
+
+.P
+User-defined rewrite rules are as follows:
+.TS
+tab (@);
+l l.
+.IR rule\ pat\ ->\ expr
+@ C (pat) = expr
+@ No value matches C (pat).
+.TE
+
+.P
+Completion hints can be given as follows:
+.TS
+tab (@);
+l l.
+.IR completion\ status\ s
+@ s can be lexicographic or multiset.
+@ s is the RPO status of the generator.
+.IR completion\ precedence\ i
+@ i is an integer.
+@ The integers define the precedence on generator symbols.
+.TE
+
+.SH OPTIONS
+The following command-line options are recognized by
+.B mocac
+:
+.TP
+.B \-c
+Generate a module for the input file argument.
+.TP
+.B \-d
+Debugging mode: generate a trace of pattern matching clauses used in construction functions.
+.TP
+.B \-help | \-\-help
+Display the list of options.
+.TP
+.B \-i
+Generate a module interface for the input file argument
+.TP
+.B \-kb
+Set completion on (experimental).
+.TP
+.BI \-limit\ <n>
+Set an upper bound  <n> to completion steps..
+.TP
+.BI \-ntests\ <n>
+Set the number of generated tests per equation (use with the
+.B -test
+option).
+.TP
+.BI \-I\ <dir>
+Add the directory <dir> to the search path.
+.TP
+.BI \-o\ <file>
+Output the generated module with name the file name argument.
+.TP
+.BI \-oml\ <file>
+Output the generated module implementation in the file argument.
+.TP
+.BI \-omli\ <file>
+Output the generated module interface in the file argument.
+.TP
+.BI \-seed\ <n>
+Sets seed number to <n> for random test generation.
+.TP
+.B \-\-sharing
+Add maximal sharing to the values built by the construction functions.
+.br This is the same as giving a ".mlms" input file.
+.TP
+.B \-\-memo
+Equip the construction functions with a so-called memoization table,
+so that the function remembers the argument \-\> result mapping:
+the image of any argument is only computed once and for all.
+.TP
+.B \-test
+Generate a file to test the code generated by
+.B mocac
+(experimental).
+.TP
+.B \-urorder
+Relations code generation for normalization is made as given in the source file.
+.TP
+.B \-v
+Print
+.B mocac
+version string.
+.TP
+.BI \-valdepth\ <n>
+Set the maximal constructor depth of the values generated for testing (use with the
+.B -test
+option).
+.TP
+.B \-\-verbose
+Be verbose.
+.TP
+.B \-\-version
+Print
+.B mocac
+long version string.
+
+.SH EXAMPLES
+.TP
+.BI mocac\ \-\-sharing\ filename
+.B mocac
+generates a module for
+.I filename
+and the associated construction functions ensure maximal sharing between the
+values of the private type defined in
+.IR filename  .
+
+.TP
+.BI mocac\ filename
+generates a module for
+.IR filename  .
+
+.SH FULL EXAMPLE
+
+If
+.I group.mlm
+contains the following (private) type definition with
+.B mocac
+annotations:
+.P
+<!--#include virtual="Includes/group.mlm"-->
+.P
+Then the command
+.B mocac
+.I group.mlm
+generates the module interface file
+.I group.mli
+containing:
+.P
+<!--#include virtual="Includes/group.mli"-->
+.P
+.B mocac
+also generates the module implementation file
+.I group.ml
+with the proper definitions for the construction functions declared in
+.IR group.mli  :
+.P
+<!--#include virtual="Includes/group.ml"-->
+.P
+Now the values of type
+.I Group.t
+can (only) be built using the construction functions defined in
+.IR group.ml
+\.
+For instance, the value
+.P
+.I z
+= add (one, add (zero, opp one))
+.P
+is a valid value of type
+.IR t.
+.P
+Thanks to the declared properties of the constructors of type
+.IR t,
+and due to the corresponding semantics of the construction functions,
+the value
+.I z
+is indeed bound to
+.IR Zero.
+
+.SH NOTES
+.P
+It is highly recommended that source files for
+.B mocac
+only contain relational type definitions.
+Although
+.B mocac
+allows arbitrary Caml code in .mlm(s) files,
+mixing relational type definitions and ordinary Caml code is considered
+bad practice, since it is usually extremely confusing.
+
+.P
+Completion is as of now highly experimental and relatively slow. It
+is a straightforward implementation of syntactic completion. In
+particular, it does not handle completion modulo AC.
+
+.SH COPYRIGHT
+This program is distributed under the artistic license found in the
+LICENSE file in the root directory of the distribution.
+.SH SEE ALSO
+The
+.B mocac
+user's manual (http://moca.inria.fr/eng.htm)
+(French version at http://moca.inria.fr/fra.htm).
+.SH AUTHORS
+Pierre Weis <Pierre.Weis@inria.fr>,
+.br
+Frédéric Blanqui <Frederic.Blanqui@inria.fr>
+.P
+This manual page was written by Pierre Weis and revised by Richard Bonichon
+and Pierre Weis for
+.B mocac
+version $mocac_version.
+.P
+Institut National de Recherche en Informatique et en Automatique
+($(software_first_year)-$(this_year))

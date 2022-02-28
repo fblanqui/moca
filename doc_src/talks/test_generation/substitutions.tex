@@ -1,0 +1,26 @@
+\begin{frame}
+\frametitle{Générations de substitutions}
+\framesubtitle{Du général au particulier}
+
+\begin{alertblock}{Une fois qu'on a une équation}
+\begin{itemize}
+  \item La structure est très simple: variables, application
+  \item Les variables ne sont pas typées
+\end{itemize}
+\end{alertblock}
+
+\pause
+\begin{exampleblock}{Il faut}
+\begin{itemize}
+  \item Détecter les variables des équations \alert{et leurs types}
+
+    \onslide<3->{$\rightarrow$ \texttt{typed\_vars.ml}}
+  \item Générer le nombre nécessaire de valeurs de chaque type
+
+    \onslide<4->{$\rightarrow$ \texttt{genr\_values.ml}}
+  \item Construire une ou plusieurs associations entre les variables et les valeurs
+
+    \onslide<5->{$\rightarrow$ \texttt{genr\_substitutions.ml}}
+\end{itemize}
+\end{exampleblock}
+\end{frame}

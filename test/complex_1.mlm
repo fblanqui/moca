@@ -1,0 +1,129 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: complex_1.mlm,v 1.2 2012-04-02 13:40:38 weis Exp $ *)
+
+(* Complexes . *)
+
+type field_re = private
+   | RZero
+   | ROne
+   | ROpp of field_re
+   | RInv of field_re
+   | RAdd of field_re * field_re
+     begin
+       associative
+       commutative
+       neutral (RZero)
+       opposite (ROpp)
+     end
+   | RMul of field_re * field_re
+     begin
+       associative
+       commutative
+       neutral (ROne)
+       absorbent (RZero)
+       distributive (RAdd)
+       inverse (RInv)
+     end
+;;
+
+type field_im = private
+   | IZero
+   | IOne
+   | IOpp of field_im
+   | IInv of field_im
+   | IAdd of field_im * field_im
+     begin
+       associative
+       commutative
+       neutral (IZero)
+       opposite (IOpp)
+     end
+   | IMul of field_im * field_im
+     begin
+       associative
+       commutative
+       neutral (IOne)
+       absorbent (IZero)
+       distributive (IAdd)
+       inverse (IInv)
+     end
+;;
+
+type complex = private
+   | CZero
+   | CROne
+   | CIOne
+   | COpp of complex
+   | CInv of complex
+   | CElt of field_re * field_im
+     begin
+       rule CElt (RZero, IZero) -> CZero
+       rule CElt (ROpp ROne, IZero) -> COpp CROne
+       rule CElt (ROne, IZero) -> CROne
+       rule CElt (RZero, IOne) -> CIOne
+     end
+
+   | CAdd of complex * complex
+     begin
+       associative
+       commutative
+       neutral (CZero)
+       opposite (COpp)
+
+       rule CAdd (CElt (r1, c1), CElt (r2, c2)) ->
+          CElt (RAdd (r1, r2), IAdd (c1, c2))
+       rule CAdd (CROne, CElt (r, c)) ->
+          CElt (RAdd (r, ROne), c)
+       rule CAdd (CIOne, CElt (r, c)) ->
+          CElt (r, IAdd (IOne, c))
+     end
+   | CMul of complex * complex
+     begin
+       associative
+       commutative
+       neutral (CROne)
+       absorbent (CZero)
+       distributive (CAdd)
+       inverse (CInv)
+
+       let rec im2re c =
+        match c with
+        | IOne -> ROne
+        | IZero -> RZero
+        | IOpp x -> ROpp (im2re x)
+        | IInv x -> RInv (im2re x)
+        | IAdd (x, y) -> RAdd (im2re x, im2re y)
+        | IMul (x, y) -> RMul (im2re x, im2re y)
+;;
+
+        let rec re2im = function
+        | ROne -> IOne
+        | RZero -> IZero
+        | ROpp x -> IOpp (re2im x)
+        | RInv x -> IInv (re2im x)
+        | RAdd (x, y) -> IAdd (re2im x, re2im y)
+        | RMul (x, y) -> IMul (re2im x, re2im y)
+;;
+
+       rule CMul (CElt (r1, c1), CElt (r2, c2)) ->
+          CElt (RAdd (RMul (r1, r2), ROpp (im2re (IMul (c1, c2)))),
+            IAdd (IMul(re2im r1, c1), IMul (re2im r2, c2)))
+       rule CMul (CIOne, CElt (r, c)) ->
+          CElt (RAdd(r, ROpp (im2re c)), IZero)
+       rule CMul (CIOne, CIOne) -> COpp CROne
+     end
+;;

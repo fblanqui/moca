@@ -1,0 +1,67 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: complex_1.mlm,v 1.1 2011-06-26 21:15:17 weis Exp $ *)
+
+(* Complex structure according to the mathematical definition. *)
+
+type complex = private
+   | Zero
+   | One
+   | I
+   | Opp of complex
+     begin
+       rule Opp (Real f) -> Real (-. f)
+     end
+   | Inv of complex
+     begin
+       rule Inv (Real f) -> Real (1.0 /. f)
+     end
+   | Real of float
+     begin
+       rule Real 0.0 -> Zero
+       rule Real 1.0 -> One
+     end
+   | Add of complex * complex
+     begin
+       associative
+       commutative
+       neutral (Zero)
+       opposite (Opp)
+
+       rule Add (I, I) -> Mul (I, Real (2.0))
+       rule Add (c1, Mul (c2, Real f)) when c1 = c2 -> Mul (c1, Real (1.0 +. f))
+       rule Add (One, One) -> Real (2.0)
+       rule Add (One, Real f) -> Real (1.0 +. f)
+       rule Add (Real f1, Real f2) -> Real (f1 +. f2)
+       rule Add (Real f1, Add (Real f2, c)) -> Add (Real (f1 +. f2), c)
+       rule Add (Mul (c1, Real f1), Mul (c2, Real f2)) when c1 = c2 ->
+         Mul (c1, Real (f1 +. f2))
+     end
+   | Mul of complex * complex
+     begin
+       associative
+       commutative
+       neutral (One)
+       absorbent (Zero)
+       distributive (Add)
+       inverse (Inv)
+
+       rule Mul (I, I) -> Opp One
+       rule Mul (I, Mul (I, c)) -> Opp c
+       rule Mul (Real f1, Real f2) -> Real (f1 *. f2)
+       rule Mul (Real f1, Mul (Real f2, c)) -> Mul (Real (f1 *. f2), c)
+     end
+;;

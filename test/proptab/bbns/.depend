@@ -1,0 +1,7 @@
+boolean.cmo: boolean.cmi
+boolean.cmx: boolean.cmi
+tableau.cmo: boolean.cmi
+tableau.cmx: boolean.cmx
+test.cmo: tableau.cmo boolean.cmi
+test.cmx: tableau.cmx boolean.cmx
+boolean.cmi:

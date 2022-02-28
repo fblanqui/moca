@@ -1,0 +1,33 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: peano_list.mlm,v 1.2 2008-02-11 19:37:33 weis Exp $ *)
+
+(* Defining Peano's integers.
+   Constructors Zero and Succ are the regular generators.
+   We add an internal composition law Plus in the type,
+   then we define its algebraic properties using relations,
+   and set up its semantics using a rule
+   (this is an example of general rule with variables). *)
+
+type peano = private
+   | Zero
+   | Succ of peano
+   | Plus of peano list
+   begin
+     associative
+     neutral (Zero)
+     rule Plus (Succ n :: ps) -> Succ (Plus (n :: ps))
+   end;;

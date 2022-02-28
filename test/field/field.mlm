@@ -1,0 +1,41 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: field.mlm,v 1.10 2008-02-11 19:37:33 weis Exp $ *)
+
+(* Implantation of:
+P. Arrighi and G. Dowek, Linear-algebraic lambda-calculus.
+http://www.lix.polytechnique.fr/~dowek/Publi/qpl.ps.gz
+
+This is a commutative semi-ring. *)
+
+type field = private
+   | KZero
+   | KOne
+   | KAdd of field * field
+     begin
+       associative
+       commutative
+       neutral (KZero)
+     end
+   | KProd of field * field
+     begin
+       associative
+       commutative
+       neutral (KOne)
+       absorbent (KZero)
+       distributive (KAdd)
+     end
+;;

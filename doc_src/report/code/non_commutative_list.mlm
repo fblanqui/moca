@@ -1,0 +1,54 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: non_commutative_list.mlm,v 1.1 2009-04-15 06:58:20 bonichon Exp $ *)
+
+(* Ad-hoc example for testing non commutative varyadic constructors *)
+
+type t = private
+  | Elem of string
+  | Neutral
+  | Nil
+  | Inv of t
+  | Constr1 of t list
+      begin
+	associative
+	neutral left (Neutral)
+        inverse left (Inv)
+      end
+  | Constr2 of t list
+      begin
+	idempotent right
+      end
+  | Constr3 of t list
+      begin
+	associative
+	idempotent right
+      end
+  | Constr4 of t list
+      begin
+	nilpotent left (Nil)
+      end
+  | Constr5 of t list
+      begin
+	associative
+	nilpotent left (Nil)
+      end
+  | Constr6 of t list
+      begin
+        neutral (Neutral)
+	inverse right (Inv)
+      end
+;;

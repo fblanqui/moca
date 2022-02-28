@@ -1,0 +1,121 @@
+
+             Relational types in Caml
+
+I am pleased to announce the 0.1.0 version of Moca, a general construction
+functions generator for relational types in Objective Caml.
+
+In short:
+=========
+  Moca allows the high-level definition and automatic management of
+complex invariants for data types; Moca also supports the automatic generation
+of maximally shared values, independantly or in conjunction with the 
+declared invariants.
+
+Moca's home page is http://cristal.inria.fr/moca/
+Moca's source files can be found at
+       ftp://ftp.inria.fr/INRIA/cristal/moca-0.1.0.tgz
+
+Moca is developped by Pierre Weis and Frédéric Blanqui.
+
+In long:
+========
+  A relational type is a concrete type that declares invariants or relations
+that are verified by its constructors. For each relational type definition,
+Moca compiles a set of Caml construction functions that implements the declared
+relations.
+
+Moca supports two kinds of relations:
+- algebraic relations (such as associativity or commutativity of a binary
+  constructor),
+- general rewrite rules that map some pattern of constructors and variables to
+  some arbitrary user's define expression.
+
+Algebraic relations are primitive, so that Moca ensures the correctness of
+their treatment. By contrast, the general rewrite rules are under the
+programmer's responsability, so that the desired properties must be verified by
+a programmer's proof before compilation (including for completeness,
+termination, and confluence of the resulting term rewriting system).
+
+An example
+==========
+The Moca compiler (named mocac) takes as input a file with extension .mlm that
+contains the definition of a relational type (a type with ``private''
+constructors, each constructor possibly decorated with a set of invariants or
+algebraic relations).
+
+For instance, consider peano.mlm, that defines the type peano with a binary
+constructor Plus that is associative, treats the nullary constructor Zero as
+its neutral element, and such that the rewrite rule Plus (Succ n, p) -> Succ
+(Plus (n, p)) should be used whenever an instance of its left hand side appears
+in a peano value:
+
+     type peano = private
+        | Zero
+        | Succ of peano
+        | Plus of peano * peano
+        begin
+          associative
+          neutral (Zero)
+          rule Plus (Succ n, p) -> Succ (Plus (n, p))
+        end;;
+
+From this relational type definition, mocac will generate a regular Objective
+Caml data type implementation, as a usual two files module.
+
+From peano.mlm, mocac produces the following peano.mli interface file:
+
+     type peano = private
+        | Zero
+        | Succ of peano
+        | Plus of peano * peano
+     val plus : peano * peano -> peano
+     val zero : peano
+     val succ : peano -> peano
+
+mocac also writes the folowing peano.ml file that implements this interface:
+
+     type peano =
+       | Zero
+       | Succ of peano
+       | Plus of peano * peano
+
+     let rec plus z =
+       match z with
+       | Succ n, p -> succ (plus (n, p))
+       | Zero, y -> y
+       | x, Zero -> x
+       | Plus (x, y), z -> plus (x, plus (y, z))
+       | x, y -> insert_in_plus x y
+     and insert_in_plus x u =
+       match x, u with
+       | _ -> Plus (x, u)
+     and zero = Zero
+     and succ x1 = Succ x1
+
+To prove these construction functions to be correct, you would prove that
+  - no Plus (Zero, x) nor Plus (x, Zero) can be a value in type peano,
+  - for any x, y, z in peano. plus (plus (x, y), z) = plus (x, plus (y, z))
+  - etc
+  Hopefully, this is useless if mocac is correct: the construction functions
+  respect all the declared invariants and relations.
+
+To prove these construction functions to be incorrect, you would have to
+  - find an example that violates the relations.
+  Hopefully, this is not possible (or please, report it!)
+
+And, if you needed maximum sharing for peano values, you just have to compile
+peano.mlm with the "-sharing" option of the mocac compiler:
+
+$ mocac -sharing peano.mlm
+
+would do the trick !
+
+Conclusion:
+===========
+Moca is still evolving and a lot of proofs has still to be done about the
+compiler and its algorithms.
+
+Anyhow, we think Moca to be already usable and worth to give it a try.
+Don't hesitate to send your constructive remarks and contributions !
+
+Pierre Weis & Frédéric Blanqui.

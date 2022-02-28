@@ -1,0 +1,47 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2012,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: bool_list.mlm,v 1.11 2012-06-04 13:01:22 weis Exp $ *)
+
+(* Booleans with varyadic constructors and common algebraic properties. *)
+
+type t = private
+   | Btrue
+   | Bfalse
+   | Bvar of string
+   | Bnot of t
+     begin
+       distributive (Btrue, Bfalse)
+       distributive (Bfalse, Btrue)
+     end
+
+   | Band of t list
+     begin
+       associative
+       commutative
+       idempotent
+       neutral (Btrue)
+       absorbent (Bfalse)
+     end
+
+   | Bor of t list
+     begin
+       associative
+       commutative
+       idempotent
+       neutral (Bfalse)
+       absorbent (Btrue)
+     end
+;;

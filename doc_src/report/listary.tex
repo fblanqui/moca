@@ -1,0 +1,422 @@
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
+\chapter{Implementation notes}
+\label{chap:listary}
+
+
+
+\section{Listary generators}
+\label{sec:listary_generators}
+
+
+The correct handling of listary generators has been a central theme of
+my one-year contribution to \moca. It has been updated and improved
+many times as bugs were discovered by running regression tests.
+
+Actually, it began to be well understood especially after the specification
+of the semantics of keywords had been revised and formally laid
+down. One Val d'Ajol stay was especially rewarding regarding that
+specific matter as we spent one entire day (maybe more) with Pierre
+Weis proof-reading and updating the documentation of this semantics.
+
+This chapter offers a small history of the evolution of the code
+generation for listary generators. The last section
+(\ref{sec:list_current}) covers material that is still under
+development and only present in the CVS repository of \moca.
+
+\subsection{First implementation: ``Continuation based'' }
+\label{sec:first_list}
+
+The story of code generation for listary generators begins with a
+pre-existing implementation, which we call ``continuation-based''. We
+will only show how this was implemented. The major problem was that it
+was just a first shot at a complete implementation which was for lack
+of manpower and time not finished. Therefore it needed to be completed.
+
+However, let's have a quick look at how things were done. Suppose we
+have the following \mlm file:
+\begin{lstlisting}[label=lst:code]
+type 'a t = private
+  | Empty
+  | Union of 'a list
+    begin
+     associative
+     commutative
+     neutral (Empty)
+     idempotent
+    end
+;;
+\end{lstlisting}
+
+
+The generated code for the smart constructor {\sf union} would
+schematically look something like:
+\begin{lstlisting}[label=lst:firstgen]
+  let union l =
+  (* code for flattening l*)
+  let x =  ...  in
+  (* code for sorting x *)
+  let x =  ... in
+  (* removing Empty in x *)
+  let x =  ... in
+  (* leaving only one occurrence of any element in x *)
+  let x = ...  in
+    Union x
+;;
+\end{lstlisting}
+
+This code was indeed generated from \moca using continuations as each part
+defining a {\sf  let x =... in cont} construct
+ was waiting for an additional argument {\sf cont} which was its
+ follow-up computation. 
+
+However, apart from the fact that it was a first try at implementing
+listary generators, and thus lacking some support for not-so-common
+equational theories, it also had the following defaults:
+\begin{enumerate}
+\item \label{it:cont1}
+  it was quite inefficient: each keyword makes at least one list
+  traversal;
+
+\item \label{it:cont2}
+  it was also unnecessarily duplicating code: sorting lists,
+  flattening them, removing a given element and such could have been
+  factorized; 
+
+\item \label{it:cont3}
+  it did not cover cases where the list had one element or even
+  none (that can happen), thus making sometimes for strange behaviors;
+  
+\item \label{it:cont4}
+  specifications were not always precise enough so that the
+  semantics was prone to change; hence the code included more mistakes.
+\end{enumerate}
+
+
+\subsection{Second implementation: factorizing code}
+\label{sec:second_list}
+The first step towards a correct handling of listary generators was to
+use the first implementation and complete it. However, another feature was
+desired: the generated code should be easier to read.
+
+Hence the step-by-step normalization of \mysec{sec:first_list} was
+broken into a myriad of small independent normalization function ---
+one at least for each keyword --- which would transforms the argument
+list according to the specification keyword the function referred to.
+
+This second version of listary code generations was also focused on
+improving points \ref{it:cont2} and \ref{it:cont3} of
+\mysec{sec:first_list}.
+
+So the code generated for the {\sf Union} constructor of \mlm file of
+listing \ref{lst:code} was  now looking like:
+
+\begin{lstlisting} [label=lst:secondgen]
+  (* top of the file *)
+  let rec remove e l = ...
+
+  and remove_double l = ...
+  .
+  .
+  .
+  (* union smart constructor *)
+  and union l = 
+   match
+  idempotent_union (
+   neutral_union (
+    commutative_union (associative_union l))) with
+  | [] -> empty 
+  | [x] -> x
+  | l -> Union l
+ 
+  (* code for flattening l*)
+  and associative_union l =  ...  in
+  (* code for sorting x *)
+  and commutative_union l =  ... in
+  (* removing Empty in x *)
+  and neutral_union l =  remove Empty l in
+  (* leaving only one occurrence of any element in x *)
+  and idempotent_union l =  remove_doubles l  in
+;;
+\end{lstlisting}
+
+It is easier to see how the normalization occurs in this version and
+the corner cases of empty and singleton lists are treated as well.
+
+However, as the first one, there are some defaults:
+\begin{enumerate}
+
+\item points \ref{it:cont1} and \ref{it:cont4} of
+\mysec{sec:first_list} are still valid;
+
+\item distributivity does not play well with functions having types:
+\begin{verbatim}
+<keyword>_<generator> :'a list -> 'a list
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection{Current implementation}
+\label{sec:list_current}
+Code generation for listary generators has been once again revamped
+and is now much more similar to what happens in the binary case. We
+believe this new code also handles ``corner cases'' well and is more
+efficient. It is easier to read and maintain and also easy to expand
+if needed. 
+
+\subsubsection{General architecture of the generated code}
+\label{sec:arch}
+The newer listary code is now structured around a general \cons function
+for each generator which gradually converts the argument list into a
+normalized list according to the specifications for the given generator.
+
+\begin{verbatim}
+cons_<generator>: 'a list -> 'a list -> 'a list
+\end{verbatim}
+
+The idea is rather simple:  the first list is an accumulator ``morally''
+containing normalized elements and the second one is the still
+unnormalized part of the argument list.
+
+The normalization is split into several functions as for binary
+generators:
+\begin{itemize}
+\item normalize
+\item return
+\item cons
+\item insert
+\item delete (optional)
+\end{itemize}
+
+\paragraph{normalize\_$<$generator$>$}
+This is actually the first function called. It just discriminates
+between the empty list and anything else: it calls the {\sf cons}
+function in the latter case and returns otherwise. 
+
+\paragraph{return\_$<$generator$>$}
+This function deals with the fact that users can give empty or
+singleton list as arguments to listary generators. According to the
+equational theories involved, it does what needs to be done. This is
+something that was not as well understood in previous versions.
+
+For example, say we have an associative generator $g$  with a
+neutral element $e$, then we have the following equality:
+\[
+ g [g []; g [x; y]]  =   g [x; y]
+\]
+ Therefore, in this theory, $ g [] = e $ and the \ret{g} function
+ must reduce any call to the smart constructor of $g$ with an empty
+ list as argument to the neutral element $e$.
+
+ We also have in this theory:
+\[
+  g [x] = g [x; e]  =  x 
+\]
+In this case, \ret{g} should return $x$ when the list is a singleton
+list. In all the other case, it just applies the constructor {\sf
+  G} to the list which has just been normalized with respect to the
+equational theory linked to this very same {\sf G}.
+
+\paragraph{cons\_$<$generator$>$}
+This function is where most of the work is being done. One clause per
+keyword is generated and put there (sometimes calling other
+functions) in a big pattern matching function. This function is often
+the longest one but is easy to understand. The elements of the
+argument list are normalized step by step and, once seen, are put in
+an accumulator which will be given to \return at the end of the normalization.
+
+\paragraph{insert\_$<$generator$>$}
+This function is useful each time we want to add an element to the
+accumulator. In the most simple theory, it barely constructs a new
+list with the added element as its head. However, in the case of
+commutative generator, it keeps the list sorted by inserting elements
+where they need be. It also triggers some other possible reductions
+which cannot be treated in the case like idempotence as in \mysec{sec:nonassocid}.
+
+\paragraph{delete\_$<$generator$>$}
+This function is generated whenever a generator contains an
+inverse. As its names states, it tries to delete an element from the
+accumulator list and returns an exception {\sf Not\_found} when it fails.
+
+
+
+\subsubsection{Optimizing AC generators}
+\label{sec:acgenopt}
+
+In the case of associative and/or commutative generators, it makes
+sense to use functions from the \ocaml standard library instead of
+rewriting the code. Furthermore, the code generated is more efficient
+when the argument list is pre-flattened and/or pre-sorted. For
+example, if the generator is both idempotent and commutative, then 
+all equal elements are next to one another if the list was
+pre-sorted. If not, we would have to recursively search through the
+list identical patterns of elements, as is done in 
+\mysec{sec:nonassocid}. This remark also holds for other \moca keywords.
+
+\paragraph{Associativity}
+Normalizing a list with respect to associativity consists in
+flattening this list with respect to the given constructor.
+The only thing worth mentioning here is that this is done in a
+tail-recursive way.
+
+\paragraph{Commutativity}
+Commutativity in listary generators is equal to sorting the elements
+of the argument list. It is just done by calling {\sf List.sort} with
+the correct \compare function.
+
+Take the example of an AC-idempotent generator $g$. If we
+pre-sort the list before doing anything, we just have to reduce any
+pattern of the form {\sf (x, x)} and reduce it to {\sf x}. If we had
+not pre-sorted the list, we could have  dealt with idempotence in
+the \insertf function by adding the following clause:
+
+\begin{lstlisting}
+  let rec insert x l =
+    match l with
+         ...
+    | y :: ys when x = y ->  l
+          ...     
+\end{lstlisting}
+
+However, pre-sorting the list has other side effects. For example, the
+sorting done in \insertf (ie by insertion) is reduced to the necessary
+cases (an element which was not in the list is created by reduction)
+and we have essentially replaced  an insertion sort (O(n2)) by a merge
+sort (O(n log n)) without much effort.
+
+Note that the commutativity-related sorting is always done after
+flattening the argument list. 
+
+\subsubsection{Idempotent non-commutative listary generators}
+\label{sec:nonassocid}
+
+\moca is still a work in progress as some corner cases in the composition of
+keywords are for now not treated (and marked as such in the code).
+Listary generators offer the
+possibility of generating normalization code for some weird equational
+theories such as one comprising a non-associative non-commutative
+idempotent generator. It is not clear what this theory corresponds to,
+nevertheless it is as of now correctly treated for listary
+generators\footnote{And not for binary ones! which is quite an
+  exception, I must say.}
+
+The idea is rather elegant and straightforward. It suffices to add a
+special treatment for nil/idem-potent generator in the \insertf
+function in the default case (remember  *-potent normalization has
+lowest priority). This calls a function which searches for identical
+patterns in the accumulator. By hypothesis the accumulator only
+includes pre-normalized elements, which means for example that one
+cannot find two identical elements in it in the case of an idempotent
+generator. 
+
+
+\subsubsection{Commented examples of generated code}
+
+We will take two examples:  group theory  expressed with listary
+generators and a more involving one tailored to test corner cases of
+code generation.
+
+\paragraph{Group theory}
+\label{sec:list_group_theory}
+This example specifies a group using listary generators. This is one
+the basic examples, as it also works with the completion procedure
+(\mysec{sec:completion}). The code below is how you do it in \moca.
+
+\lstinputlisting[firstline=20]{./code/group_list.mlm}
+
+The code you can find in the \testd directory, generated from
+{\sf group\_list.mlm} is printed back in \mysec{sec:group_list}.
+We will detail two of the four generators: {\sf Opp} and {\sf Mult}.
+
+
+  \begin{description}
+  \item[Opp]dfds
+    
+\lstinputlisting[firstline=35, lastline=42]{./code/group_list.ml}
+\item[Mult]sdfsd
+  \lstinputlisting[firstline=44, lastline=97]{./code/group_list.ml}
+  \end{description}
+
+
+
+
+\paragraph{Non commutative theories}
+\label{sec:nc_theory}
+
+This example was built by hand as an attempt to reach corner cases and
+trigger more mistakes in the code. The interest here lies in the
+exotic equational theory built around the generators and not in the
+complexity of the examples using such a theory.
+The \moca source code for this example can be found in {\sf
+  test/non\_commutative\_list.mlm} and specifies the following
+relational data type:
+
+\lstinputlisting[firstline=20]{./code/non_commutative_list.mlm}
+
+It is not obvious that this example corresponds to any ``real'' mathematical
+structure encountered but this is precisely the
+goal here.
+
+The relational type is first completed by ad-hoc completion:
+\lstinputlisting[firstline=36,lastline=84]{./code/non_commutative_list.ml}
+
+The generated code for normalization purposes is found in \mysec{sec:nc_list}
+
+Let us focus on the code for {\sf constr5}, which is a non-commutative
+nilpotent generator.
+\lstinputlisting[firstline=142,
+lastline=208]{./code/non_commutative_list.ml}
+
+We can see all the parts defined in \mysec{sec:arch}. The code may
+seem rather lengthy but its vast majority is easily readable. Let us
+walk through it.
+
+{\sf constr5} is associative: hence, the code begins by flattening the
+argument list {\sf l} before calling the normalization process.
+
+This in turn calls the general construction function {\sf cons}
+whenever the list is not empty. We see here that if the argument list
+is empty, the result is {\sf constr5 []}: this happens because this
+generator does not have a neutral element.
+
+{\sf cons} has three cases: one for flattening (associative), one when
+the list is empty (this means that the argument list has been
+successfully normalizer) and one base case inserting the current
+element into the pre-normalized accumulator list.
+
+The work for associativity is finished but nothing has been made for
+nilpotence: it will be done by the {\sf insert} function. It has also
+three cases but only the first one is really relevant: this reduces
+any occurrence of two consecutive identical sublists of the
+accumulator list to the element declared in the {\sf nilpotent}
+keyword. The work is done inside the {\sf potent} and {\sf
+  matching\_heads} functions. The latter checks that one list is a
+prefix of the other and the former tries to find step-by-step
+identical sublists until it reaches the half of the list (whose length
+was calculated and passed as argument to this function).
+
+One could fear that the code would be much more complicated when
+adding more elements to the equational theory. Actually this will not
+be the case, as {\sf constr5}, while having only two related keywords,
+does have the whole functional infrastructure necessary for
+normalization purposes. In effect, this means that only some clauses
+will be added to pattern matchings if the equational theory is more
+complicated. 
+
+\section{Conclusion}
+
+The treatment of listary generators has changed a lot during this
+year. It is now more efficient, more readable (and thus
+maintainable). I also think the code generating this code is also more
+readable and easier to maintain. It also has reached a level of
+maturity nearing the one for binary generators, even going beyond them
+for some exotic equationa theories.
+
+However, there is still some work to do. It obviously needs more
+testing as it is rather new. I also happen to think it can still be
+made more efficient by making all generated functions tail-recursive,
+as it proved to be necessary in my listary tableaux example
+(\mysec{sec:list_proptab}). 
+

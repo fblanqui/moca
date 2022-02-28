@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Relational data types
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Relational data types}
+\label{sec-rdt}
+
+We mentioned in the introduction that, often, the invariants upon
+concrete data types are such that the set of values satisfying them is
+indeed a set of representatives for the equivalence classes of some
+equational theory. We therefore propose to specify invariants by a set
+of unoriented equations and study to which extent such a specification
+can be realized with an abstract or private data type. In case of a
+private data type however, it is important to be able to describe the
+set of possible values.
+
+\begin{dfn}[Relational data type]
+A {\em relational data type (RDT) definition} is a pair $(\G,\cE)$
+where $\G=(\pi,\cC,\S)$ is a CDT definition and $\cE$ is a finite set
+of equations on $\cT_\pi(\cA_\G,\cX)$. Let $=_\cE$ be the smallest
+congruence relation containing $\cE$. Such an RDT is {\em
+implementable} by a PDT $(\G,\cF)$ if the family of construction
+functions $\cF=(f_C)_{C\in\cC}$ is {\em valid wrt $\cE$}:
+
+\begin{lst}{--}
+\item [\bf(Correctness)]
+For all $C:\s_1..\s_n\pi$ and $v_i\in Val(\s_i)$,
+$f_C(v_1..v_n)=_\cE C(v_1..v_n)$.
+\item [\bf(Completeness)]
+For all $C:\s_1..\s_n\s$, $v_i\in Val(\s_i)$,
+$D:\tau_1..\tau_p\s\in\S$ and $w_i\in Val(\tau_i)$, $f_C(v_1..v_n)=
+f_D(w_1..w_p)$ whenever $C(v_1..v_n)=_\cE D(w_1..w_p)$.
+\end{lst}
+\end{dfn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Valid normalization function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We are going to see that the existence of a valid family of
+construction functions is equivalent to the existence of a valid
+normalization function:
+
+\begin{dfn}[Valid normalization function]
+A map $f:\cT_\pi(\cA_\G)\a\cT_\pi(\cA_\G)$ is a {\em valid
+normalization function} for an RDT $(\G,\cE)$ with $\G=(\pi,\cC,\S)$
+if:
+
+\begin{lst}{--}
+\item [\bf(Correctness)]
+For all $t\in\cT_\pi(\cA_\G)$, $f(t)=_\cE t$.
+\item [\bf(Completeness)]
+For all $t,u\in\cT_\pi(\cA_\G)$, $f(t)= f(u)$ whenever $t=_\cE u$.
+\end{lst}
+\end{dfn}
+
+Note that a valid normalization function is idempotent ($f\circ f=f$)
+and provides a decision procedure for $=_\cE$ (the boolean function
+$\la xy.f(x)= f(y)$).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% family -> normalization function
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thm}
+\label{thm-f}
+The normalization function associated to a valid family is a valid
+normalization function.
+\end{thm}
+
+\begin{prf}
+\begin{lst}{--}
+\item Correctness. We proceed by induction on the size of $t\in\cT_\pi$.
+We have $C:\s_1..\s_n\pi\in\S$ and $t_i$ such that $t=C(t_1..t_n)$. By
+definition, $f(t)=f_C(f(t_1)..$ $f(t_n))$. By induction hypothesis,
+$f(t_i)=_\cE t_i$. Since the family is valid and $f(t_1)..f(t_n)$ are
+values, $f_C(f(t_1)..f(t_n))=_\cE C(f(t_1)..f(t_n))$. Thus, $f(t)=_\cE
+t$.
+
+\item Completeness.
+Let $t,u\in\cT_\pi$ such that $t=_\cE u$. We have $t=C(t_1..t_n)$ and
+$u=D(u_1..u_p)$. By definition, $f(t)=f_C(f(t_1)..f(t_n))$ and
+$f(u)=f_D(f(u_1)..f(u_p))$. By correctness, $f(t_i)=_\cE t_i$ and
+$f(u_j)=_\cE u_j$. Hence, $C(f(t_1)..f(t_n))=_\cE
+D(f(u_1)..f(u_p))$. Since the family is valid and $f(t_1)..f(t_n)$ are
+values, $f_C(f(t_1)$ $..f(t_n))=f_D(f(t_1)..f(t_n))$. Thus,
+$f(t)=f(u)$.\cqfd\\
+\end{lst}
+\end{prf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% normalization function -> family
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Conversely, given $f:\cT_\pi(\cA_\G)\a\cT_\pi(\cA_\G)$, one can
+easily define a family of construction functions that is valid
+whenever $f$ is a valid normalization function.
+
+\begin{dfn}[Associated family of constr. functions]
+Given a CDT $\G=(\pi,\cC,\S)$ and a function
+$f:\cT_\pi(\cA_\G)\a\cT_\pi(\cA_\G)$, the {\em family of construction
+functions associated to $f$} is the family $(f_C)_{C\in\cC}$ such
+that, for all $C:\s_1..\s_n\pi\in\S$ and $t_i\in\cT_{\s_1}(\cA_\G)$,
+$f_C(t_1, \ldots,t_n)=f(C(t_1, \ldots, t_n))$.
+\end{dfn}
+
+\begin{thm}
+\label{thm-g}
+The family of construction functions associated to a valid
+normalization function is valid.
+\end{thm}
+
+\comment{
+\begin{prf}
+\begin{lst}{--}
+\item Correctness.
+Let $C:\s_1..\s_n\g\in\S$ and $v_i\in Val_\cF(\s_i)$. Since $f$ is
+valid, we have $f_C(v_1, \ldots, v_n)=f(C(v_1, \ldots, v_n))=_\cE
+C(v_1, \ldots, v_n)$.
+
+\item Completeness.
+Let $C:\s_1..\s_n\pi\in\S$, $v_i\in Val_\cF(\s_i)$,
+$D:\tau_1..\tau_p\pi\in\S$ and $w_i\in Val_\cF(\s_i)$ such that
+$C(v_1, \ldots, v_n)=_\cE D(w_1, \ldots, w_p)$. Since $f$ is valid,
+$f_C(v_1, \ldots, v_n)=f(C(v_1, \ldots, v_n))= f(D(w_1, \ldots,
+w_p))=f_D(w_1, \ldots, w_p)$.\cqfd
+\end{lst}
+\end{prf}
+}
+
+\begin{expl}
+We can choose {\tt cexp} as the underlying CDT and $\cE = \{$ {\tt
+Plus x Zero = x}$\}$ to define a RDT implementable by the PDT {\tt
+exp}, with the valid family of construction functions {\tt zero}, {\tt
+one}, {\tt opp}, {\tt plus}.
+\end{expl}

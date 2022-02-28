@@ -1,0 +1,24 @@
+\begin{frame}
+\frametitle{La procédure générale}
+\framesubtitle{Comment fait-on ?}
+
+\texttt{
+\begin{tabular}{l}
+testi 5\\
+(\alert<3>{let x =} \alert<4>{element 5} in\\
+ \alert<3>{let y =} \alert<4>{concat (element 60, element 47)} in\\
+ \alert<3>{let z =} \alert<4>{empty} in\\
+ \alert<2>{concat (concat (\alert<3>{x}, \alert<3>{y}), \alert<3>{z}) =}\\
+                  \hspace{0.35\textwidth} \alert<2>{concat (\alert<3>{x}, concat (\alert<3>{y}, \alert<3>{z})))}
+\end{tabular}
+}
+
+\pause
+\begin{exampleblock}{Plusieurs éléments à générer}
+\begin{itemize}
+\item<2-> Des équations
+\item<3-> Des substitutions
+\item<4-> Des valeurs
+\end{itemize}
+\end{exampleblock}
+\end{frame}

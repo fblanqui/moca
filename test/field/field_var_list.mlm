@@ -1,0 +1,25 @@
+type t = private
+   | Zero
+   | One
+   | Inv of t
+   | Opp of t
+   | Var of string
+
+   | Add of t list
+    begin
+        associative
+        commutative
+        neutral (Zero)
+        inverse (Opp)
+      end
+   | Mul of t list
+   begin
+        associative
+        commutative
+        neutral (One)
+        inverse (Inv)
+        absorbent (Zero)
+        distributive (Add)
+        distributive inverse (Opp)
+      end 
+;;

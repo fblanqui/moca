@@ -1,0 +1,98 @@
+0.7 Trianon (2012-06-04)
+===
+
+-- For listary generators Nilpotent (Left, A) and Nilpotent (Right, A) are
+   equivalent to Nilpotent (Both, A).
+
+-- API (new user's features and facilities):
+
+* Construction functions can be memoized:
+  - new option -memo.
+  - new option -memo-hash-table-size <int> to set the size of memoization
+  tables for construction functions.
+
+-- Internals: new compilation scheme for construction functions.
+   * Compilation of listary generators rewritten from scratch.
+   * Compilation scheme of unary and binary generators no more uses
+   exceptions. A special ordering (per generator) is now generated to handle
+   associative/commutative generators.
+
+0.6 Titanic (2008-04-14)
+===
+
+-- API (new user's features and facilities):
+
+* Precedence of generators for the Recursive Path Ordering used in completion
+  can be set by the user with the order of presentation of generators in the
+  relational type definition.
+
+* The seed number to initial the random number generator used for automatic
+  test generation can be set with a command line option.
+  This is convenient to get a reproducible set of tests.
+
+-- Internals (new technology and improvement in the implementation):
+
+0.5 Valentine (2008-02-13)
+===
+
+-- API (new user's features and facilities):
+
+* Generalization of usage of the keyword distributive with simplification of
+  other relations.
+
+* Automatic generation of tests.
+
+-- Internals (new technology and improvement in the implementation):
+
+* Lot of debugging in particular for vary-adic operators.
+
+* Introduction of automatic completion of relations: new rules are added to
+  the set of rules specified to get a canonical set of rules (completion
+  procedure à la Knuth-Bendix).
+
+0.4 (2007-11-22)
+===
+
+-- API (new user's features and facilities):
+
+* Introduction of private abbrevs with injection defined via rewrite rules
+  defined by the user, and projection defined as a trivial identity.
+
+* Lot of work on generation and usage of comparisons (including equality) in
+  construction functions.
+
+* A new .mlms extension has been added to force compilation with sharing.
+
+* Introduction of arbitrary Caml code in the .mlm files (any sequence of Caml
+  signature items are allowed as extra algebraic properties of generators).
+
+* Commutativity relation gets an extra argument which gives the order used to
+  sort the combs (or lists in case of a vary-adic generator).
+
+* User's defined rules have been generalized from pattern -> pattern
+  to pattern -> expr.
+
+-- Internals (new technology and improvement in the implementation):
+
+* Treatment of variable-adic generators largely improved.
+
+* Source code of the compiler has been documented.
+
+* No more shell scripts: the compiler is entirely written in Caml.
+
+0.3 (2007-04-27)
+===
+
+* Non linear patterns are allowed in user's defined rules.
+
+* Documentation has been largely improved.
+
+0.2 (2007-04-22)
+===
+
+* Polymorphic types are now handled, including for sharing.
+
+0.1 (2005-10-20)
+===
+
+Initial revision.

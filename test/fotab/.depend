@@ -1,0 +1,15 @@
+configuration.cmo:
+configuration.cmx:
+fol.cmo: gensymb.cmo configuration.cmo fol.cmi
+fol.cmx: gensymb.cmx configuration.cmx fol.cmi
+foltab.cmo: pprint.cmo fol.cmi configuration.cmo
+foltab.cmx: pprint.cmx fol.cmx configuration.cmx
+gensymb.cmo:
+gensymb.cmx:
+main.cmo: pprint.cmo foltab.cmo fol.cmi configuration.cmo
+main.cmx: pprint.cmx foltab.cmx fol.cmx configuration.cmx
+pprint.cmo: fol.cmi
+pprint.cmx: fol.cmx
+test.cmo:
+test.cmx:
+fol.cmi: gensymb.cmo configuration.cmo

@@ -1,0 +1,610 @@
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
+
+\chapter{A glimpse of \moca}
+\label{chap:keywords}
+
+This chapter covers the equational specifications and the semantics of
+the keywords used by \moca to extend the traditional \ocaml syntax.
+
+If you want to see some coding examples using \moca, you can also
+have a look at chapter \ref{chap:examples} and come back here to get all
+the details.
+
+\section{BNF of \moca constructs}
+\label{sec:bnf}
+
+We will give in this section the means of writing a syntactically correct \mlm file
+by highlighting what has been added to \ocaml (see Fig. \ref{fig:bnf}).
+
+Non-terminals undefined in this BNF come from \ocaml ({\sf
+  http://caml.inria.fr/pub/docs/manual-ocaml/language.html}). The
+complete BNF (\moca plus \ocaml) can also be found in the {\sf
+  parser.mly} file under the subdirectory {\sf
+  compiler/ocaml\_src/parsing/} of the directory where you extracted moca.  
+
+\begin{figure}[!ht]
+  \centering
+\begin{verbatim}
+<constr-decl> ::= <constr-name> [ <annotation> ]
+| <constr-name> of <typexpr> [ <annotation> ]
+ 
+<annotation> ::= begin
+               { | <relation>
+                 | <completion_hint>
+                 | <structure_item>
+               }+
+               end
+
+<side> ::= left | right
+
+<invopp> ::= inverse | opposite
+
+<rpo_status> ::= lexicographic | multiset
+
+<completion_hint> ::=
+| completion precedence <int>
+| completion status <rpo_status> 
+
+<compare> ::= "(" val_longident ")"
+
+<relation> ::=
+| commutative [(<compare>)]
+| associative
+| involutive
+| idempotent [<side>]
+| neutral [<side>] "(" <constr-name> ")"
+| nilpotent "(" <constr-name> ")"
+| invopp [side] "(" <constr-name> ["," <constr-name>] ")"
+| distributive [<invopp>] [<side>] "(" constr-name ["," <constr_name>]  ")"
+| absorbent [<side>] "(" <constr-name> ")"
+| absorbing [<side>] "(" <constr-name> ")"
+| rule <pattern> -> <expression>
+\end{verbatim}
+  
+  \caption{\moca BNF}
+  \label{fig:bnf}
+\end{figure}
+
+After reading the BNF, one could now be able to construct
+syntactically correct \moca 
+programs but would not know what behavior to expect from the possible
+keywords. Let us now turn to the specification of their (equational)
+semantics. 
+
+The {\sf structure\_item} part
+allows to embed \ocaml code in the definition of
+a relational data type. This is used in particular to define
+comparison functions, whose identifier can then be used as argument to
+the commutative keyword (\mysec{sec:commutative}).
+
+\section{Keywords semantics}
+\label{sec:kwd_specs}
+
+The definition of the semantics of keywords is the first important
+step towards having a correct code generation. Otherwise, how would we
+know how to measure the correction of the code? We will describe here
+an almost formal specification of the expected impact of \moca
+keywords on the behavior of the corresponding programs.
+
+
+\moca classifies generators (\ocaml constructors with relations)
+according to their arity. We distinguish five categories of generators:
+\begin{description}
+\item[Zero-ary generators] are constant \ocaml constructors;
+\item[Unary generators] have only one argument;
+\item[Binary generators] have two;
+\item[N-ary generators] have more than two but have a constant single arity;
+\item[Listary generators] represent generators of variable arity and
+  their only argument is a list. 
+\end{description}
+
+
+In all subsections below, we consider that the keyword is applied to a
+constructor  \C. Also we use the following conventions:
+\begin{itemize}
+\item parentheses and commas $C(x, y)$ will delimit arguments of
+  non-listary generators as in usual mathematical textbooks.
+\item square brackets and semi-colons $C[x; y; z]$ will delimit arguments of
+  listary generators as in \ocaml lists.
+\end{itemize}
+
+\subsection{Absorbent}
+\label{sec:absorbent}
+
+Examples of absorbent elements:
+\begin{itemize}
+\item $0$ for multiplication 
+\item $\bot$ (aka {\sf false} in \ocaml) for the boolean $\land$ connector (aka \&\&)
+\end{itemize}
+
+Any absorbent element {\em must} be zero-ary. Otherwise, it is an error.
+
+\begin{description}
+\item[For zero-ary generators] \na.
+\item[For unary generators]~
+  \begin{itemize}
+  \item \ift{absorbent (both, A)}{C(A) \rw A}
+  \end{itemize}
+
+In this case, absorbent (left, A) and absorbent (right, A) are errors.
+
+\item[For binary generators]~
+  \begin{itemize}
+  \item \ift{absorbent (left, A)}{C(A, x) \rw A}
+  \item \ift{absorbent (right, A)}{C(x, A) \rw A}
+  \end{itemize}
+  absorbent (both, a) is the combination of absorbent (left, a) and
+  absorbent (right, a). 
+
+\item[For listary generators]~
+  \begin{itemize}
+  \item
+    \ift{absorbent (both, A)}
+    {C & [b_1; ...; b_m; A; c1; ...; c_n] \rw A \\
+      \text{In particular:} &  C [A] \rw A
+    }
+
+  \item \ift{absorbent (left, A)}
+    { & C [b_1; ...; b_m; A; c1; ...; c_n] \rw C [b_1; ...; b_m; A] \\
+      \text{In particular:} &  C [A] \rw A
+    }
+  \item \ift{absorbent (right, A)}
+    {&
+      C [b_1; ...; bm; A; c1; ...; cn] \rw C [A; c1; ...; cn] \\
+      \text{In particular:} & C [A] \rw A
+    }
+  \end{itemize}
+
+\item[For n-ary generators] \na
+
+\end{description}
+
+\note{ Absorbent (side, A) is (mostly) equivalent to
+         Distributive (side, A, None, Dist\_Direct).}
+
+
+\subsection{Absorbing}
+\label{sec:absorbing}
+
+The absorbing keyword is only applicable to binary generators. Other
+uses are not defined\footnote{It is not clear what the intuition is in the
+binary case is either.}.
+\begin{description}
+
+\item[For zero-ary generators] \na
+\item[For unary generators] \na
+\item[For binary generators] ~
+  \begin{itemize}
+  \item \ift{absorbing (left, D)}{C( D (x, y), y) \rw y}
+  \item \ift{absorbing (right, D)}{C(x, D(x, y) ) \rw x}
+  \end{itemize}
+
+
+
+absorbing (both, D) is the conjunction of absorbing (left, D) and
+absorbing (right, D). 
+\item[For listary generators] \na
+\item[For n-ary generators] \na
+
+\end{description}
+
+\subsection{Associative}
+\label{sec:associative}
+
+\note{As of today, side cannot be specified in \mlm files. The
+  default is left.}
+
+Examples of associative generators:
+\begin{itemize}
+\item multiplication on integers or reals 
+ $ x * ( y * z) = ( x * y ) * z $
+\end{itemize}
+
+\begin{description}
+
+\item[For zero-ary generators] \na
+\item[For unary generators] \na
+\item[For binary generators] ~
+  \begin{itemize}
+  \item \ift{associative (left)}{C( C (x, y), z) \rw C(x, C (y , z) ) }
+  \item \ift{associative (right)}{C(x, C (y , z) ) \rw C( C (x, y), z) }
+  \end{itemize}
+
+
+
+associative (both) is equivalent to associative (left).
+\item[For listary generators] 
+\ift{associative (left)}
+{C[x_1; ..., x_i; C [y_1; ...; y_j]; z_1; ...; z_k] \rw
+ C [x_1; ..., x_i; y_1; ...; y_j; z_1; ...; z_k ] }
+
+associative (both), associative (left) and associative (right)
+are identical for listary generators.
+
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+\subsection{Commutative}
+\label{sec:commutative}
+
+The commutative keyword accepts an optional argument denoting the
+identifier of a user-defined comparison function. The default is to
+use \ocaml default total comparison function (ie commutative is
+equivalent to commutative({\sf  Pervarsives.compare})).
+
+
+
+\begin{description}
+
+\item[For zero-ary generators] \na
+\item[For unary generators] \na
+\item[For binary generators]~
+  \begin{itemize}
+  \item
+    \ift{commutative (cmp)}{
+      C(x, y) \rw C (y, x) ~~\text{if {\sf cmp x y > 0}} \\
+      \text{The arguments are sorted in increasing order with respect to cmp.}
+    }
+
+\item
+\ift{commutative (cmp) and also has associative}{
+C(x, C (y, z)) \rw C (y, C(x, z)) ~~\text{if {\sf cmp x y > 0}} \\
+C(x, y) \rw C (y, x) ~~\text{if {\sf cmp x y > 0} and } y
+\text{is not of the form } C (u, v). \\
+\text{The arguments are sorted in increasing order with respect to cmp.}
+}
+\end{itemize}
+
+\item[For listary generators]~
+  \begin{itemize}
+  \item
+    \ift{commutative (cmp)}{
+      C[...; x; y; ...] \rw C [...; y; x; ...] ~~\text{if {\sf cmp x y > 0}} \\
+      \text{The arguments are sorted in increasing order with respect to cmp.}
+    }
+  \end{itemize}
+
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+\subsection{Distributive}
+\label{sec:distributive}
+
+This is the longest specification of all due to the number of
+arguments possible to the distributive keyword.
+
+The first step towards a specification of the semantics of
+distributive concerns the definition of the notion of arity
+compatibility.
+
+\begin{definition}[Arity compatibility]
+The arity of $E$ is {\em compatible} with the arity of $D$ if $E$ is
+listary (and thus can simulate any other arity) or if arity $(E) =$
+arity $(D)$.
+\end{definition}
+
+\begin{remark}
+distributive (D, E) is only defined when the arity of $E$ is
+compatible with the arity of $D$.
+  
+\end{remark}
+
+Distributive is defined as follows in \mysec{sec:bnf}:
+\begin{alltt}
+  distributive [<invopp>] [<side>] "(" constr-name ["," <constr_name>]  ")"
+\end{alltt}
+where:
+\begin{itemize}
+\item \verb&<invopp>& governs the order of the arguments of the
+  generator $E$ in the right-hand side of the rules for
+  distributivity (either same order as in $D$ or reversed).
+  The rules for distributive inverse (D, E) are obtained by taking the
+  definition for distributive (D, E) and writing the arguments of $E$
+  in reverse order.
+
+  If we have:  
+  \begin{lstlisting}
+    type t = private
+    | E of int
+    | Add of t * t
+    | Mult of t * t
+      begin
+      distributive (Add}
+      end
+    \end{lstlisting}
+    then
+    \begin{alltt}
+      Mult (x, Plus (y, z) -> Plus (Mult (x, y), Mult (x, z))
+    \end{alltt}
+    and if we have:
+    \begin{lstlisting}
+    type t = private
+    | E of int
+    | Add of t * t
+    | Mult of t * t
+      begin
+      distributive inverse (Add}
+      end
+    \end{lstlisting}
+    then
+    \begin{alltt}
+      Mult (x, Plus (y, z) -> Plus (Mult (x, z), Mult (x, y))
+    \end{alltt}
+\end{itemize}
+
+Let us now give the specifications for distributivity:
+
+\begin{description}
+
+\item[For zero-ary generators] \na
+\item[For unary generators] 
+\ift{distributive (D, E)}{
+  $if $E$ is zeroary (then $D$ must be too) $C (D) \rw E \\
+  $if $E$ is unary (then $D$ must be too) $C (D (x)) \rw E (C (x)) \\
+  $if $E$ is binary (then $D$ must be too) $C (D (x, y)) \rw E (C(x), C(y))
+  \\
+  $if $E$ is binary then if $D$ is$ \\
+  \begin{array}{l}
+    $zeroary:$  C(D) \rw E [] \\
+    $unary:$ C(D (x)) \rw E [x] \\
+    $binary:$ C(D (x, y)) \rw E [C(x); C(y)] \\
+    $listary:$ C(D [x_1; ...; x_n]) \rw E [C(x_1); ...; C(x_n)] \\
+    $nary:$ C(D (x_1, ..., x_n)) \rw E [C(x_1); ...; C(x_n)] \\
+  \end{array} \\
+  $if $E$ is nary (then $D$ must be too and of the same arity as well) $
+  C (D (x_1, ..., x_n)) \rw E (C(x_1), ..., C(x_n))
+}
+\item[For binary generators] 
+
+
+\item[For listary generators] 
+
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+\subsection{Idempotent}
+\label{sec:idempotent}
+Examples of idempotent elements:
+\begin{itemize}
+\item The identity function is idempotent.
+\item The boolean and is also idempotent.
+\end{itemize}
+
+\begin{description}
+
+\item[For zero-ary generators] \na.
+\item[For unary generators] 
+\ift{idempotent}{ C (C (x)) \rw C (x)}
+idempotent left and idempotent right are errors.
+\item[For binary generators] 
+\ift{idempotent left}
+{ C (C (x, y), y) \rw C (x, y) \\
+  C (x , x) \rw x \text{ if } x \text{ and } C(x, x) \text{ have the
+    same type}. 
+}
+\ift{idempotent right}
+{ C (x, C (x, y)) \rw C (x, y) \\
+  C (x , x) \rw x \text{ if } x \text{ and } C(x, x) \text{ have the
+    same type}. 
+}
+idempotent is treated as the conjunction of idempotent left and
+idempotent right.
+
+\item[For listary generators] 
+\ift{idempotent}
+{C[...; x; x; ...] \rw C [... ; x; ...] \\
+ C[x; x]\rw x  \text{ if } x \text{ and } C[x; x] \text{ have the same type}
+}
+
+idempotent, idempotent left and idempotent right are identical.
+\item[For n-ary generators] \na
+
+\end{description}
+
+\subsection{Inverse}
+\label{sec:inverse}
+\begin{description}
+
+\item[For zero-ary generators] \na
+\item[For unary generators] 
+\ift{inverse left (I)}{I(C(x))\rw x}
+\ift{inverse right (I)}{C(I(x))\rw x}
+inverse (I) is the conjunction of inverse left (I) and inverse right
+(I).
+
+\ift{inverse left (I, A)}{I(C(x))\rw A}
+\ift{inverse right (I, A)}{C(I(x))\rw A}
+inverse (I, A) is the conjunction of inverse left (I, A) and inverse
+right (I, A).
+
+\item[For binary generators] 
+ If \C has inverse side (I) then \C must also have neutral
+side (E) (see \mysec{sec:neutral}) and inverse side (I) defaults to
+inverse side (I, E).
+
+\ift{inverse left (I, A)}
+{ I \text{implicitly has involutive (see \mysec{sec:involutive})}. \\
+  C \text{implicitly has distributive left (E, A) (see
+    \mysec{sec:distributive})}. \\ 
+  C (I(x), x) \rw A
+}
+
+\ift{inverse right(I, A)}
+{ I \text{implicitly has involutive (see \mysec{sec:involutive})}. \\
+  C \text{implicitly has distributive right (E, A) (see
+    \mysec{sec:distributive})}. \\ 
+  C (x, I (x)) \rw A
+}
+
+inverse (I, A) is the conjunction of inverse left (I, A) and inverse
+right (I, A). 
+\item[For listary generators] If \C has inverse side (I) then \C must also have neutral
+side (E) (see \mysec{sec:neutral}) and inverse side (I) defaults to
+inverse side (I, E).
+
+\ift{inverse left (I, A)}
+{ I \text{implicitly has involutive (see \mysec{sec:involutive})}s. \\
+  C \text{implicitly has distributive left (E, A) (see
+    \mysec{sec:distributive})}. \\ 
+
+            C [...; I (x); x; ...] \rw C [...; A; ...] \text{if
+              the list of arguments has more than 2 elements} \\
+            C [I (x); x] \rw A
+  }
+
+\ift{inverse right(I, A)}
+{ I \text{implicitly has involutive (see \mysec{sec:involutive})}. \\
+  C \text{implicitly has distributive right (E, A) (see
+    \mysec{sec:distributive}) }. \\ 
+    C [...; x; I (x); ...] \rw C [...; A; ...] \text{if
+              the list of arguments has more than 2 elements} \\
+            C [x; I (x)] \rw A
+}
+
+inverse (I, A) is the conjunction of inverse left (I, A) and inverse
+right (I, A). 
+
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+
+
+\subsection{Involutive}
+\label{sec:involutive}
+The boolean negation $\neg$  is involutive\footnote{in classical logic}.
+The unary minus sign $-$ in arithmetic is also involutive.
+
+\begin{description}
+
+\item[For zero-ary generators] \na
+\item[For unary generators] 
+\ift{involutive}{C(C(x))\rw x}
+\item[For binary generators] \na
+\item[For listary generators] \na
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+
+
+
+
+
+
+\subsection{Neutral}
+\label{sec:neutral}
+
+Examples:
+\begin{itemize}
+\item $0$ is the neutral element for $+$ for reals and integers.
+\item $1$ is neutral for $*$ for reals and integers
+\item true is neutral for the boolean or $\vee$
+\end{itemize}
+
+\begin{description}
+\item[For zero-ary generators] \na
+\item[For unary generators] 
+\ift{neutral (E)}{
+\text{It means that }E \text{ is a fixpoin for } C. \\
+C(E) \rw E \\
+\text{In the unary setting, neutral left and neutral right are errors.}
+}
+\item[For binary generators] 
+\ift{neutral left (E)}{
+C(E, x)\rw x
+}
+\ift{neutral right (E)}{
+C(x, E)\rw x
+}
+neutral (E) is the conjunction of neutral left (E) and neutral right (E).
+\item[For listary generators] 
+\ift{neutral left (E)}{
+C[...; E; x; ...]\rw C [...; x; ...] \\
+C [x] \rw x \\
+C [] \rw []
+}
+\ift{neutral right (E)}{
+C[...; x; E; ...]\rw C [...; x; ...] \\
+C [x] \rw x \\
+C [] \rw []
+}
+neutral (E) is the conjunction of neutral left (E) and neutral right (E).
+
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+\subsection{Nilpotent}
+\label{sec:nilpotent}
+\begin{description}
+
+\item[For zero-ary generators] \na.
+\item[For unary generators] 
+\ift{nilpotent (A)}{ C (C (x)) \rw A}
+nilpotent left and nilpotent right are errors.
+\item[For binary generators] 
+\ift{nilpotent left (A)}
+{ C (C (x, y), y) \rw C (x, A) \\
+  C (x , x) \rw A
+}
+\ift{nilpotent right}
+{ C (x, C (x, y)) \rw C (A, y) \\
+  C (x , x) \rw A
+}
+nilpotent (A) is treated as the conjunction of nilpotent left (A) and
+nilpotent right (A).
+
+\item[For listary generators] 
+\ift{nilpotent (A)}
+{C[...; x; x; ...] \rw C [... ; A; ...] \\
+ C[x; x]\rw A
+}
+
+nilpotent, nilpotent left and nilpotent right are identical.
+\item[For n-ary generators] \na
+
+\end{description}
+
+
+\subsection{Rules}
+\label{sec:rules}
+
+User can write arbitrary rewrite rules using the same syntax as for
+\ocaml pattern matchings. Examples of such rules can be found in
+\mysec{chap:examples}.
+
+\subsection{Completion }
+\label{sec:completion}
+
+\moca has the ability to complete user-defined equational theories,
+making them convergent (i.e. confluent and noetherian). 
+It uses the well-known Knuth-Bendix completion
+procedure \cite{DKnuPBen70}. 
+
+This is made possible using two kinds of annotation on generators:
+precedence and status.
+
+
+\section{Priorities}
+\label{sec:priorities}
+
+The priorities of \moca keywords with respect to one another are quite
+essential to know which code should be generated. Actually, is states
+what should be reduced first in order to obtain the canonical
+form. These priorities reflect \moca's reduction strategy
+
+
+\todo{State current priorities list of Moca}

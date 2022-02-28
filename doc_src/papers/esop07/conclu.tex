@@ -1,0 +1,25 @@
+
+\section{Future work}
+\label{sec-futur}
+
+We plan to integrate \moca\ to the development environment \focal\
+\cite{focal0.3.1}. \focal\ units contain declarations and
+definitions of functions, statements and proofs as first-class
+citizens. Their compilation produces both a file checkable by the
+theorem prover \coq\ \cite{coq8.0} and a \ocaml\ source code. Proofs
+are done either within \coq\ or via the automatic theorem prover
+\zenon\ \cite{zenon0.4.1}, which issues a \coq\ file when it
+successes. Every \focal\ unit has a special field, giving the type of
+the data manipulated in this unit. Thus, it would be very interesting
+to do a full integration of private/relational data types in \focal,
+the proof of correctness of construction functions being done with
+\zenon\ or \coq\ and then recorded as a theorem to be used for further
+proofs. This should be completed by the integration of a tool on
+rewriting and equational theories able to complete equational
+presentations, to generate and prove the corresponding lemmas and to
+show some termination properties. Some experiments already done within
+\focal\ on coupling \cime\ \cite{cime2.02} and \zenon\ give a serious
+hope of success.
+
+{\bf Acknowledgments.} The authors thank Claude Kirchner for his
+comments on a previous version of the paper.

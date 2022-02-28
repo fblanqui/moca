@@ -1,0 +1,114 @@
+open Gensymb;;
+open Configuration;;
+
+type term =
+  | Var of string
+  | Meta of string
+  | Const of string
+  | Function of string * term list
+;;
+
+type uconstraints = (term * term) list;;
+
+type prop = uconstraints * string * term list;;
+
+type formula = private
+  | Btrue | Bfalse
+
+  | Prop of prop
+
+  | Bnot of formula
+    begin
+      involutive
+        distributive (Bor, Band)
+        distributive (Band, Bor)
+    end
+
+  | Band of formula * formula
+    begin
+      associative
+        idempotent
+        commutative
+        distributive (Bor)
+       inverse (Bnot, Bfalse)
+       neutral (Btrue)
+       absorbent (Bfalse)
+    end
+
+  | Bor of formula * formula
+    begin
+      associative
+      (* The following means that if we have twice the same branch
+         they will be nearby and only one instance will be kept
+         in the bor comb
+      *)
+      commutative
+      idempotent
+      inverse (Bnot, Btrue)
+      neutral (Bfalse)
+      absorbent (Btrue)
+    end
+
+   | Bimplies of formula * formula
+     begin
+       (*rule Bimplies(x, y) when x = y -> Btrue*)
+       rule Bimplies (x, y) -> Bor (Bnot x, y)
+     end
+
+   | Ball of term * formula
+     begin
+       (* substitute term v (Var) by term u in formula f *)
+       let substitute v u f =
+         let rec aux_term bv v u t =
+           match t with
+           | Var x when t = v ->
+               if (List.mem t bv) then t else u
+           | Function (g, xs) ->
+               Function (g, List.map (aux_term bv v u) xs)
+           | _ as x -> x in
+
+         let rec aux bv v u f =
+           match f with
+           | Band(x, y) ->
+               Band (aux bv v u x, aux bv v u y)
+           | Bor (x, y) ->
+               Bor (aux bv v u x, aux bv v u y)
+           | Bimplies (x, y) ->
+               Bimplies (aux bv v u x, aux bv v u y)
+           | Bnot x -> Bnot (aux bv v u x)
+           | Ball (x, y) ->
+               Ball (x, aux (x :: bv) v u y)
+           | Bex (x, y) -> Bex (x, aux (x :: bv) v u y)
+           | Prop (y , x, ts) ->
+               Prop(y, x, List.map (aux_term bv v u) ts)
+           | Btrue | Bfalse -> f in
+         aux [] v u f
+       ;;
+
+       let new_meta_formula f v =
+         substitute v (Meta (get_new_meta ())) f
+       ;;
+
+       let rec make_new_formulas n f v =
+         assert (n >= 1);
+         let f1 = new_meta_formula f v in
+           if n = 1 then [f1]
+           else f1 :: (make_new_formulas (n - 1) f v)
+       ;;
+
+       rule Ball (Var x as v, f) ->
+         if Configuration.get_maxdepth () = 1
+           then new_meta_formula f v else
+         let fs =
+           make_new_formulas (Configuration.get_maxdepth ()) f v in
+         List.fold_left
+           (fun x y -> Band (x, y))
+           (List.hd fs)
+           (List.tl fs)
+     end
+
+   | Bex of term * formula
+     begin
+       rule Bex (Var x as v, f) -> substitute v (Const (get_new_const ())) f
+     end
+;;

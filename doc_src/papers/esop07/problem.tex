@@ -1,0 +1,302 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ON THE EXISTENCE OF CONSTRUCTION FUNCTIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{On the existence of construction functions}
+\label{sec-ex}
+
+In this section, we provide a general theorem for the existence of
+valid families of construction functions based on rewriting theory. We
+recall the notions of rewriting and completion. The interested reader
+may find more details in \cite{dershowitz90book}.\vsp[1mm]
+
+\noindent
+{\bf Standard rewriting.} A {\em rewrite rule} is an ordered pair of
+terms $(l,r)$ written $l\a r$. A rule is {\em left-linear} if no
+variable occurs twice in its left hand side $l$.
+
+As usual, the set $\pos(t)$ of {\em positions in $t$} is defined as a
+set of words on positive integers. Given $p\in\pos(t)$, let $t|_p$ be
+the subterm of $t$ at position $p$ and $t[u]_p$ be the term $t$ with
+$t|_p$ replaced by $u$.
+
+Given a finite set $\cR$ of rewrite rules, the {\em rewriting
+relation} is defined as follows: $t\a_\cR u$ iff there are
+$p\in\pos(t)$, $l\a r\in\cR$ and a substitution $\t$ such that
+$t|_p=l\t$ and $u=t[r\t]_p$. A term $t$ is an {\em $\cR$-normal form}
+if there is no $u$ such that $t\a_\cR u$. Let $=_\cR$ be the
+symmetric, reflexive and transitive closure of $\a_\cR$.
+
+A {\em reduction ordering} $\succ$ is a well-founded ordering (there
+is no infinitely decreasing sequence $t_0\succ t_1\succ\ldots$) stable
+by context ($C(..t..)\succ C(..u..)$ whenever $t\succ u$) and
+substitution ($t\t\succ u\t$ whenever $t\succ u$). If $\cR$ is
+included in a reduction ordering, then $\a_\cR$ is well-founded
+(terminating, strongly normalizing).
+
+We say that $\a_\cR$ is {\em confluent} if, for all terms $t,u,v$ such
+that $u\al^*_\cR t\a^*_\cR v$, there exists a term $w$ such that
+$u\a^*_\cR w\al^*_\cR v$. This means that the relation
+$\al^*_\cR\a^*_\cR$ is included in the relation $\a^*_\cR\al^*_\cR$
+(composition of relations is written by juxtaposition).
+
+If $\a_\cR$ is confluent, then every term has at most one normal
+form. If $\a_\cR$ is well-founded, then every term has at least one
+normal form. Therefore, if $\a_\cR$ is confluent and terminating, then
+every term has a unique normal form.\vsp[1mm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% standard completion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+{\bf Standard completion.} Given a finite set $\cE$ of equations and a
+reduction ordering $\succ$, the standard Knuth-Bendix completion
+procedure \cite{bendix70book} tries to find a finite set $\cR$ of
+rewrite rules such that:
+
+\begin{lst}{\bu}
+\item $\cR$ is included in $\succ$,
+\item $\a_\cR$ is confluent,
+\item $\cR$ and $\cE$ have same theory: ${=_\cE}={=_\cR}$.
+\end{lst}
+
+Note that completion may fail or not terminate but, in case of
+successful termination, $\cR$-normalization provides a decision
+procedure for $=_\cE$ since $t=_\cE u$ iff the $\cR$-normal forms of
+$t$ and $u$ are syntactically equal.\vsp[2mm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AC equations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+However, since permutation theories like commutativity or
+associativity and commutativity together (written AC for short) are
+included in no reduction ordering, dealing with them requires to
+consider rewriting with pattern matching modulo these theories and
+completion modulo these theories. In this paper, we restrict our
+attention to AC.
+
+\begin{dfn}[Associative-commutative equations]
+Let $Com$ be the set of commutative constructors, \ie the set of
+constructors $C$ such that $\cE$ contains an equation of the form
+$C(x,y)=C(y,x)$. Then, let $\cE_{AC}$ be the subset of $\cE$ made of
+the commutativity and associativity equations for the commutative
+constructors, $=_{AC}$ be the smallest congruence relation containing
+$\cE_{AC}$ and $\cE_{\neg AC}=\cE\moins\cE_{AC}$.
+\comment{
+\begin{center}
+$\begin{array}{rl}
+\cE_{AC}= & \{C(x,y)=C(y,x)\in\cE~|~C\in Com\}\\
+& \cup~\{C(x,C(y,z))=C(C(x,y),z)\in\cE~|~C\in Com\}\\
+\end{array}$
+\end{center}
+}
+\end{dfn}
+
+\noindent
+{\bf Rewriting modulo AC.} Given a set $\cR$ of rewrite rules, {\em
+rewriting with pattern matching modulo $AC$} is defined as follows:
+$t\a_{\cR,AC} u$ iff there are $p\in\pos(t)$, $l\a r\in\cR$ and a
+substitution $\t$ such that $t|_p=_{AC}l\t$ and $u=t[r\t]_p$. A
+reduction ordering $\succ$ is {\em $AC$-compatible} if, for all terms
+$t,t',u,u'$ such that $t=_{AC}t'$ and $ u=_{AC}u'$, $t'\succ u'$ iff
+$t\succ u$. The relation $\a_{\cR,AC}$ is {\em confluent modulo $AC$}
+if ${(\al^*_{\cR,AC}=_{AC}\a^*_{\cR,AC})}\sle
+{(\a^*_{\cR,AC}=_{AC}\al^*_{\cR,AC})}$.\vsp[2mm]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AC-completion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+{\bf Completion modulo AC.} Given a finite set $\cE$ of equations and
+an $AC$-compatible reduction ordering $\succ$, completion modulo $AC$
+\cite{peterson81jacm} tries to find a finite set $\cR$ of rules such
+that:
+
+\begin{lst}{\bu}
+\item $\cR$ is included in $\succ$,
+\item $\a_{\cR,AC}$ is confluent modulo $AC$,
+\item $\cE$ and $\cR\cup\cE_{AC}$ have same theory:
+${=_\cE}={=_{\cR\cup\cE_{AC}}}$.
+\end{lst}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% definition of complete presentations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{dfn}
+A theory $\cE$ has a {\em complete presentation} if there is an
+AC-com\-patible reduction ordering for which the $AC$-completion of
+$\cE_{\neg AC}$ successfully terminates.
+\end{dfn}
+
+Many interesting systems have a complete presentation: (commutative)
+mo\-no\-ids, (abelian) groups, rings, etc. See
+\cite{hullot80thesis,lechenadec86book} for a catalog. Moreover,
+there are automated tools implementing completion modulo AC. See for
+instance \cite{cime2.02,gaillourdet03cade}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AC-normal forms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A term may have distinct $\cR,AC$-normal forms but, by confluence
+modulo $AC$, all normal forms are $AC$-equivalent and one can easily
+define a notion of normal form for $AC$-equivalent terms
+\cite{hullot80thesis}:
+
+\begin{dfn}[$AC$-normal form]
+Given an associative and commutative constructor $C$, {\em
+$C$-left-combs} (resp. {\em $C$-right-combs}) and their {\em leaves}
+are inductively defined as follows:
+
+\begin{lst}{--}
+\item If $t$ is not headed by $C$, then $t$ is both a $C$-left-comb
+and a $C$-right-comb. The {\em leaves} of $t$ is the one-element list
+$\leaves(t)=[t]$.
+\item If $t$ is not headed by $C$ and $u$ is a $C$-right-comb,
+then $C(t,u)$ is a $C$-right-comb. The {\em leaves} of $C(t,u)$ is the
+list $t::\leaves(u)$.
+\item If $t$ is not headed by $C$ and $u$ is a $C$-left-comb,
+then $C(u,t)$ is a $C$-left-comb. The {\em leaves} of $C(u,t)$ is the
+list $\leaves(u)@[t]$, where $@$ is the concatenation.
+\end{lst}
+
+\noindent
+Let $\orient$ be a function associating a kind of combs (left or
+right) to every AC-constructor. Let $\le$ be a total ordering on
+terms. Then, a term $t$ is in {\em $AC$-normal form wrt $\orient$ and
+$\le$} if:
+
+\begin{lst}{--}
+\item Every subterm of $t$ headed by an AC-constructor $C$ is an
+$\orient(C)$-comb whose leaves are in increasing order wrt $\le$.
+\item For every subterm of $t$ of the form $C(u,v)$ with $C$
+commutative but non-associative, we have $u\le v$.
+\end{lst}
+\end{dfn}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% existence of AC-normal forms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+As it is well-known, one can put any term in $AC$-normal form:
+
+\begin{thm}
+\label{thm-ac}
+Whatever the function $\orient$ and the ordering $\le$ are, every term
+$t$ has an $AC$-normal form $t\!\ad_{AC}$ wrt $\orient$ and $\le$, and
+$t=_{AC}t\!\ad_{AC}$.
+\end{thm}
+
+\begin{prf}
+Let $\cA$ be the set of rules obtained by choosing an orientation for
+the associativity equations of $\cE_{AC}$ according to $\orient$:
+
+\begin{lst}{--}
+\item If $\orient(C)$ is ``left'', then take $C(x,C(y,z))\a C(C(x,y),z)$.
+\item If $\orient(C)$ is ``right'', then take $C(C(x,y),z)\a C(x,C(y,z))$.
+\end{lst}
+
+$\a_\cA$ is a confluent and terminating relation putting every subterm
+headed by an AC-constructor into a comb form according to
+$\orient$. Let $\comb$ be a function computing the $\cA$-normal form
+of a term. Let now $\sort$ be a function permuting the leaves of combs
+and the arguments of commutative but non-associative constructors to
+put them in increasing order wrt $\le$. Then, the function
+$\sort\circ\comb$ computes the $AC$-normal form of any term and
+$\sort(\comb(t))=_{AC} t$.\cqfd\\
+\end{prf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% existence of a valid family
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This naturally provides a decision procedure for $AC$-equivalence: the
+function $\la xy.\sort(\comb(x))=\sort(\comb(y))$. It follows that
+$\cR,AC$-normalization together with $AC$-normalization provides a
+valid normalization function, hence the existence of a valid family of
+construction functions:
+
+\begin{thm}
+\label{thm-ex}
+If $\cE$ has a complete presentation, then there exists a valid family
+of construction functions.
+\end{thm}
+
+\begin{prf}
+Assume that $\cE$ has a complete presentation $\cR$. We define the
+computation of normal forms as it is generally implemented in
+rewriting tools. Let $\step$ be a function making an $\cR,AC$-rewrite
+step if there is one, or failing if the term is in normal form. Let
+$\norm$ be the function applying $\step$ until a normal form is
+reached. Since $\cR$ is a complete presentation of $\cE$, by
+definition of the completion procedure, $\sort\circ\comb\circ\norm$ is
+a valid normalization function. Thus, by Theorem \ref{thm-g}, the
+associated family of construction functions is valid.\cqfd\\
+\end{prf}
+
+The construction functions described in the proof are not very
+efficient since they are based on rewriting with pattern matching
+modulo AC, which is NP-complete \cite{benanav87jsc}, and do not take
+advantage of the fact that, by definition of PDTs, they are only
+applied to terms already in normal form. We can therefore wonder
+whether they can be defined in a more efficient way for some common
+equational theories like the ones of Figure \ref{fig-eq}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% some common equations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure*}
+\centering\caption{Some common equations on binary constructors\label{fig-eq}}\vsp[2mm]
+\begin{tabular}{|c|c|c|c|}\hline
+\bf Name & \bf Abbrev & \bf Definition & \bf Example\\\hline
+associativity & $Assoc(C)$ & $C(C(x,y),z)=C(x,C(y,z))$ & $(x+y)+z=x+(y+z)$\\\hline
+commutativity & $Com(C)$ & $C(x,y)=C(y,x)$ & $x+y=y+x$\\\hline
+neutrality & $Neu(C,E)$ & $C(x,E)=x$ & $x+0=x$\\\hline
+inverse & $Inv(C,I,E)$ & $C(x,I(x))=E$ & $x+(-x)=0$\\\hline
+idempotence & $Idem(C)$ & $C(x,x)=x$ & $x\et x=x$\\\hline
+nilpotence & $Nil(C,A)$ & $C(x,x)=A$ & $x\oplus x=\bot$ (exclusive or)\\\hline
+%absorbance & $Abs(C,A)$ & $C(x,A)=A$ & $x\times 0=0$\\\hline
+%absorption & $Lat(C,D)$ & $C(x,D(x,y))=x$ & $x\ou(x\et y)=x$\\\hline
+%distributivity & $Dist(C,D)$ & $C(D(x,y),z)=D(C(x,z),C(y,z))$ & $(x+y)\times z=(x\times z)+(y\times z)$\\\hline
+\end{tabular}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% checking the validity of a family
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Rewriting provides also a way to check the validity of construction
+functions:
+
+\begin{thm}
+\label{thm-valid}
+If $\cE$ has a complete presentation $\cR$ and $\cF=(f_C)_{C\in\cC}$
+is a family such that, for all $C:\s_1..\s_n\pi\in\S$ and terms
+$v_i\in Val(\s_i)$, $f_C(v_1..v_n)$ is an $\cR,AC$-normal form of
+$C(v_1..v_n)$ in $AC$-normal form, then $\cF$ is valid.
+\end{thm}
+
+\begin{prf}
+\begin{lst}{--}
+\item Correctness. Let $C:\s_1..\s_n\pi\in\S$
+and $v_i\in Val(\s_i)$. Since $f_C(v_1..v_n)$ is an $\cR,AC$-normal
+form of $C(v_1..v_n)$, we clearly have $f_C(v_1..v_n)=_\cE
+C(v_1..v_n)$.
+
+\item Completeness. 
+Let $C:\s_1..\s_n\pi\in\S$, $v_i\in Val_\cF(\s_i)$,
+$D:\tau_1..\tau_p\pi\in\S$, and $w_i\in Val_\cF(\tau_i)$ such that
+$C(v_1..v_n)=_\cE D(w_1..w_p)$. Since $\cR$ is a complete presentation
+of $\cE$, $\norm(C(v_1..v_n))=_{AC}\norm(D(w_1..w_p))$. Thus,
+$f_C(v_1..v_n)= f_D(w_1..w_p)$.\cqfd\\
+\end{lst}
+\end{prf}
+
+It follows that rewriting provides a natural way to explain what are
+the possible values of an RDT: values are $AC$-normal forms matching
+no left hand side of a rule of $\cR$.

@@ -1,0 +1,7 @@
+boolean_list.cmo: boolean_list.cmi
+boolean_list.cmx: boolean_list.cmi
+tableau_list.cmo: boolean_list.cmi
+tableau_list.cmx: boolean_list.cmx
+test_list.cmo: tableau_list.cmo boolean_list.cmi
+test_list.cmx: tableau_list.cmx boolean_list.cmx
+boolean_list.cmi:

@@ -1,0 +1,52 @@
+#*********************************************************************#
+#                                                                     #
+#                             Moca                                    #
+#                                                                     #
+#            Pierre Weis, projet Cristal, INRIA Rocquencourt          #
+#                                                                     #
+# Copyright 2005 Institut National de Recherche en Informatique       #
+# et en Automatique. Distributed only by permission.                  #
+#                                                                     #
+#*********************************************************************#
+
+#(* $Id: INSTALL.win,v 1.3 2007-04-26 08:30:02 guiraudy Exp $ *)
+
+Installation procedure in Windows (tested in Vista, should work in XP)
+
+0) Requires:
+
+  * Cygwin
+
+  * Objective Caml
+
+1) Configure the software:
+
+  * sh configure.win
+    will install moca in c:/cygwin/usr
+
+  * sh configure.win <directory>
+    will install moca in <directory>
+
+  * remarks:
+    - use '/' in <directory> instead of '\'
+    - use 'Progra~1' instead of 'Program Files'
+    - add "c:/cygwin/usr/bin" or "<directory>/bin" to the Path
+      variable if necessary
+
+If this step fails with messages like ': command not found 12:', it is likely that you have a problem with end of line characters. You can :
+
+- Manually change the encoding from CR+LF to LF in the three configure.win files (moca/configure.win, moca/config/configure.win and moca/Mk/configure.win).
+
+- Change the preferences in your CVS client to use UNIX end of files. See http://www.tortoisecvs.org/faq.html#brokenlineendings for more information on the problem.
+
+- Launch Cygwin setup and change file encoding from UNIX (default) to DOS. Now sh should work equally well on files in either UNIX or DOS format. See http://cygwin.com/cygwin-ug-net/using-textbinary.html for more information.
+
+2) Compile the software:
+
+  * make
+
+3) Become the super-user (if necessary) and do
+
+  * make install
+
+4) Execute "man mocac" and enjoy :)

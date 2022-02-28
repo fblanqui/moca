@@ -1,0 +1,14 @@
+atom.cmo: atom.cmi
+atom.cmx: atom.cmi
+bdd.cmo: atom.cmi bdd.cmi
+bdd.cmx: atom.cmx bdd.cmi
+bdd_rewritten_by_hand.cmo: memo_htbl.cmo atom.cmi
+bdd_rewritten_by_hand.cmx: memo_htbl.cmx atom.cmx
+main.cmo: queens.cmo bdd.cmi
+main.cmx: queens.cmx bdd.cmx
+memo_htbl.cmo:
+memo_htbl.cmx:
+queens.cmo: bdd.cmi atom.cmi
+queens.cmx: bdd.cmx atom.cmx
+atom.cmi:
+bdd.cmi: atom.cmi

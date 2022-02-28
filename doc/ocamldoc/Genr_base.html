@@ -1,0 +1,320 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<script src="jquery.js"></script>
+<script src="improve.js"></script>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Genr_pattern.html">
+<link rel="next" href="Genr_memo.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Index of module types" rel=Appendix href="index_module_types.html">
+<link title="Parsetree" rel="Chapter" href="Parsetree.html">
+<link title="Asttypes" rel="Chapter" href="Asttypes.html">
+<link title="Misc" rel="Chapter" href="Misc.html">
+<link title="Tbl" rel="Chapter" href="Tbl.html">
+<link title="Config" rel="Chapter" href="Config.html">
+<link title="Clflags" rel="Chapter" href="Clflags.html">
+<link title="Terminfo" rel="Chapter" href="Terminfo.html">
+<link title="Ccomp" rel="Chapter" href="Ccomp.html">
+<link title="Warnings" rel="Chapter" href="Warnings.html">
+<link title="Consistbl" rel="Chapter" href="Consistbl.html">
+<link title="Linenum" rel="Chapter" href="Linenum.html">
+<link title="Location" rel="Chapter" href="Location.html">
+<link title="Longident" rel="Chapter" href="Longident.html">
+<link title="Syntaxerr" rel="Chapter" href="Syntaxerr.html">
+<link title="Parser" rel="Chapter" href="Parser.html">
+<link title="Lexer" rel="Chapter" href="Lexer.html">
+<link title="Parse" rel="Chapter" href="Parse.html">
+<link title="Printast" rel="Chapter" href="Printast.html">
+<link title="Configuration" rel="Chapter" href="Configuration.html">
+<link title="File" rel="Chapter" href="File.html">
+<link title="Useful" rel="Chapter" href="Useful.html">
+<link title="Debug" rel="Chapter" href="Debug.html">
+<link title="Mylist" rel="Chapter" href="Mylist.html">
+<link title="Myset" rel="Chapter" href="Myset.html">
+<link title="Relation" rel="Chapter" href="Relation.html">
+<link title="Otype" rel="Chapter" href="Otype.html">
+<link title="Pr_ocaml" rel="Chapter" href="Pr_ocaml.html">
+<link title="Code" rel="Chapter" href="Code.html">
+<link title="Pr_code" rel="Chapter" href="Pr_code.html">
+<link title="Check" rel="Chapter" href="Check.html">
+<link title="Var" rel="Chapter" href="Var.html">
+<link title="Symb" rel="Chapter" href="Symb.html">
+<link title="Term" rel="Chapter" href="Term.html">
+<link title="Term_utils" rel="Chapter" href="Term_utils.html">
+<link title="Subterm" rel="Chapter" href="Subterm.html">
+<link title="Order" rel="Chapter" href="Order.html">
+<link title="Prec" rel="Chapter" href="Prec.html">
+<link title="Subs" rel="Chapter" href="Subs.html">
+<link title="Match" rel="Chapter" href="Match.html">
+<link title="Rename" rel="Chapter" href="Rename.html">
+<link title="Unif" rel="Chapter" href="Unif.html">
+<link title="Rule" rel="Chapter" href="Rule.html">
+<link title="Equation" rel="Chapter" href="Equation.html">
+<link title="Cparser" rel="Chapter" href="Cparser.html">
+<link title="Clexer" rel="Chapter" href="Clexer.html">
+<link title="Cp" rel="Chapter" href="Cp.html">
+<link title="Norm" rel="Chapter" href="Norm.html">
+<link title="Norm_ml" rel="Chapter" href="Norm_ml.html">
+<link title="Comp" rel="Chapter" href="Comp.html">
+<link title="Axiom" rel="Chapter" href="Axiom.html">
+<link title="Genr_pattern" rel="Chapter" href="Genr_pattern.html">
+<link title="Genr_base" rel="Chapter" href="Genr_base.html">
+<link title="Genr_memo" rel="Chapter" href="Genr_memo.html">
+<link title="Genr_sharing" rel="Chapter" href="Genr_sharing.html">
+<link title="Genr_expression" rel="Chapter" href="Genr_expression.html">
+<link title="Eqnrel" rel="Chapter" href="Eqnrel.html">
+<link title="Complete" rel="Chapter" href="Complete.html">
+<link title="Genr_nary" rel="Chapter" href="Genr_nary.html">
+<link title="Genr_listary" rel="Chapter" href="Genr_listary.html">
+<link title="Genr_binary" rel="Chapter" href="Genr_binary.html">
+<link title="Genr_unary" rel="Chapter" href="Genr_unary.html">
+<link title="Genr_nullary" rel="Chapter" href="Genr_nullary.html">
+<link title="Genr" rel="Chapter" href="Genr.html">
+<link title="Genr_mli" rel="Chapter" href="Genr_mli.html">
+<link title="Listutils" rel="Chapter" href="Listutils.html">
+<link title="Randomutils" rel="Chapter" href="Randomutils.html">
+<link title="Tgenr_base" rel="Chapter" href="Tgenr_base.html">
+<link title="Genr_values" rel="Chapter" href="Genr_values.html">
+<link title="Typed_vars" rel="Chapter" href="Typed_vars.html">
+<link title="Genr_listary_equations" rel="Chapter" href="Genr_listary_equations.html">
+<link title="Genr_substitutions" rel="Chapter" href="Genr_substitutions.html">
+<link title="Genr_equalities" rel="Chapter" href="Genr_equalities.html">
+<link title="Genr_testing" rel="Chapter" href="Genr_testing.html">
+<link title="Main" rel="Chapter" href="Main.html"><link title="Comparison expressions." rel="Section" href="#6_Comparisonexpressions">
+<link title="Handling function names and identifiers." rel="Section" href="#6_Handlingfunctionnamesandidentifiers">
+<link title="Applying construction functions of generators." rel="Section" href="#6_Applyingconstructionfunctionsofgenerators">
+<link title="Applying generators." rel="Section" href="#6_Applyinggenerators">
+<link title="Generation of usual list operations." rel="Section" href="#6_Generationofusuallistoperations">
+<link title="Generation of functions for relational types." rel="Section" href="#6_Generationoffunctionsforrelationaltypes">
+<link title="Functions to select a clause according to the side argument." rel="Section" href="#6_Functionstoselectaclauseaccordingtothesideargument">
+<link title="Mapping according to the distributivity." rel="Section" href="#6_Mappingaccordingtothedistributivity">
+<link title="Tracing normalization for generated code" rel="Section" href="#6_Tracingnormalizationforgeneratedcode">
+<title>Genr_base</title>
+</head>
+<body>
+<div class="navbar"><a href="Genr_pattern.html">Previous</a>
+&nbsp;<a href="index.html">Up</a>
+&nbsp;<a href="Genr_memo.html">Next</a>
+</div>
+<center><h1>Module <a href="type_Genr_base.html">Genr_base</a></h1></center>
+<br>
+<pre><span class="keyword">module</span> Genr_base: <code class="code"><span class="keyword">sig</span></code> <a href="Genr_base.html">..</a> <code class="code"><span class="keyword">end</span></code></pre><span id="3_Basicdefinitionsforgenerationfunctions"><h3>Basic definitions for generation functions.</h3></span><br>
+<hr width="100%">
+<br><code><span id="TYPEgenerated_function"><span class="keyword">type</span> <code class="type"></code>generated_function</span> = </code><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Construction</span> <span class="keyword">of</span> <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> * <a href="Code.html#TYPEpattern">Code.pattern</a> list * <a href="Code.html#TYPEexp">Code.exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Comparison</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPElident">Code.lident</a> * <a href="Code.html#TYPEpattern">Code.pattern</a> list * <a href="Code.html#TYPEexp">Code.exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Construction_helper</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPElident">Code.lident</a> * <a href="Code.html#TYPEpattern">Code.pattern</a> list * <a href="Code.html#TYPEexp">Code.exp</a></code></code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code><span class="keyword">|</span></code></td>
+<td align="left" valign="top" >
+<code><span class="constructor">Construction_record</span> <span class="keyword">of</span> <code class="type"><a href="Code.html#TYPElident">Code.lident</a> * <a href="Code.html#TYPEpattern">Code.pattern</a> list * <a href="Code.html#TYPEexp">Code.exp</a></code></code></td>
+
+</tr></table>
+
+
+<pre><span id="TYPEgenerated_functions"><span class="keyword">type</span> <code class="type"></code>generated_functions</span> = <code class="type"><a href="Genr_base.html#TYPEgenerated_function">generated_function</a> list</code> </pre>
+
+<pre><span id="VALis_construction_function"><span class="keyword">val</span> is_construction_function</span> : <code class="type"><a href="Genr_base.html#TYPEgenerated_function">generated_function</a> -> bool</code></pre><pre><span id="TYPEbinary_fun_exp"><span class="keyword">type</span> <code class="type"></code>binary_fun_exp</span> = <code class="type"><a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code> </pre>
+<div class="info">
+The type of a function that takes two expression arguments and returns an
+    expression that represents the application of the function to these
+    arguments.<br>
+</div>
+
+<pre><span id="TYPEcomparisons"><span class="keyword">type</span> <code class="type"></code>comparisons</span> = <code class="type"><a href="Genr_base.html#TYPEbinary_fun_exp">binary_fun_exp</a> * <a href="Genr_base.html#TYPEbinary_fun_exp">binary_fun_exp</a> *<br>       <a href="Genr_base.html#TYPEbinary_fun_exp">binary_fun_exp</a></code> </pre>
+<div class="info">
+The triple of a lesser, an equal, and a greater predicate.<br>
+</div>
+
+<pre><span id="VALcomparison_function"><span class="keyword">val</span> comparison_function</span> : <code class="type"><a href="Longident.html#TYPEt">Longident.t</a> option -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+A constant representing the name of the comparison function corresponding
+    to the indicated identifier. Returns the standard comparison function
+    if no identifier is provided.<br>
+</div>
+<br>
+<span id="6_Comparisonexpressions"><h6>Comparison expressions.</h6></span><br>
+<pre><span id="VALgenr_comparisons"><span class="keyword">val</span> genr_comparisons</span> : <code class="type"><a href="Code.html#TYPElident">Code.lident</a> option -> <a href="Genr_base.html#TYPEcomparisons">comparisons</a></code></pre><div class="info">
+Generation of a triple of comparison functions for a given commutative
+    operator.<br>
+</div>
+<pre><span id="VALpervasives_comparisons"><span class="keyword">val</span> pervasives_comparisons</span> : <code class="type"><a href="Genr_base.html#TYPEcomparisons">comparisons</a></code></pre><div class="info">
+Triple representing OCaml's Pervasives.compare functions<br>
+</div>
+<pre><span id="VALeq_function"><span class="keyword">val</span> eq_function</span> : <code class="type"><a href="Genr_base.html#TYPEbinary_fun_exp">binary_fun_exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+Returns the function that generates the code to call the proper equality
+    function to its two code arguments.
+    The proper equality function is "eq" or the <code class="code">binary_fun_exp</code> argument,
+    according to whether we have or have not to generate maximally shared
+    terms for the relational type at hand.<br>
+</div>
+<pre><span id="VALget_user_rel_order"><span class="keyword">val</span> get_user_rel_order</span> : <code class="type">unit -> bool</code></pre><div class="info">
+Do we use the user order for code generation ?<br>
+</div>
+<pre><span id="VALset_user_rel_order"><span class="keyword">val</span> set_user_rel_order</span> : <code class="type">unit -> unit</code></pre><pre><span id="VALorder_rels"><span class="keyword">val</span> order_rels</span> : <code class="type">(<a href="Parsetree.html#TYPErelation">Parsetree.relation</a> -> int) -><br>       <a href="Parsetree.html#TYPErelation">Parsetree.relation</a> list -> <a href="Parsetree.html#TYPErelation">Parsetree.relation</a> list</code></pre><pre><span id="VALorder_relations"><span class="keyword">val</span> order_relations</span> : <code class="type">(<a href="Parsetree.html#TYPErelation">Parsetree.relation</a> -> int) -> <a href="Parsetree.html#TYPErelations">Parsetree.relations</a> -> <a href="Parsetree.html#TYPErelations">Parsetree.relations</a></code></pre><pre><span id="VALset_sharable_target"><span class="keyword">val</span> set_sharable_target</span> : <code class="type">unit -> unit</code></pre><div class="info">
+<span id="6_Maximumsharinghandling"><h6>Maximum sharing handling.</h6></span><br>
+</div>
+<pre><span id="VALget_sharable_target"><span class="keyword">val</span> get_sharable_target</span> : <code class="type">unit -> bool</code></pre><div class="info">
+Do we generate maximum sharing ?<br>
+</div>
+<br>
+<span id="6_Handlingfunctionnamesandidentifiers"><h6>Handling function names and identifiers.</h6></span><br>
+<pre><span id="VALcompare_function"><span class="keyword">val</span> compare_function</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Comparison function ident from its generator<br>
+</div>
+<pre><span id="VALconstruction_function_name"><span class="keyword">val</span> construction_function_name</span> : <code class="type">string -> string</code></pre><div class="info">
+Construction function name from its generator (string) name.<br>
+</div>
+<pre><span id="VALconstruction_function_ident"><span class="keyword">val</span> construction_function_ident</span> : <code class="type"><a href="Code.html#TYPEuident">Code.uident</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Construction function ident from its generator ident.<br>
+</div>
+<pre><span id="VALconstruction_function"><span class="keyword">val</span> construction_function</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Construction function ident from its generator.<br>
+</div>
+<pre><span id="VALconstruction_function_memo_table_ident"><span class="keyword">val</span> construction_function_memo_table_ident</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Construction function memo table ident from its generator.<br>
+</div>
+<pre><span id="VALprefix_ident"><span class="keyword">val</span> prefix_ident</span> : <code class="type">string -> <a href="Code.html#TYPElident">Code.lident</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Adds a prefix to an identifier.
+  <code class="code">prefix_ident p id</code> is the identifier <code class="code">p_id</code> is <code class="code">id</code> is not qualified,
+  <code class="code"><span class="constructor">Mod</span>.p_id</code> if <code class="code">id</code> is qualified by module <code class="code"><span class="constructor">Mod</span></code>.<br>
+</div>
+<pre><span id="VALprefix_construction_function"><span class="keyword">val</span> prefix_construction_function</span> : <code class="type">string -> <a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Name of the generation functions for a given prefix name
+   and a given generator:
+   <code class="code">prefix_generator_function p g</code> is the ident "prefix_name",
+   where "prefix" is the contents of <code class="code">p</code>,
+   and "name" is the uncapitalized version of <code class="code">g</code>.<br>
+</div>
+<pre><span id="VALprefix_construction_function2"><span class="keyword">val</span> prefix_construction_function2</span> : <code class="type">string -> <a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Name of the generation functions for a given prefix name
+   and the combination of two generators:
+   <code class="code">prefix_generator_function2 p g1 g2</code> is the ident "prefix_name1_name2",
+   where "prefix" is the contents of <code class="code">p</code>,
+   and "name1", "name2" are the uncapitalized versions of <code class="code">g1</code>, <code class="code">g2</code>.<br>
+</div>
+<pre><span id="VALmk_sharing_function_ident"><span class="keyword">val</span> mk_sharing_function_ident</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPElident">Code.lident</a></code></pre><div class="info">
+Name of the sharing generation functions for a given generator name.<br>
+</div>
+<br>
+<span id="6_Applyingconstructionfunctionsofgenerators"><h6>Applying construction functions of generators.</h6></span><br>
+<pre><span id="VALconstruction"><span class="keyword">val</span> construction</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a> list -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+The generic (and most general) way to apply a construction function for a
+  generator.
+  <code class="code">construction</code> properly takes care of the generator arity, whatever
+  this arity could be.
+<p>
+
+  The following specialized versions are just particular case of the generic
+  <code class="code">construction</code> function.<br>
+</div>
+<pre><span id="VALconstruction0"><span class="keyword">val</span> construction0</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALconstruction1"><span class="keyword">val</span> construction1</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALconstruction2"><span class="keyword">val</span> construction2</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+The application of the construction function for a zeroary, unary or
+  binary generator.<br>
+</div>
+<br>
+<span id="6_Applyinggenerators"><h6>Applying generators.</h6></span><br>
+<br>
+We use the generators as unconstrainted term builders.
+<p>
+
+  Presumably, the following functions are only used once to define the
+  construction function of a generator: we need it to build the (last)
+  default clause of the construction function (unless we have a proof that a
+  direct call to the generator is safe, because we know that the resulting
+  term will be in normal form).<br>
+<pre><span id="VALgenerator"><span class="keyword">val</span> generator</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a> list -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+Apply the generator term constructor for the generator: in case of sharing,
+    we properly call the sharing version of the generator.<br>
+</div>
+<pre><span id="VALgenerator0"><span class="keyword">val</span> generator0</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALgenerator1"><span class="keyword">val</span> generator1</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALgenerator2"><span class="keyword">val</span> generator2</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+Apply the generator term constructor for the generator: special cases for
+  zeroary, unary, and binary generators.<br>
+</div>
+<br>
+<span id="6_Generationofusuallistoperations"><h6>Generation of usual list operations.</h6></span><br>
+<pre><span id="VALnil"><span class="keyword">val</span> nil</span> : <code class="type"><a href="Code.html#TYPEexp">Code.exp</a></code></pre><div class="info">
+These functions generate code values.<br>
+</div>
+<pre><span id="VALsingleton"><span class="keyword">val</span> singleton</span> : <code class="type"><a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALcons"><span class="keyword">val</span> cons</span> : <code class="type"><a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALappend"><span class="keyword">val</span> append</span> : <code class="type"><a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a> -> <a href="Code.html#TYPEexp">Code.exp</a></code></pre><pre><span id="VALgenr_rule_pattern"><span class="keyword">val</span> genr_rule_pattern</span> : <code class="type">Parsetree.pattern -> Parsetree.pattern</code></pre><div class="info">
+<span id="6_Patternconstructionforgeneratorsandfunctions"><h6>Pattern construction for generators and functions.</h6></span>
+<p>
+Generation of the LHS of a pattern matching clause for a user's defined
+    rule.<br>
+</div>
+<pre><span id="VALpattern_info"><span class="keyword">val</span> pattern_info</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a> list -> <a href="Code.html#TYPEpattern">Code.pattern</a></code></pre><div class="info">
+Similar to generator application for the pattern case.<br>
+</div>
+<pre><span id="VALpattern"><span class="keyword">val</span> pattern</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a> list -> <a href="Code.html#TYPEpattern">Code.pattern</a></code></pre><pre><span id="VALpattern0"><span class="keyword">val</span> pattern0</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a></code></pre><pre><span id="VALpattern1"><span class="keyword">val</span> pattern1</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a></code></pre><pre><span id="VALpattern2"><span class="keyword">val</span> pattern2</span> : <code class="type"><a href="Parsetree.html#TYPEgenerator">Parsetree.generator</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a> -> <a href="Code.html#TYPEpattern">Code.pattern</a></code></pre><div class="info">
+Similar to generator application for the pattern case.<br>
+</div>
+<br>
+<span id="6_Generationoffunctionsforrelationaltypes"><h6>Generation of functions for relational types.</h6></span><br>
+<pre><span id="VALgenr_eq"><span class="keyword">val</span> genr_eq</span> : <code class="type">string * <a href="Parsetree.html#TYPEtype_declaration">Parsetree.type_declaration</a> -> <a href="Code.html#TYPEstructure_item">Code.structure_item</a></code></pre><div class="info">
+Generate an equality predicate primitive for the type name given:
+    for type <code class="code">t</code>, we generate the primitive <code class="code">eq_t</code>, bound to <code class="code"><span class="string">"%equal"</span></code> if the
+    values of the type are not maximally shared, or bound to <code class="code"><span class="string">"%eq"</span></code>
+    otherwise.<br>
+</div>
+<pre><span id="VALgenr_projection"><span class="keyword">val</span> genr_projection</span> : <code class="type">string * <a href="Parsetree.html#TYPEtype_declaration">Parsetree.type_declaration</a> -><br>       Parsetree.core_type -> <a href="Code.html#TYPEstructure_item">Code.structure_item</a></code></pre><div class="info">
+Generate a projection primitive for the (abbreviation) type name given.<br>
+</div>
+<br>
+<span id="6_Functionstoselectaclauseaccordingtothesideargument"><h6>Functions to select a clause according to the side argument.</h6></span><br>
+<pre><span id="VALclauses_of_side"><span class="keyword">val</span> clauses_of_side</span> : <code class="type"><a href="Parsetree.html#TYPErelation_side">Parsetree.relation_side</a> -><br>       <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a></code></pre><pre><span id="VALclauses_left_or_right"><span class="keyword">val</span> clauses_left_or_right</span> : <code class="type"><a href="Parsetree.html#TYPErelation_side">Parsetree.relation_side</a> -><br>       <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a></code></pre><pre><span id="VALclauses_both_as_left"><span class="keyword">val</span> clauses_both_as_left</span> : <code class="type"><a href="Parsetree.html#TYPErelation_side">Parsetree.relation_side</a> -><br>       <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a></code></pre><pre><span id="VALopt"><span class="keyword">val</span> opt</span> : <code class="type">bool -> <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a></code></pre><div class="info">
+<span id="6_Functionstogenerateclausesondemand"><h6>Functions to generate clauses on demand.</h6></span><br>
+</div>
+<pre><span id="VALlazy_opt"><span class="keyword">val</span> lazy_opt</span> : <code class="type">bool -> (unit -> <a href="Code.html#TYPEclause">Code.clause</a>) -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a></code></pre><pre><span id="VALopts"><span class="keyword">val</span> opts</span> : <code class="type">bool -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a> -> <a href="Code.html#TYPEclauses">Code.clauses</a></code></pre><br>
+<span id="6_Mappingaccordingtothedistributivity"><h6>Mapping according to the distributivity.</h6></span><br>
+<pre><span id="VALmap_of_direction"><span class="keyword">val</span> map_of_direction</span> : <code class="type"><a href="Parsetree.html#TYPEdistributivity_direction">Parsetree.distributivity_direction</a> -> ('a -> 'b) -> 'a list -> 'b list</code></pre><div class="info">
+Returns the <code class="code">map</code> like function from the predefined <code class="code"><span class="constructor">List</span></code> module that is
+  suitable for the <code class="code">distributivity_direction</code> argument.
+  This function is used to generate the code.<br>
+</div>
+<pre><span id="VALimap_of_direction"><span class="keyword">val</span> imap_of_direction</span> : <code class="type"><a href="Parsetree.html#TYPEdistributivity_direction">Parsetree.distributivity_direction</a> -> <a href="Longident.html#TYPEt">Longident.t</a></code></pre><div class="info">
+Returns the qualified identificateur of the mapping function of the
+  predefined <code class="code"><span class="constructor">List</span></code> module that is suitable for the
+  <code class="code">distributivity_direction</code> argument.
+  This identifier will be used in the generated code.<br>
+</div>
+<br>
+<span id="6_Tracingnormalizationforgeneratedcode"><h6>Tracing normalization for generated code</h6></span><br>
+<pre><span id="VALdiese_line"><span class="keyword">val</span> diese_line</span> : <code class="type"><a href="Location.html#TYPEt">Location.t</a> -> int * string</code></pre><div class="info">
+Get the line and file where the located element appears<br>
+</div>
+<pre><span id="VALset_dline_trace"><span class="keyword">val</span> set_dline_trace</span> : <code class="type">unit -> unit</code></pre><pre><span id="VALget_dline_trace"><span class="keyword">val</span> get_dline_trace</span> : <code class="type">unit -> bool</code></pre><div class="info">
+Do we add diese line directives to <code class="code">.ml</code> files ?<br>
+</div>
+<pre><span id="VALset_comments"><span class="keyword">val</span> set_comments</span> : <code class="type">unit -> unit</code></pre><pre><span id="VALget_comments"><span class="keyword">val</span> get_comments</span> : <code class="type">unit -> bool</code></pre><div class="info">
+Do we output normalization traces ?<br>
+</div>
+<pre><span id="VALtrace_clause"><span class="keyword">val</span> trace_clause</span> : <code class="type">int -> string -> <a href="Code.html#TYPEclause">Code.clause</a> -> <a href="Code.html#TYPEclause">Code.clause</a></code></pre><div class="info">
+Returns the code outputing the diese_line directives
+    # <code class="code">int</code> <code class="code">string</code><br>
+</div>
+</body></html>

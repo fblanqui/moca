@@ -1,0 +1,49 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2012,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: bool.mlm,v 1.10 2012-06-04 13:01:22 weis Exp $ *)
+
+(* Booleans with common algebraic properties. *)
+
+type t = private
+   | Btrue
+   | Bfalse
+   | Bvar of string
+   | Bnot of t
+     begin
+       distributive (Btrue, Bfalse)
+       distributive (Bfalse, Btrue)
+     end
+
+   | Band of t * t
+     begin
+       associative
+       commutative
+       idempotent
+       neutral (Btrue)
+       absorbent (Bfalse)
+       (*inverse (Bnot, Bfalse)*)
+     end
+
+   | Bor of t * t
+     begin
+       associative
+       commutative
+       idempotent
+       neutral (Bfalse)
+       absorbent (Btrue)
+       (*inverse (Bnot, Btrue)*)
+     end
+;;

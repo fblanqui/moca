@@ -1,0 +1,81 @@
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{ifthen}
+\usepackage{geometry}
+\usepackage{xspace}
+
+\def\bitem{\item[$\bullet$]}
+
+\def\moca{{\sf Moca}\xspace}
+\def\zenon{{\sf Zenon}\xspace}
+\def\focal{{\sf Focal}\xspace}
+\def\ocaml{{\sf OCaml}\xspace}
+\def\coq{{\sf Coq}\xspace}
+\def\tamed{{\sf TaMed}\xspace}
+\def\why{{\sf Why}\xspace}
+\def\zenonweb{{\sf http://focal.inria.fr/zenon}\xspace}
+\def\mocaweb{{\sf http://moca.inria.fr/}\xspace}
+\def\mocacvs{{\sf http://camlcvs.inria.fr/cgi-bin/cvsweb/bazar-ocaml/moca/}\xspace}
+\def\vnumber{{\sf 0.5.0}}
+
+\newcommand{\note}[1]{{\bf NOTE:} #1}
+
+\def\postes{}
+\def\cv{long}
+
+\newcommand{\longcv}[1]{
+  \ifthenelse{\equal{\cv}{long}}{#1}{}
+}
+
+\def\chapname{}
+
+\newcommand{\chaptitle}[1]{
+\part*{#1}
+\setcounter{section}{0}
+\addcontentsline{toc}{part}{\protect{#1}}
+\def\chapname{#1}
+}
+
+\newcommand{\secpage}[1]{section \ref{#1}, p.\pageref{#1}}
+
+\newcommand{\pagetitle}[2]{
+\vspace*{3cm}
+\thispagestyle{empty}
+\begin{center}
+  {\Huge\bf #1}
+\end{center}
+
+\vspace*{2cm}
+\begin{center}
+  {\Large #2}
+\end{center}
+\vspace*{1cm}
+\begin{center}
+  {\Large Richard Bonichon}
+\end{center}
+\vfill
+\def\postes{#2}
+}
+
+
+\usepackage{listings}
+
+% \lstdefinelanguage{Moca}[Objective]{Caml}
+% {morekeywords={rule, associative, commutative, nilpotent, inverse,
+%     opposite, neutral, idempotent, distributive, absorbing, absorbent,
+%   left, right, involutive, status, precedence, completion},%
+% }%
+
+\lstloadlanguages{[Objective]Caml,Moca}
+\lstset{
+  language=Moca,
+  captionpos=b,
+  xleftmargin=10mm,
+  xrightmargin=10mm,
+  frame=lines,
+  columns=[c]{fixed},
+  numbers=right,
+  stepnumber=2,
+  numberfirstline=false
+}

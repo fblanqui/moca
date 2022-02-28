@@ -1,0 +1,53 @@
+Moca should generate code using compare_t and define compare_t as compare or
+define the comparison ordering that was specified in the .mlm file.
+
+(After a new keyuword compare ? *)
+
+L'ordre vérifie-t-il
+ all x in t, exists y minimal, y >= x
+
+L'ordre qui va bien pour ordonnanceer les peignes comme on veut.
+Its the usual Caml lexicographic ordering plus the extra rule
+  Positive a < Negative b, if a <= b
+
+let equal = 0;;
+let smaller = -1;;
+let greater = 1;;
+
+let rec compare_sequent_set s1 s2 =
+  match s1, s2 with
+
+  | Closed, Closed -> equal
+  | Closed, _ -> smaller
+  | _, Closed -> greater
+
+  | Trivial, Trivial -> equal
+  | Trivial, _ -> greater
+  | _, Trivial -> smaller
+
+  | Positive a, Positive b -> Pervasives.compare a b
+  | Positive a, Negative b ->
+     (* Positive x < Negative x *)
+     let c = Pervasives.compare a b in
+     if c = equal then smaller else c
+  | Positive _, _ -> smaller
+
+  | Negative a, Negative b -> Pervasives.compare a b
+  | Negative a, Positive b ->
+     let c = Pervasives.compare a b in
+     (* Negative x > Positive x *)
+     if c = equal then greater else c
+  | Negative _, _ -> smaller
+
+  | Graft (s3, s4), Graft (s5, s6) ->
+    let c = compare_sequent_set s3 s5 in
+    if c = equal then compare_sequent_set s4 s5 else c
+  | Graft (_, _), Union (_, _) -> smaller
+  | Graft (_, _), _ -> greater
+
+  | Union (s3, s4), Union (s5, s6) ->
+    let c = compare_sequent_set s3 s5 in
+    if c = equal then compare_sequent_set s4 s5 else c
+  | Union (s3, s4), Graft (s5, s6) -> greater
+  | Union (_, _), _ -> smaller
+;;

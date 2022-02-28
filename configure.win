@@ -1,0 +1,169 @@
+#!/bin/sh
+
+######################################################################
+#                                                                    #
+#                           Moca                                     #
+#                                                                    #
+#          Pierre Weis, INRIA Rocquencourt                           #
+#          Frédéric Blanqui, projet Protheo, INRIA Lorraine          #
+#                                                                    #
+#  Copyright 2005-2012,                                              #
+#  Institut National de Recherche en Informatique et en Automatique. #
+#  All rights reserved.                                              #
+#                                                                    #
+#  This file is distributed under the terms of the Q Public License. #
+#                                                                    #
+######################################################################
+
+# $Id: configure.win,v 1.5 2012-06-04 13:01:21 weis Exp $
+
+# Set the installation root directory, the Makefile variable PREFIX
+
+usage () {
+  echo "Usage: sh configure.win <absolute path of the root directory for installation>"
+  echo "(default is configure.win \"c:/cygwin.usr\")"
+}
+
+# The default installation root directory.
+# If necessary we can compute the root directory of the Caml installation using
+#PREFIX=`ocamlc -where | awk -F/lib/ '{print $1}'`
+# Let's choose a regular prefix.
+PREFIX="c:/cygwin/usr"
+
+# The forbidden value for PREFIX, the forbidden root directory for installation
+# (since installation here could destroy directories or files in the source
+# distribution of the software).
+HERE="$(pwd)"
+
+# The file the PREFIX value is stored.
+PREFIX_FILE=config/prefix_default
+
+# Set PREFIX to the previously stored value.
+if [ -s $PREFIX_FILE ]; then
+   PREVIOUS_PREFIX=`tail -1 $PREFIX_FILE | awk -F'= ' '{print $2}'`
+   if [ -n "$PREVIOUS_PREFIX" ]; then
+      PREFIX=`eval echo $PREVIOUS_PREFIX`
+   fi
+fi
+
+record_prefix () {
+  PREFIX_FILE=$1
+  PREFIX=$2
+  echo "PREFIX = $PREFIX" > $PREFIX_FILE
+}
+
+# Check if we have been called with an explicit PREFIX value argument.
+PREFIX_ARGUMENT=""
+
+case $# in
+ 0) ;;
+ 1)
+  case "$1" in
+   -h* | -help ) usage; exit 0;;
+   * ) PREFIX_ARGUMENT="$1";;
+  esac;;
+ *) usage; exit 2;;
+esac
+
+# Explicitely ask for a root directory name for installation, if none has been
+# provided as argument.
+if test "$PREFIX_ARGUMENT" = ""; then
+  echo "Give the root directory for the installation (default is $PREFIX) ";
+  read PREFIX_ARGUMENT
+fi
+
+# Set PREFIX to the value entered (when the user has not simply hit
+# the return key).
+if [ -n "$PREFIX_ARGUMENT" ]; then
+  PREFIX=`eval echo $PREFIX_ARGUMENT`
+fi
+
+# Perform sanity checks: we cannot install in the source directory.
+if test "$HERE" = "$PREFIX"; then
+  echo "Cannot install in the source directory!";
+  exit 2;
+elif test "." = "$PREFIX"; then
+  echo "Cannot install in the source directory!";
+  exit 2;
+fi
+
+# Remember the current value of $PREFIX
+record_prefix $PREFIX_FILE $PREFIX
+
+echo "******************************************************";
+echo "Configuring from directory";
+echo "  \"$HERE\", with";
+echo "  \"$PREFIX\" as the root directory for installation.";
+echo "******************************************************";
+
+# We consider three configuration behaviours, related to three lists of sub
+# directories:
+#
+# The CONFIGURESUBDIRS are the sub directories that needs to run a ./configure
+#     script with $PREFIX and $HERE as arguments.
+#
+# The DOTDEPENDSUBDIRS are the sub directories that have a .depend file that
+#     contains the set of make dependencies for the files the make must build.
+#
+# The MAKECONFIGURESUBDIRS are the sub directories that need a make configure
+#     call to be fully configured.
+#
+# There are no implicit inheritance nor inclusion within these variables.
+# This means that a given directory may need one, two or three configuration
+# behaviours, hence appear in more than one list. The three variables neither
+# need to form a partition of the sub directories of the application, since
+# there may exist directories that do not need any configuration at all.
+
+CONFIGURESUBDIRS="config Mk"
+DOTDEPENDSUBDIRS="compiler examples test"
+MAKECONFIGURESUBDIRS="compiler examples test"
+
+# Automatic part of the configuration.
+
+# Configuration of Mk/Config.mk will set the value of SRCROOTDIR.
+for i in $CONFIGURESUBDIRS; do
+  if test -d $i; then
+    echo "*** Configuring the $i directory...";
+    (cd $i; sh configure.win "$PREFIX" "$HERE");
+  fi
+done
+
+# Create empty .depend-rebuild files in order to get
+# the Makefiles up and running (although .depend files are not yet correct).
+for i in $DOTDEPENDSUBDIRS; do
+  if test -d $i; then
+    echo "*** Touching .depend-rebuild file in the $i directory...";
+    (rm -f $i/.depend-rebuild; touch $i/.depend-rebuild);
+  fi
+done
+
+# Create empty .depend files in each sub directory.
+for i in $DOTDEPENDSUBDIRS; do
+  if test -d $i; then
+    echo "*** Touching .depend file in the $i directory...";
+    (rm -f $i/.depend; touch $i/.depend);
+  fi
+done
+
+# Wait enough to ``oldify'' enough the .depend files just created.
+# Otherwise the make command could consider the .depend-rebuild files to be not
+# new enough to re-fire the .depend files computation (how ugly!).
+sleep 1
+
+# Now configure the directories that needs it.
+for i in $MAKECONFIGURESUBDIRS; do
+  if test -d $i; then
+    echo "*** Making configure in the $i directory...";
+    (cd $i; make configure);
+  fi
+done
+
+# Then create corresponding empty .depend-rebuild files in order to get
+# the automatic recalculation of .depend files when the make command will be
+# called again.
+for i in $DOTDEPENDSUBDIRS; do
+  if test -d $i; then
+    echo "*** Touching .depend-rebuild file in the $i directory...";
+    (rm -f $i/.depend-rebuild; touch $i/.depend-rebuild);
+  fi
+done

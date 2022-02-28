@@ -1,0 +1,32 @@
+(* See test/ski.mlm for a short description of what SKI is *)
+(* We convert a ski expr to lambda-calcul *)
+
+open Gensymb;;
+open Skilam;;
+
+
+type ski2lam= private
+  | S2l_app of ski2lam * ski2lam
+  | S2l_abst of string * ski2lam
+  | S2l_var of string
+  | Tolam of tski
+        begin
+      rule Tolam S ->
+          let x = newsymb () and y = newsymb () and z = newsymb () in
+          S2l_abst (x, S2l_abst (y, S2l_abst (z,
+         S2l_app (S2l_var x, S2l_app (
+                  S2l_var z, S2l_app (S2l_var y, S2l_var z))))))
+
+            
+      rule Tolam K ->
+        let x = newsymb () and y = newsymb () in
+        S2l_abst (x, S2l_abst (y, S2l_var x))
+        
+      rule Tolam I ->
+        let y = newsymb () in
+        S2l_abst(y,S2l_var y)
+          
+      rule Tolam (Sapp (x, y)) -> S2l_app (Tolam x, Tolam y)
+        end
+        
+

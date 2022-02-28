@@ -1,0 +1,25 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: non_linear.mlm,v 1.2 2010-10-25 16:37:40 weis Exp $ *)
+
+type t = private
+  | C begin completion precedence 0 end
+  | E of t * t
+    begin
+      completion precedence 1
+      rule E (x, E (y, z)) when x = y && 0 = Pervasives.compare z y -> E (y, z)
+    end
+;;

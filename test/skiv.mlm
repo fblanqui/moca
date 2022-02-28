@@ -1,0 +1,40 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2012,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: skiv.mlm,v 1.6 2012-06-04 13:01:22 weis Exp $ *)
+
+(* Defining Combinatory Logic:
+   Constructors are S, K, and I (subtituting application, constant
+   function generator, and identity).
+   We also add an App constructor to modelize application.
+   Then, semantics definitions of S, K, I are given using rules that
+   define their behavior when applied to arguments. For instance:
+     rule App (I, x) -> x
+   defines the I combinator. *)
+type ski = private
+   | S
+   | K
+   | I
+   | Var of string
+   | App of ski * ski
+   begin
+    (* Defining I *)
+    rule App (I, x) -> x
+    (* Defining K *)
+    rule App (App (K, x), _y) -> x
+    (* Defining S *)
+    rule App (App (S, K), _x) -> I
+    rule App (App (App (S, x), y), z) -> App (App (x, z), (App (y, z)))
+   end;;

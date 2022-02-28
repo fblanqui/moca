@@ -1,0 +1,100 @@
+open Skilam;;
+open Gensymb;;
+open Utils;;
+
+
+type ttype =
+  | TyArrow of ttype * ttype
+  | TyId of string
+;;
+
+
+(* Repace occurrences of x with y in terms of list l *)
+
+let rec replace_with x y l =
+   let rec replace_in_term t =
+     if t = x then y
+     else
+       begin
+         match t with
+         | TyArrow (a, b) -> TyArrow (replace_in_term a,
+                                      replace_in_term b)
+         | _ -> t
+       end
+    in
+   List.map (fun (x,y) -> (replace_in_term x), replace_in_term y) l
+;;       
+
+let rec ty_fv = function
+  | TyId x -> [x]
+  | TyArrow (x, y) -> union (ty_fv x) (ty_fv y)
+;;
+   
+exception Ufail of  ttype * ttype;;
+
+let rec unify = function
+  | [] -> []
+  | (x, y) :: l ->
+      begin
+        match x, y with
+        | x, y when x = y -> unify l
+        | TyArrow (a, b), TyArrow (c, d) ->
+            unify ((a, c) :: (b, d) :: l)
+        | TyId z, _ when not (List.mem z (ty_fv y)) ->
+           (unify (replace_with x y l))@[(x, y)]
+        | _ , TyId z when not (List.mem z (ty_fv x)) ->
+          (unify (replace_with y x l))@[(y, x)]
+        | _ , _  -> raise (Ufail (x, y))
+      end  
+;;                                          
+
+type env = (string * ttype) list ;;
+type tconst = (ttype * ttype) list;;
+
+exception Unbound_Variable of string;;
+
+type ltype = private
+  | Ltype of  tlam * env * ttype option * tconst
+      begin
+          rule Ltype (Var x, e, None , c) ->
+            begin
+            try
+              let ty_x = List.assoc x e in
+              let t = TyId (new_tsymb ())  in
+               ltype (Var x, e, Some t, (ty_x, t) :: c)
+            with Not_found -> raise (Unbound_Variable x)
+             end 
+
+          rule Ltype (Abst (x, t), e, None , c) ->
+
+             let ty = TyId (new_tsymb ()) in
+             begin
+             match ltype (t, (x, ty) :: e,
+                          None , c)
+             with
+             | Ltype (_, _, Some ty2 , c1) ->
+                 ltype (t, (x, ty) :: e,
+                        Some (TyArrow(ty, ty2)),
+                        c1)
+             | _ -> assert false
+             end
+
+          rule Ltype (App (s, u), e, None, c) ->
+            begin
+            let ty = TyId (new_tsymb ()) in
+
+            match ltype (s, e, None, c),
+                  ltype (u, e, None, c)
+            with
+            | Ltype (_, _, Some t1, c1),
+              Ltype (_, _, Some t2, c2)
+                ->
+               ltype (App (s, u), e, Some ty,
+                      c1 @ c2 @ [(t1, TyArrow(t2, ty))]
+                     )
+
+            | _ -> assert false
+            end      
+            
+        end
+;;

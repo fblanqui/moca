@@ -1,0 +1,20 @@
+1) To quickly test something, use the specialized script shell ocaml_test.
+==========================================================================
+
+To run and perform test in file test.ml, just launch
+
+$ ocaml_test < test.ml
+
+Contents of file test is the following:
+
+#load "gentest.cmo";;
+open Gentest;;
+#load "group_2.cmo";;
+open Group_2;;
+#use "tgroup_2.ml";;
+
+let _minus_one = ~- one;;
+let x = _2 + _1;;
+_minus_one + x;;
+
+You may easily adapt test.ml to your needs :)

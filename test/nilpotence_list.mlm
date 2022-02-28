@@ -1,0 +1,39 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2007,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: nilpotence_list.mlm,v 1.2 2008-02-13 23:06:26 weis Exp $ *)
+
+(* A relational type with two kinds of nilpotence. *)
+
+type t = private
+  | Zero
+      begin
+	completion precedence 0
+      end
+  | One
+      begin
+	completion precedence 1
+      end
+  | Nprod of t list
+  begin
+    nilpotent (Zero)
+    completion precedence 3
+  end
+  | Proj of t
+  begin
+    nilpotent (One)
+    completion precedence 2
+  end
+;;

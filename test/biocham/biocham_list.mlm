@@ -1,0 +1,43 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: biocham_list.mlm,v 1.4 2010-11-22 16:29:10 bonichon Exp $ *)
+
+(* Defining the molecules for the biocham system.
+   We need sets and associative commutative operators. *)
+
+type 'a set = private
+   | Empty
+   | Singleton of 'a
+   | Union of ('a set) list
+   begin
+     associative neutral (Empty) commutative idempotent
+   end
+;;
+
+type molecule = private
+   | Name of string
+   | Phospho of molecule * (molecule set)
+   | Complex of molecule list
+     begin
+       associative
+       commutative
+     end
+   | Ph of molecule list
+     begin
+       associative
+       commutative
+     end
+;;

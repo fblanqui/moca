@@ -1,0 +1,6 @@
+#/bin/sh
+
+set -x
+
+touch .depend
+make depend

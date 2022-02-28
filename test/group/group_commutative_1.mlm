@@ -1,0 +1,33 @@
+(**********************************************************************)
+(*                                                                    *)
+(*                           Moca                                     *)
+(*                                                                    *)
+(*          Pierre Weis, INRIA Rocquencourt                           *)
+(*          Frédéric Blanqui, projet Protheo, INRIA Lorraine          *)
+(*                                                                    *)
+(*  Copyright 2005-2008,                                              *)
+(*  Institut National de Recherche en Informatique et en Automatique. *)
+(*  All rights reserved.                                              *)
+(*                                                                    *)
+(*  This file is distributed under the terms of the Q Public License. *)
+(*                                                                    *)
+(**********************************************************************)
+
+(* $Id: group_commutative_1.mlm,v 1.2 2008-02-11 19:37:33 weis Exp $ *)
+
+(* Abelian group structure: one commutative, associative law, with a neutral
+   element and an opposite for each element in the group.
+   The group is not trivial since we have a One constant generator. *)
+
+type t = private
+   | Zero
+   | One
+   | Opp of t
+   | Add of t * t
+   begin
+     associative
+     commutative
+     neutral (Zero)
+     opposite (Opp)
+   end
+;;
